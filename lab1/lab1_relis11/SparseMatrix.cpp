@@ -6,9 +6,16 @@ void readSparseMatrix(MatrixCRS &matrixCRS, int n) {
     ListMatrix matrix[n];
 
     initializationMatrixList(matrix, n);
-    readMatrixList(matrix, n);
-    //printMatrixList(matrix, n);
-    conversionToMatrixCRS(matrixCRS, matrix, n);
+    try {
+        readMatrixList(matrix, n);
+        //printMatrixList(matrix, n);
+        conversionToMatrixCRS(matrixCRS, matrix, n);
+    } catch (char const* str) {
+        std::cout << "Sorry, EOF..." << std::endl;
+        deleteMatrixList(matrix, n);
+        throw "Matrix isn't entered";
+    }
+
     deleteMatrixList(matrix, n);
 }
 

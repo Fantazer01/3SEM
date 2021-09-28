@@ -1,5 +1,6 @@
 #include "SparseMatrix.h"
 #include <iostream>
+#include "../../LabTools/LabTools.h"
 
 void initializationMatrixList(ListMatrix *matrix, int n) {
     for (int i = 0; i < n; ++i) 
@@ -29,9 +30,10 @@ void readMatrixList(ListMatrix *matrix, int n) {
 
     for (i = 0; i < n; ++i) {
         for (j = 0; j < n; ++j) {
-            std::cin >> a;
-            if (a != 0) 
+            getNum(a);
+            if (a != 0)
                 add(&(matrix[i].list), a, j);
+
         }
     }
 }

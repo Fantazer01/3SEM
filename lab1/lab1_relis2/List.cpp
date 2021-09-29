@@ -79,7 +79,7 @@ void printNetMatrix(struct NetMatrix &matrix) {
 }
 
 void computeAnswer(int *b, struct NetMatrix &matrix) {
-    int i, j, k, a;
+    int i, j, k;
 
     struct List *plistL, *plistC;
 

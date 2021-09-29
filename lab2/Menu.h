@@ -20,4 +20,6 @@ int setC(LineCassini &);
 
 int setAC(LineCassini &);
 
+int formLine(LineCassini &);
+
 #endif //LAB2_MENU_H

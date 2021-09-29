@@ -34,7 +34,6 @@ void readNetMatrix(struct NetMatrix &matrix) {
                 deleteNetMatrix(matrix);
                 throw "Matrix isn't entered";
             }
-
         }
     }
 }
@@ -80,9 +79,7 @@ void printNetMatrix(struct NetMatrix &matrix) {
 
 void computeAnswer(int *b, struct NetMatrix &matrix) {
     int i, j, k;
-
     struct List *plistL, *plistC;
-
 
     for (i = 0; i < matrix.size; ++i) {
         b[i] = 0;
@@ -110,9 +107,8 @@ int getMaxElementFromLineNetMatrix(struct NetMatrix &matrix, int i) {
     int maxIndex = 0;
     int j = -1;
 
-    if (matrix.list_lines[0] != nullptr && matrix.list_lines[0]->j == 0) {
+    if (matrix.list_lines[0] != nullptr && matrix.list_lines[0]->j == 0)
         max = matrix.list_lines[0]->a;
-    }
 
     while(list != nullptr) {
         if (list->a > max) {
@@ -121,6 +117,7 @@ int getMaxElementFromLineNetMatrix(struct NetMatrix &matrix, int i) {
         }
         list = list->next_l;
     }
+
     if (max < 0) {
         list = matrix.list_lines[i];
         while(list != nullptr && list->j-j > 1) {
@@ -134,20 +131,20 @@ int getMaxElementFromLineNetMatrix(struct NetMatrix &matrix, int i) {
 }
 
 void deleteNetMatrix(struct NetMatrix &matrix) {
-int i;
-List *list, *list2;
+    int i;
+    List *list, *list2;
 
-for (i = 0; i < matrix.size; ++i) {
-list = matrix.list_lines[i];
-while (list != nullptr) {
-list2 = list;
-list = list->next_l;
-delete list2;
-}
-}
+    for (i = 0; i < matrix.size; ++i) {
+        list = matrix.list_lines[i];
+        while (list != nullptr) {
+            list2 = list;
+            list = list->next_l;
+            delete list2;
+        }
+    }
 
-delete [] matrix.list_lines;
-delete [] matrix.list_colums;
+    delete [] matrix.list_lines;
+    delete [] matrix.list_colums;
 }
 
 void printAnswer(int *b, int n) {

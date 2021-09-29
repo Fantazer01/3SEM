@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SparseMatrix.h"
+#include "../../LabTools/LabTools.h"
 
 void initializationNetMatrix(struct NetMatrix &matrix, int n) {
     int i;
@@ -25,9 +26,15 @@ void readNetMatrix(struct NetMatrix &matrix) {
 
     for (i = 0; i < matrix.size; ++i) {
         for (j = 0; j < matrix.size; ++j) {
-            std::cin >> a;
-            if (a != 0)
-                addNetMatrix(plistL[i], plistC[j], a, i, j);
+            try {
+                getNum(a);
+                if (a != 0)
+                    addNetMatrix(plistL[i], plistC[j], a, i, j);
+            } catch (char const* str) {
+                deleteNetMatrix(matrix);
+                throw "Matrix isn't entered";
+            }
+
         }
     }
 }

@@ -27,8 +27,5 @@ int main() {
         std::cout << "Sorry, EOF..." << std::endl;
     }
 
-
-    
-
     return 0;
 }

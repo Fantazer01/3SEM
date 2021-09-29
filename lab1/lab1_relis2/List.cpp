@@ -1,27 +1,7 @@
 #include <iostream>
-#include <ctime>
 #include "SparseMatrix.h"
 
-
-int main() {
-    int n;
-    NetMatrix matrix{0, nullptr, nullptr};
-    std::cin >> n;
-    int b[n];
-
-    clock_t start = clock();
-    initializationNetMatrix(matrix, n);
-    readNetMatrix(matrix);
-    //printNetMatrix(matrix);
-    computeAnswer(b, matrix);
-    deleteNetMatrix(matrix);
-    //printAnswer(b, n);
-    std::cout << clock() - start << std::endl;
-
-    return 0;
-}
-/*
-void initializationNetMatrix(NetMatrix &matrix, int n) {
+void initializationNetMatrix(struct NetMatrix &matrix, int n) {
     int i;
 
     matrix.size = n;
@@ -34,9 +14,9 @@ void initializationNetMatrix(NetMatrix &matrix, int n) {
     }
 }
 
-void readNetMatrix(NetMatrix &matrix) {
+void readNetMatrix(struct NetMatrix &matrix) {
     int i, j, a;
-    List **plistL[matrix.size], **plistC[matrix.size];
+    struct List **plistL[matrix.size], **plistC[matrix.size];
 
     for (i = 0; i < matrix.size; ++i) {
         plistL[i] = matrix.list_lines+i;
@@ -52,7 +32,7 @@ void readNetMatrix(NetMatrix &matrix) {
     }
 }
 
-void addNetMatrix(List **&plistL, List **&plistC, int a, int i, int j) {
+void addNetMatrix(struct List **&plistL, List **&plistC, int a, int i, int j) {
     List *list = new List;
 
     list->a = a;
@@ -68,9 +48,9 @@ void addNetMatrix(List **&plistL, List **&plistC, int a, int i, int j) {
 
 }
 
-void printNetMatrix(NetMatrix &matrix) {
+void printNetMatrix(struct NetMatrix &matrix) {
     int i, j, k;
-    List *list;
+    struct List *list;
 
     std::cout << "Original matrix:\n";
 
@@ -83,18 +63,18 @@ void printNetMatrix(NetMatrix &matrix) {
             j = list->j;
             std::cout << list->a << " ";
             list = list->next_l;
-      }
-      for (k = 1; k < matrix.size-j; ++k) {
-          std::cout << "0 ";
-      }
-      std::cout << std::endl;
+        }
+        for (k = 1; k < matrix.size-j; ++k) {
+            std::cout << "0 ";
+        }
+        std::cout << std::endl;
     }
 }
 
-void computeAnswer(int *b, NetMatrix &matrix) {
+void computeAnswer(int *b, struct NetMatrix &matrix) {
     int i, j, k, a;
 
-    List *plistL, *plistC;
+    struct List *plistL, *plistC;
 
 
     for (i = 0; i < matrix.size; ++i) {
@@ -116,7 +96,7 @@ void computeAnswer(int *b, NetMatrix &matrix) {
     }
 }
 
-int getMaxElementFromLineNetMatrix(NetMatrix &matrix, int i) {
+int getMaxElementFromLineNetMatrix(struct NetMatrix &matrix, int i) {
     List *list = matrix.list_lines[i];
 
     int max = 0;
@@ -146,21 +126,21 @@ int getMaxElementFromLineNetMatrix(NetMatrix &matrix, int i) {
     return maxIndex;
 }
 
-void deleteNetMatrix(NetMatrix &matrix) {
-    int i;
-    List *list, *list2;
+void deleteNetMatrix(struct NetMatrix &matrix) {
+int i;
+List *list, *list2;
 
-    for (i = 0; i < matrix.size; ++i) {
-        list = matrix.list_lines[i];
-        while (list != nullptr) {
-            list2 = list;
-            list = list->next_l;
-            delete list2;
-        }
-    }
+for (i = 0; i < matrix.size; ++i) {
+list = matrix.list_lines[i];
+while (list != nullptr) {
+list2 = list;
+list = list->next_l;
+delete list2;
+}
+}
 
-    delete [] matrix.list_lines;
-    delete [] matrix.list_colums;
+delete [] matrix.list_lines;
+delete [] matrix.list_colums;
 }
 
 void printAnswer(int *b, int n) {
@@ -171,4 +151,4 @@ void printAnswer(int *b, int n) {
     }
     std::cout << std::endl;
 }
-*/
+

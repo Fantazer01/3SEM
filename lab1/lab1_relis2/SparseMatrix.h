@@ -13,12 +13,12 @@ struct NetMatrix {
 };
 
 
-void initializationNetMatrix(NetMatrix &, int);
-void readNetMatrix(NetMatrix &);
-void addNetMatrix(List **&, List **&, int a, int i, int j);
-void printNetMatrix(NetMatrix &);
-void computeAnswer(int *b, NetMatrix &matrix);
-int getMaxElementFromLineNetMatrix(NetMatrix &matrix, int i);
-void deleteNetMatrix(NetMatrix &);
+void initializationNetMatrix(struct NetMatrix &, int);
+void readNetMatrix(struct NetMatrix &);
+void addNetMatrix(struct List **&, List **&, int a, int i, int j);
+void printNetMatrix(struct NetMatrix &);
+void computeAnswer(int *b, struct NetMatrix &matrix);
+int getMaxElementFromLineNetMatrix(struct NetMatrix &matrix, int i);
+void deleteNetMatrix(struct NetMatrix &);
 void printAnswer(int *b, int n);
 

@@ -10,21 +10,31 @@ void skip_to_int() {
         for (char ch; std::cin >> ch;) {
             if (std::isdigit(ch) || ch == '-') {
                 std::cin.unget();
-
                 return;
             }
         }
     }
+
     throw "Ввода нет";
 }
 
-int getNum(int &num) {
+void getNum(int &num) {
     while (true) {
         if (std::cin >> num)
-            break;
+            return;
         else
             skip_to_int();
     }
-    return 0;
 }
 
+void getNum(int &num, char* const str) {
+    while (true) {
+        if (std::cin >> num)
+            return;
+        else {
+            std::cout << str << std::endl;
+            skip_to_int();
+        }
+
+    }
+}

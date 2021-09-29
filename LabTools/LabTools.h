@@ -5,6 +5,7 @@
 #ifndef LABTOOLS_LABTOOLS_H
 #define LABTOOLS_LABTOOLS_H
 
-int getNum(int &);
+void getNum(int &);
+void getNum(int &, char* const);
 
 #endif //LABTOOLS_LABTOOLS_H

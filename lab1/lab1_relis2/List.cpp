@@ -27,7 +27,7 @@ void readNetMatrix(struct NetMatrix &matrix) {
     for (i = 0; i < matrix.size; ++i) {
         for (j = 0; j < matrix.size; ++j) {
             try {
-                getNum(a);
+                getNum(a, "No number");
                 if (a != 0)
                     addNetMatrix(plistL[i], plistC[j], a, i, j);
             } catch (char const* str) {

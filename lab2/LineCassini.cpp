@@ -10,7 +10,7 @@
 
 
 std::vector <double> LineCassini::distFromOrigin(double angle) const {
-    double p = 0, b;
+    double p, b;
     std::vector <double> v;
     b = pow(a, 4)-pow(c, 4)*pow(sin(2*angle), 2);
     if (b >= 0) {
@@ -41,8 +41,10 @@ char* LineCassini::formLineCassini() const {
 
 std::vector <double> LineCassini::radiusOfCurvature(double angle) const {
     std::vector <double> v = (*this).distFromOrigin(angle), v2;
-    for (int i; i < v.size(); ++i)
-        v2.push_back(pow(a, 2) * v[i]/(pow(v[i], 2) + pow(c, 2)*cos(2*angle)));
+    if (a == 0 && c == 0)
+        return v;
+    for (double i : v)
+        v2.push_back(pow(a, 2) * i/(pow(i, 2) + pow(c, 2)*cos(2*angle)));
     return v;
 }
 
@@ -83,22 +85,22 @@ char* LineCassini::equationOfLine() const {
     return s;
 }
 
-LineCassini& LineCassini::setA(double a) {
-    if (a < 0)
+LineCassini& LineCassini::setA(double A) {
+    if (A < 0)
         throw -1;
-    LineCassini::a = a;
+    a = A;
     return *this;
 }
 
-LineCassini& LineCassini::setC(double c) {
-    if (c < 0)
+LineCassini& LineCassini::setC(double C) {
+    if (C < 0)
         throw -1;
-    LineCassini::c = c;
+    c = C;
     return *this;
 }
 
-LineCassini& LineCassini::setAC(double a, double c) {
-    (*this).setA(a);
-    (*this).setC(c);
+LineCassini& LineCassini::setAC(double A, double C) {
+    (*this).setA(A);
+    (*this).setC(C);
     return *this;
 }

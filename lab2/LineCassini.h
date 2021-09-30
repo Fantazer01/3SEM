@@ -2,14 +2,22 @@
 // Created by oleg on 29.09.2021.
 //
 
+#include <vector>
+
 #ifndef LAB2_LINECASSINI_H
 #define LAB2_LINECASSINI_H
+
+struct Point {
+    double x;
+    double y;
+};
 
 
 class LineCassini {
 private:
     double a;
     double c;
+    int formLine() const;
 public:
     //constructors
     LineCassini():a(0), c(0) {}
@@ -20,13 +28,18 @@ public:
         LineCassini::c = c;
     }
     //selectors
-    double getA() const {return a;}
-    double getC() const {return c;}
-    double distFromOrigin(double angle);
+    [[nodiscard]] double getA() const {return a;}
+    [[nodiscard]] double getC() const {return c;}
+    [[nodiscard]] std::vector <double>  distFromOrigin(double angle) const;
+    [[nodiscard]] char* formLineCassini() const;
+    [[nodiscard]] double radiusOfCurvature() const;
+    [[nodiscard]] std::vector <Point> inflectionPointCoordinates() const;
+    [[nodiscard]] char* equationOfLine() const;
     //modifiers
     LineCassini& setA(double a);
     LineCassini& setC(double c);
     LineCassini& setAC(double a, double c);
+
 };
 
 

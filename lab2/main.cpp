@@ -3,9 +3,9 @@
 #include "Menu.h"
 
 int main() {
-    const char *msgs[] = {"Quit", "Get A", "Get C", "Get distanse from origin to a given point", "Set A", "Set C", "Set A&C", "Form the line", "Радиус кривизны", "вернуть координаты точек перегиба", "текстовое представление уравнения линии"};
+    const char *msgs[] = {"Quit", "Get A", "Get C", "Get distanse from origin to a given point", "Set A", "Set C", "Set A&C", "Form the line", "Radius of curvature", "Inflection point coordinates", "The equation of line"};
     const int NMsgs = sizeof(msgs) / sizeof(msgs[0]);
-    int (*fptr[NMsgs])(LineCassini &) = {nullptr, getA, getC, distFromOrigin, setA, setC, setAC, formLine};
+    int (*fptr[NMsgs])(LineCassini &) = {nullptr, getA, getC, distFromOrigin, setA, setC, setAC, formLine, radiusOfCurvature, inflectionPointCoordinates, equationOfLine};
     LineCassini line;
     int rc = 0;
 

@@ -22,4 +22,10 @@ int setAC(LineCassini &);
 
 int formLine(LineCassini &);
 
+int radiusOfCurvature(LineCassini &);
+
+int inflectionPointCoordinates(LineCassini &);
+
+int equationOfLine(LineCassini &);
+
 #endif //LAB2_MENU_H

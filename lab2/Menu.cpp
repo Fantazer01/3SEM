@@ -92,6 +92,19 @@ int formLine(LineCassini &line) {
 }
 
 int radiusOfCurvature(LineCassini &line) {
+    int i;
+    std::cout << "Enter number, angle:" << std::endl;
+    double d = 0;
+    std::cin >> d;
+    std::vector <double> v = line.radiusOfCurvature(d);
+    if (v.empty())
+        std::cout << "There are no points.";
+    else {
+        std::cout << "Radius to found points" << std::endl;
+        for (i = 0; i < v.size(); ++i)
+            std::cout << v[i] << " ";
+    }
+    std::cout << std::endl;
     return 1;
 }
 

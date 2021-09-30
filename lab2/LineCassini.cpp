@@ -39,9 +39,11 @@ char* LineCassini::formLineCassini() const {
     return s[type];
 }
 
-double LineCassini::radiusOfCurvature() const {
-
-    return 0;
+std::vector <double> LineCassini::radiusOfCurvature(double angle) const {
+    std::vector <double> v = (*this).distFromOrigin(angle), v2;
+    for (int i; i < v.size(); ++i)
+        v2.push_back(pow(a, 2) * v[i]/(pow(v[i], 2) + pow(c, 2)*cos(2*angle)));
+    return v;
 }
 
 std::vector <Point> LineCassini::inflectionPointCoordinates() const {

@@ -32,7 +32,7 @@ public:
     [[nodiscard]] double getC() const {return c;}
     [[nodiscard]] std::vector <double>  distFromOrigin(double angle) const;
     [[nodiscard]] char* formLineCassini() const;
-    [[nodiscard]] double radiusOfCurvature() const;
+    [[nodiscard]] std::vector <double> radiusOfCurvature(double angle) const;
     [[nodiscard]] std::vector <Point> inflectionPointCoordinates() const;
     [[nodiscard]] char* equationOfLine() const;
     //modifiers

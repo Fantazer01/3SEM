@@ -2,6 +2,7 @@
 #include "LineCassini.h"
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 TEST(LineCassiniTest, DefaultConstructor)
 {
@@ -42,12 +43,34 @@ TEST(LineCassiniTest, Setters)
 
 TEST(LineCassiniTest, Selectors)
 {
+    double angle = 0, a, c;
+    //лемниската Бернули
     LineCassini line(5, 5);
+    a = line.getA();
+    c = line.getC();
+
     //distFromOrigin
-    std::vector <double> v = line.distFromOrigin(0);
-    ASSERT_EQ(2, )
-    ASSERT_NEAR(7.07, v[0], 0.005);
+    //получаем две точки, одна на дуге, другая в центре лемнискаты
+    std::vector <double> v = line.distFromOrigin(angle);
+    ASSERT_EQ(2, v.size());
+    ASSERT_NEAR(sqrt(pow(c, 2)*cos(2*angle)+sqrt(pow(a, 4)-pow(c, 4)*pow(sin(2*angle), 2))), v[0], 0.005);
+    ASSERT_NEAR(sqrt(c*c*cos(2*angle)-sqrt(pow(a, 4)-pow(c, 4)*pow(sin(2*angle), 2))), v[1], 0.005);
+    //меняем угол
+    angle = 0.5;
+    v = line.distFromOrigin(angle);
+    ASSERT_EQ(2, v.size());
+    ASSERT_NEAR(sqrt(c*c*cos(2*angle)+sqrt(pow(a, 4)-pow(c, 4)*pow(sin(2*angle), 2))), v[0], 0.005);
     ASSERT_NEAR(0, v[1], 0.005);
+    //меняем угол, получаем лишь одну точку - в центре лемнискаты
+    angle = 0.9;
+    v = line.distFromOrigin(angle);
+    ASSERT_EQ(1, v.size());
+    ASSERT_NEAR(0, v[1], 0.005);
+    //форма два овала, ни одной точки луч не пересекает
+    line.setAC(4.4, 5);
+    angle = 0.9;
+    v = line.distFromOrigin(angle);
+    ASSERT_EQ(0, v.size());
 }
 
 int main(int argc, char* argv[])

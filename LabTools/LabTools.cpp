@@ -27,7 +27,28 @@ void getNum(int &num) {
     }
 }
 
+void getNum(double &num) {
+    while (true) {
+        if (std::cin >> num)
+            return;
+        else
+            skip_to_int();
+    }
+}
+
 void getNum(int &num, char* const str) {
+    while (true) {
+        if (std::cin >> num)
+            return;
+        else {
+            std::cout << str << std::endl;
+            skip_to_int();
+        }
+
+    }
+}
+
+void getNum(double &num, char* const str) {
     while (true) {
         if (std::cin >> num)
             return;

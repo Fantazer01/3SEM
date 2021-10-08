@@ -3,6 +3,7 @@
 //
 
 #include <vector>
+#include "gtest/gtest.h"
 
 #ifndef LAB2_LINECASSINI_H
 #define LAB2_LINECASSINI_H
@@ -17,7 +18,7 @@ class LineCassini {
 private:
     double a;
     double c;
-    int formLine() const;
+    [[nodiscard]] int formLine() const;
 public:
     //constructors
     LineCassini():a(0), c(0) {}

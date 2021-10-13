@@ -19,15 +19,18 @@ namespace lab3 {
         Data(int arg):a(arg) {*s='\0';}
         Data(char *s);
         Data(int arg, char *s);
+        std::istream &read(std::istream &);
+        std::ostream &print(std::ostream &output);
     };
 
     class Stack {
     private:
         static const int SZ = 100;
-        int top{};
-        struct Data array[SZ]{};
+        int top;
+        struct Data array[SZ];
     public:
         Stack():top(0){}
+        Stack(int num, Data *array_data);
         //Stack(Data data) {array[top] = data; ++top;}
         //Stack(int a, char *s);
         int size() const {return top;}

@@ -6,6 +6,8 @@
 
 namespace lab3 {
 
+    //data
+
     Data::Data(char *s) {
         a = 0;
         char *p = s;
@@ -22,11 +24,36 @@ namespace lab3 {
         *p = '\0';
     }
 
+    std::istream &Data::read(std::istream &input) {
+        //simple cod
+        input >> a >> s;
+        //hard cod
+        //soon it will be here
+        return input;
+    }
+
+    std::ostream &Data::print(std::ostream &output) {
+        output << a << " " << s << " ";
+        return output;
+    }
+
+    //stack
+
     struct Data Stack::pop() {
         if (top <= 0)
             throw "stack is empty";
         --top;
         return array[top];
+    }
+
+    Stack::Stack(int num, Data *array_data): top(0) {
+        if (num < 0)
+            throw "incorrect value of number";
+        if (num > SZ)
+            throw "stack size is not enough";
+        for (; top < num; ++top) {
+            array[top] = array_data[top];
+        }
     }
 
     Stack& Stack::push(struct Data data) {
@@ -38,19 +65,18 @@ namespace lab3 {
     }
 
     std::istream& Stack::read(std::istream &input) {
-        int a;
-        char s[SIZE_STR];
-        input >> a >> s;
-        (*this).push(a, s);
+        Data data;
+        data.read(input);
+        (*this).push(data);
         return input;
     }
 
     std::ostream& Stack::print(std::ostream &output) {
         for(int i = 0; i < top; ++i)
-            output << array[i].a << " " << array[i].s << " ";
+            array[i].print(output);
         return output;
     }
-
+/*
     std::ostream& Stack::printInt(std::ostream &output) {
         for(int i = 0; i < top; ++i)
             output << array[i].a << " ";
@@ -62,7 +88,7 @@ namespace lab3 {
             output << array[i].s << " ";
         return output;
     }
-
+*/
     /*
     Stack::Stack(int a, char *s) {
         array[top].a = a;

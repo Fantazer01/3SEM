@@ -4,10 +4,9 @@
 #include "Menu.h"
 
 int main() {
-    /*
-    const char *msgs[] = {"Quit", };
+    const char *msgs[] = {"Quit", "Add element to stack from input stream", "Get elements from stack to output stream"};
     const int NMsgs = sizeof(msgs) / sizeof(msgs[0]);
-    int (*fptr[NMsgs])(lab3::Stack &) = {nullptr};
+    int (*fptr[NMsgs])(lab3::Stack &) = {nullptr, addToStack, getFromStack};
     lab3::Stack stack;
     int rc = 0;
 
@@ -22,7 +21,7 @@ int main() {
         system("clear");
     }
     std::cout << "Game over" << std::endl;
-     */
+
     /*
     lab3::Data data{1, "oleg"}, data2;
     lab3::Stack stack;

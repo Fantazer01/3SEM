@@ -8,5 +8,7 @@
 
 int dialog(const char **, int );
 
+int addToStack(lab3::Stack &stack);
 
+int getFromStack(lab3::Stack &stack);
 #endif //LAB3_MENU_H

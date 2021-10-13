@@ -25,3 +25,13 @@ int dialog(const char **msgs, int NMsgs) {
     return a;
 }
 
+int addToStack(lab3::Stack &stack) {
+    stack.read(std::cin);
+    return 1;
+}
+
+int getFromStack(lab3::Stack &stack) {
+    stack.print(std::cout);
+    return 1;
+}
+

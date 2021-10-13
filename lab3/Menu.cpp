@@ -35,3 +35,23 @@ int getFromStack(lab3::Stack &stack) {
     return 1;
 }
 
+int Push(lab3::Stack &stack) {
+    int a;
+    char s[81];
+    getNum(a);
+    std::cin >> s;
+    lab3::Data data(a, s);
+
+    stack.push(data);
+
+    return 1;
+}
+
+int Pop(lab3::Stack &stack) {
+    lab3::Data data = stack.pop();
+
+    std::cout << data.a << " " << data.s << std::endl;
+
+    return 1;
+}
+

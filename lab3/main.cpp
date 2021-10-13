@@ -4,9 +4,9 @@
 #include "Menu.h"
 
 int main() {
-    const char *msgs[] = {"Quit", "Add element to stack from input stream", "Get elements from stack to output stream"};
+    const char *msgs[] = {"Quit", "Add element to stack from input stream", "Get elements from stack to output stream", "Push", "Pop"};
     const int NMsgs = sizeof(msgs) / sizeof(msgs[0]);
-    int (*fptr[NMsgs])(lab3::Stack &) = {nullptr, addToStack, getFromStack};
+    int (*fptr[NMsgs])(lab3::Stack &) = {nullptr, addToStack, getFromStack, Push, Pop};
     lab3::Stack stack;
     int rc = 0;
 

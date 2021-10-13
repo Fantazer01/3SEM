@@ -38,8 +38,10 @@ namespace lab3 {
         bool full() const {return top == SZ;}
         struct Data pop();
         Stack& push(struct Data data);
+        /*
         Stack& push(int a, char *s);
         Stack& push(int a);
+         */
 
         std::istream& read(std::istream &input);
         std::ostream& print(std::ostream &output);

@@ -79,9 +79,9 @@ char* LineCassini::equationOfLine() const {
     char *s = new char[80];
     s[0] = '\0';
     if (c == 0)
-        sprintf(s, "(x^2+y^2)^2=%0.2f^4", a);
+        sprintf(s, "(x^2+y^2)^2=%0.2f", pow(a, 4));
     else
-        sprintf(s, "(x^2+y^2)^2+2%0.2f^2*(x^2-y^2)=%0.2f^4-%0.2f^4", c, a, c);
+        sprintf(s, "(x^2+y^2)^2+%0.2f*(x^2-y^2)=%0.2f", 2*pow(c,2), pow(a, 4)-pow(c, 4));
     return s;
 }
 

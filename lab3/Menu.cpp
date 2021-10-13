@@ -38,7 +38,9 @@ int getFromStack(lab3::Stack &stack) {
 int Push(lab3::Stack &stack) {
     int a;
     char s[81];
+    std::cout << "Enter number" << std::endl;
     getNum(a);
+    std::cout << "Enter string" << std::endl;
     std::cin >> s;
     lab3::Data data(a, s);
 
@@ -50,6 +52,7 @@ int Push(lab3::Stack &stack) {
 int Pop(lab3::Stack &stack) {
     lab3::Data data = stack.pop();
 
+    std::cout << "Data element:" << std::endl;
     std::cout << data.a << " " << data.s << std::endl;
 
     return 1;

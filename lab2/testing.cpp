@@ -41,7 +41,7 @@ TEST(LineCassiniTest, Setters)
     ASSERT_ANY_THROW(line.setC(-0.23));
 }
 
-TEST(LineCassiniTest, Selectors)
+TEST(LineCassiniTest, Selectors_distFromOrigin)
 {
     double angle = 0, a, c;
     //лемниската Бернули
@@ -71,6 +71,45 @@ TEST(LineCassiniTest, Selectors)
     angle = 0.9;
     v = line.distFromOrigin(angle);
     ASSERT_EQ(0, v.size());
+}
+
+TEST(LineCassiniTest, Selectors_formLineCassini)
+{
+    LineCassini line(5, 5);
+    ASSERT_STREQ("lemniscate Bernoulli", line.formLineCassini());
+    line.setAC(4.4, 5);
+    ASSERT_STREQ("two oval", line.formLineCassini());
+    line.setAC(5, 4.7);
+    ASSERT_STREQ("concave oval", line.formLineCassini());
+    line.setAC(5, 3);
+    ASSERT_STREQ("oval", line.formLineCassini());
+}
+
+TEST(LineCassiniTest, Selectors_radiusOfCurvature)
+{
+    LineCassini line(5, 5);
+/*
+    std::vector <double> v = line.radiusOfCurvature(angle);
+    ASSERT_EQ(2, v.size());
+    ASSERT_NEAR(sqrt(c*c*cos(2*angle)+sqrt(pow(a, 4)-pow(c, 4)*pow(sin(2*angle), 2))), v[0], 0.005);
+*/
+}
+
+TEST(LineCassiniTest, Selectors_inflectionPointCoordinates)
+{
+
+}
+
+TEST(LineCassiniTest, Selectors_equationOfLine)
+{
+    LineCassini line(5, 5);
+    char s[100], *ans;
+    if (line.getC() == 0)
+        sprintf(s, "(x^2+y^2)^2=%0.2f", pow(line.getA(), 4));
+    else
+        sprintf(s, "(x^2+y^2)^2+%0.2f*(x^2-y^2)=%0.2f", 2*pow(line.getC(),2), pow(line.getA(), 4)-pow(line.getC(), 4));
+    ASSERT_STREQ(s, ans=line.equationOfLine());
+    delete[] ans;
 }
 
 int main(int argc, char* argv[])

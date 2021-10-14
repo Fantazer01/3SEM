@@ -39,13 +39,6 @@ namespace lab3 {
 
     //stack
 
-    struct Data Stack::pop() {
-        if (top <= 0)
-            throw "stack is empty";
-        --top;
-        return array[top];
-    }
-
     Stack::Stack(int num, Data *array_data): top(0) {
         if (num < 0)
             throw "incorrect value of number";
@@ -55,6 +48,22 @@ namespace lab3 {
             array[top] = array_data[top];
         }
     }
+
+    Conditions Stack::condition() const {
+        if (top == 0)
+            return CON_EMPTY;
+        else if (top == SZ)
+            return CON_FULL;
+        return CON_PARTIALLY;
+    }
+
+    struct Data Stack::pop() {
+        if (top <= 0)
+            throw "stack is empty";
+        --top;
+        return array[top];
+    }
+
 
     Stack& Stack::push(struct Data data) {
         if (top >= SZ)
@@ -76,53 +85,5 @@ namespace lab3 {
             array[i].print(output);
         return output;
     }
-/*
-    std::ostream& Stack::printInt(std::ostream &output) {
-        for(int i = 0; i < top; ++i)
-            output << array[i].a << " ";
-        return output;
-    }
-
-    std::ostream& Stack::printStr(std::ostream &output) {
-        for(int i = 0; i < top; ++i)
-            output << array[i].s << " ";
-        return output;
-    }
-*/
-    /*
-    Stack::Stack(int a, char *s) {
-        array[top].a = a;
-        char *p = array[top].s;
-        for (int i = 0; *s != '\0' && i != SIZE_STR-1; ++i, ++s, ++p)
-            *p = *s;
-        *p = '\0';
-        ++top;
-    }
-*/
-
-/*
-    Stack& Stack::push(int a, char *s) {
-        if (top >= SZ)
-            throw "stack is full";
-        if (s == nullptr)
-            throw "string is nullptr";
-        array[top].a = a;
-        char *p = array[top].s;
-        for (int i = 0; *s != '\0' && i != SIZE_STR-1; ++i, ++s, ++p)
-            *p = *s;
-        *p = '\0';
-        ++top;
-        return *this;
-    }
-
-    Stack& Stack::push(int a) {
-        if (top >= SZ)
-            throw "stack is full";
-        array[top].a = a;
-        *(array[top].s) = '\0';
-        ++top;
-        return *this;
-    }
-*/
 
 }

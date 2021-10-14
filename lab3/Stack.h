@@ -10,6 +10,12 @@
 namespace lab3 {
     #define SIZE_STR 81
 
+    enum Conditions {
+        CON_EMPTY,
+        CON_PARTIALLY,
+        CON_FULL,
+    };
+
     struct Data {
     public:
         int a;
@@ -30,25 +36,13 @@ namespace lab3 {
     public:
         Stack():top(0){}
         Stack(int num, Data *array_data);
-        //Stack(Data data) {array[top] = data; ++top;}
-        //Stack(int a, char *s);
         int size() const {return top;}
-        bool empty() const {return top == 0;}
-        bool full() const {return top == SZ;}
+        Conditions condition() const;
         struct Data pop();
         Stack& push(struct Data data);
-        /*
-        Stack& push(int a, char *s);
-        Stack& push(int a);
-         */
 
         std::istream& read(std::istream &input);
         std::ostream& print(std::ostream &output);
-        /*
-        std::ostream& printInt(std::ostream &output);
-        std::ostream& printStr(std::ostream &output);
-         */
-
     };
 
 

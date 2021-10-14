@@ -100,6 +100,8 @@ TEST(LineCassiniTest, Selectors_radiusOfCurvature)
 
 TEST(LineCassiniTest, Selectors_inflectionPointCoordinates)
 {
+    double p, fi;
+
     LineCassini line(5, 5);
     std::vector <Point> v = line.inflectionPointCoordinates();
     ASSERT_EQ(0, v.size());
@@ -113,7 +115,20 @@ TEST(LineCassiniTest, Selectors_inflectionPointCoordinates)
     line.setAC(5, 4.7);
     v = line.inflectionPointCoordinates();
     ASSERT_EQ(4, v.size());
-
+    p = sqrt(sqrt((pow(line.getA(), 4) - pow(line.getC(), 4)) / 3));
+    fi = acos(-sqrt((pow(line.getA()/line.getC(), 4) - 1)/3)) / 2;
+    //point 1
+    ASSERT_NEAR(-p*cos(-fi), v[0].x, 0.005);
+    ASSERT_NEAR(p*sin(-fi), v[0].y, 0.005);
+    //point 2
+    ASSERT_NEAR(-p*cos(fi), v[1].x, 0.005);
+    ASSERT_NEAR(p*sin(fi), v[1].y, 0.005);
+    //point 3
+    ASSERT_NEAR(p*cos(-fi), v[2].x, 0.005);
+    ASSERT_NEAR(p*sin(-fi), v[2].y, 0.005);
+    //point 4
+    ASSERT_NEAR(p*cos(fi), v[3].x, 0.005);
+    ASSERT_NEAR(p*sin(fi), v[3].y, 0.005);
     v.clear();
 
     line.setAC(5, 3);

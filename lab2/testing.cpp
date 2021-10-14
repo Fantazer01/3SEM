@@ -87,17 +87,39 @@ TEST(LineCassiniTest, Selectors_formLineCassini)
 
 TEST(LineCassiniTest, Selectors_radiusOfCurvature)
 {
-    LineCassini line(5, 5);
-/*
-    std::vector <double> v = line.radiusOfCurvature(angle);
-    ASSERT_EQ(2, v.size());
-    ASSERT_NEAR(sqrt(c*c*cos(2*angle)+sqrt(pow(a, 4)-pow(c, 4)*pow(sin(2*angle), 2))), v[0], 0.005);
-*/
+    double angle = 0;
+    LineCassini line(4.4, 5);
+    std::vector <double> v = line.distFromOrigin(angle), v2;
+    v2 = line.radiusOfCurvature(angle);
+
+    ASSERT_EQ(2, v2.size());
+    ASSERT_NEAR(pow(line.getA(), 2) * v[0]/(pow(v[0], 2) + pow(line.getC(), 2)*cos(2*angle)), v2[0], 0.005);
+    ASSERT_NEAR(pow(line.getA(), 2) * v[1]/(pow(v[1], 2) + pow(line.getC(), 2)*cos(2*angle)), v2[1], 0.005);
+
 }
 
 TEST(LineCassiniTest, Selectors_inflectionPointCoordinates)
 {
+    LineCassini line(5, 5);
+    std::vector <Point> v = line.inflectionPointCoordinates();
+    ASSERT_EQ(0, v.size());
+    v.clear();
 
+    line.setAC(4.4, 5);
+    v = line.inflectionPointCoordinates();
+    ASSERT_EQ(0, v.size());
+    v.clear();
+
+    line.setAC(5, 4.7);
+    v = line.inflectionPointCoordinates();
+    ASSERT_EQ(4, v.size());
+
+    v.clear();
+
+    line.setAC(5, 3);
+    v = line.inflectionPointCoordinates();
+    ASSERT_EQ(0, v.size());
+    v.clear();
 }
 
 TEST(LineCassiniTest, Selectors_equationOfLine)

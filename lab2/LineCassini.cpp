@@ -45,7 +45,7 @@ std::vector <double> LineCassini::radiusOfCurvature(double angle) const {
         return v;
     for (double i : v)
         v2.push_back(pow(a, 2) * i/(pow(i, 2) + pow(c, 2)*cos(2*angle)));
-    return v;
+    return v2;
 }
 
 std::vector <Point> LineCassini::inflectionPointCoordinates() const {

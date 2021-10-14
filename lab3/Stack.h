@@ -8,7 +8,6 @@
 #include <iostream>
 
 namespace lab3 {
-    #define SIZE_STACK 100
     #define SIZE_STR 81
 
     struct Data {
@@ -45,8 +44,10 @@ namespace lab3 {
 
         std::istream& read(std::istream &input);
         std::ostream& print(std::ostream &output);
+        /*
         std::ostream& printInt(std::ostream &output);
         std::ostream& printStr(std::ostream &output);
+         */
 
     };
 

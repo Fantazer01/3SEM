@@ -2,6 +2,14 @@
 // Created by oleg on 13.10.2021.
 //
 
+//потоки - готово
+//бинарный - готово
+//инкремент или дикремент - готово
+//инверсия
+//индексация
+//модифцир присваивание
+//() приведение типа space ship
+
 #include "Stack.h"
 
 namespace lab3 {
@@ -32,7 +40,7 @@ namespace lab3 {
         return input;
     }
 
-    std::ostream &Data::print(std::ostream &output) {
+    std::ostream &Data::print(std::ostream &output) const{
         output << a << " " << s << " ";
         return output;
     }
@@ -80,9 +88,47 @@ namespace lab3 {
         return input;
     }
 
-    std::ostream& Stack::print(std::ostream &output) {
+    std::ostream& Stack::print(std::ostream &output) const {
         for(int i = 0; i < top; ++i)
             array[i].print(output);
+        return output;
+    }
+
+    const Stack& Stack::operator +(Data data) {
+        if (top >= SZ)
+            throw "stack is full";
+        array[top] = data;
+        ++top;
+        return *this;
+    }
+
+    Stack& Stack::operator --() {
+        pop();
+        return *this;
+    }
+
+    const Stack Stack::operator --(int) {
+        Stack x(*this);
+        pop();
+        return x;
+    }
+//rvalue lvalue
+    Data Stack::operator [](int i) {
+        if (i < 0 || i >= top)
+            throw "incorrect index";
+        return array[i];
+    }
+
+    std::istream& operator >>(std::istream &input, Stack &stack) {
+        Data data;
+        data.read(input);
+        stack.push(data);
+        return input;
+    }
+
+    std::ostream& operator <<(std::ostream &output, const Stack &stack) {
+        for(int i = 0; i < stack.top; ++i)
+            stack.array[i].print(output);
         return output;
     }
 

@@ -25,7 +25,7 @@ namespace lab3 {
         Data(char *s);
         Data(int arg, char *s);
         std::istream &read(std::istream &);
-        std::ostream &print(std::ostream &output);
+        std::ostream &print(std::ostream &output) const;
     };
 
     class Stack {
@@ -39,10 +39,21 @@ namespace lab3 {
         int size() const {return top;}
         Conditions condition() const;
         struct Data pop();
-        Stack& push(struct Data data);
+        Stack& push(Data data);
+
+        const Stack& operator +(Data data);
+        Stack& operator +=(Data data);
+        Stack& operator +=(const Stack &stack);
+        Stack& operator --();
+        const Stack operator --(int);
+        Data operator [](int i);
 
         std::istream& read(std::istream &input);
-        std::ostream& print(std::ostream &output);
+        std::ostream& print(std::ostream &output) const;
+
+        friend std::istream& operator >>(std::istream &, Stack &);
+        friend std::ostream& operator <<(std::ostream &, const Stack &);
+
     };
 
 

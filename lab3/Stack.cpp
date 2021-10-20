@@ -2,13 +2,13 @@
 // Created by oleg on 13.10.2021.
 //
 
-//потоки - готово
-//бинарный - готово
-//инкремент или дикремент - готово
-//инверсия
-//индексация
-//модифцир присваивание
-//() приведение типа space ship
+//потоки - готово (<< >>)
+//бинарный - готово (+)
+//инкремент или дикремент - готово (--() ()--)
+//инверсия - готово (~)
+//индексация - готово ([])
+//модифицированное присваивание - готово (+=)
+//() приведение типа space ship - готово (())
 
 #include "Stack.h"
 
@@ -72,7 +72,6 @@ namespace lab3 {
         return array[top];
     }
 
-
     Stack& Stack::push(struct Data data) {
         if (top >= SZ)
             throw "stack is full";
@@ -94,11 +93,34 @@ namespace lab3 {
         return output;
     }
 
-    const Stack& Stack::operator +(Data data) {
+    const Stack& Stack::operator +(Stack stack) const{
+        if (top+stack.top >= SZ)
+            throw "there is not enough space on the stack";
+
+        Stack stack2 = *this;
+
+        for (int i = 0; i < stack.top; ++i, ++(stack2.top))
+            stack2.array[stack2.top] = stack.array[i];
+
+        return stack2;
+    }
+
+    const Stack& Stack::operator +=(Data data) {
         if (top >= SZ)
             throw "stack is full";
         array[top] = data;
         ++top;
+        return *this;
+    }
+
+    const Stack& Stack::operator +=(Stack stack) {
+        if (top+stack.top >= SZ)
+            throw "there is not enough space on the stack";
+
+        int i;
+        for (i = 0; i < stack.top; ++i, ++top)
+            array[top] = stack.array[i];
+
         return *this;
     }
 
@@ -112,11 +134,27 @@ namespace lab3 {
         pop();
         return x;
     }
+
+    const Stack Stack::operator ~() const {
+        Stack stack2 = *this;
+        int i, j = top - 1;
+        for (i = 0; i < j; ++i, --j)
+            swap(stack2.array[i], stack2.array[j]);
+
+        return stack2;
+    }
 //rvalue lvalue
     Data Stack::operator [](int i) {
         if (i < 0 || i >= top)
             throw "incorrect index";
         return array[i];
+    }
+
+    Stack& operator ()(Data data) {
+        if (top >= SZ)
+            throw "stack is full";
+        array[top] = data;
+        ++top;
     }
 
     std::istream& operator >>(std::istream &input, Stack &stack) {

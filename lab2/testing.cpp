@@ -41,7 +41,7 @@ TEST(LineCassiniTest, Setters)
     ASSERT_ANY_THROW(line.setC(-0.23));
 }
 
-TEST(LineCassiniTest, Selectors_distFromOrigin)
+TEST(LineCassiniTest, Selectors)
 {
     double angle = 0, a, c;
     //лемниската Бернули

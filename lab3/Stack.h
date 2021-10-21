@@ -34,10 +34,10 @@ namespace lab3 {
         int top;
         struct Data array[SZ];
 
-        void swap(Data *val1, Data *val2) {
-            Data data_temp = *val1;
-            *val = *val2;
-            *val2 = data_temp;
+        void Swap(Data &val1, Data &val2) {
+            Data data_temp = val1;
+            val1 = val2;
+            val2 = data_temp;
         }
 
     public:
@@ -48,13 +48,12 @@ namespace lab3 {
         struct Data pop();
         Stack& push(Data data);
 
-
-        const Stack& operator +(const Stack &stack) const;
-        const Stack& operator +=(Data data);
-        const Stack& operator +=(const Stack &stack);
+        const Stack operator +(const Stack &stack) const;
+        //const Stack operator +=(Data data);
+        Stack& operator +=(const Stack &stack);
         Stack& operator --();
         const Stack operator --(int);
-        const Stack operator ~() const;
+        const Stack operator ~();
         Data operator [](int i);
         Stack& operator ()(Data data);
 

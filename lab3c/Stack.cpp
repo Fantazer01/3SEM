@@ -189,7 +189,7 @@ namespace lab3c {
     }
 
 //rvalue lvalue
-    Data Stack::operator [](int i) const {
+    Data& Stack::operator [](int i) const {
         if (i < 0 || i >= top)
             throw "incorrect index";
         return array[i];

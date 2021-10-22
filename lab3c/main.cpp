@@ -12,9 +12,16 @@ int main() {
     Data data[2];
     data[0].a = 1;
     data[1].a = 2;
+
     Stack stack(2, data);
     Stack stack2 = PUSH(stack);
-    std:: cout << stack2--;
+
+    stack2[1] = Data(4);
+    std:: cout << stack2 << std::endl;
+
+    Stack stack3 = stack = stack2;
+
+    std:: cout << stack << std::endl << stack2 << std::endl << stack3 << std::endl;
 
     return 0;
 }

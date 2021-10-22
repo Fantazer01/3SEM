@@ -60,7 +60,7 @@ namespace lab3c {
         Stack& operator --();
         const Stack operator --(int);
         Stack operator ~();
-        Data operator [](int i) const;
+        Data& operator [](int i) const;
         Stack& operator ()(Data data);
 
         std::istream& read(std::istream &input);

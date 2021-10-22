@@ -21,7 +21,11 @@ int main() {
 
     Stack stack3 = stack = stack2;
 
-    std:: cout << stack << std::endl << stack2 << std::endl << stack3 << std::endl;
+    const Stack stack4(2, data);
+
+    std::cout << stack << std::endl << stack2 << std::endl << stack3 << std::endl;
+
+    std::cout << stack4 << std::endl;
 
     return 0;
 }

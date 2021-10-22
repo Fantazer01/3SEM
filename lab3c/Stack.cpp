@@ -53,15 +53,16 @@ namespace lab3c {
     }
 
     Stack::Stack(const Stack &stack):SZ(stack.SZ), top(stack.top) {
+        std::cout << "copy\n";
         array = new Data[SZ];
         for (int i = 0; i < top; ++i)
             array[i] = stack.array[i];
     }
 
     Stack::Stack(Stack && stack) noexcept:SZ(stack.SZ), top(stack.top), array(stack.array) {
+        std::cout << "move\n";
         stack.array = nullptr;
-        stack.SZ = 0;
-        stack.top = 0;
+
     }
 
     Conditions Stack::condition() const {

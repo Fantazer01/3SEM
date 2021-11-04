@@ -10,6 +10,15 @@
 namespace lab3d {
 
     void introduction();
+    int dialog();
+
+    //menu functions
+    void AddContact(Lab3C::printedCircuitBoard &);
+    void EstablishConnect(Lab3C::printedCircuitBoard &);
+    void RemoveContact(Lab3C::printedCircuitBoard &);
+    void GroupOfContacts(Lab3C::printedCircuitBoard &);
+    void LengthOfTrack(Lab3C::printedCircuitBoard &);
+    void OutputPCB(Lab3C::printedCircuitBoard &);
 
 
 }

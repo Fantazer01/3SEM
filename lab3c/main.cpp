@@ -14,8 +14,10 @@ int main() {
     data[1].a = 2;
 
     Stack stack(2, data);
+    std::cout << "1\n";
     Stack stack2 = PUSH(stack);
 
+    std::cout << "2\n";
     stack2[1] = Data(4);
     std:: cout << stack2 << std::endl;
 

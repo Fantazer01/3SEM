@@ -104,15 +104,7 @@ namespace lab3 {
 
         return stack2;
     }
-/*
-    const Stack Stack::operator +=(Data data) {
-        if (top >= SZ)
-            throw "stack is full";
-        array[top] = data;
-        ++top;
-        return *this;
-    }
-*/
+
     Stack& Stack::operator +=(const Stack &stack) {
         if (top+stack.top >= SZ)
             throw "there is not enough space on the stack";

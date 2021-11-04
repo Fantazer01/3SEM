@@ -49,7 +49,7 @@ namespace lab3 {
         Stack& push(Data data);
 
         const Stack operator +(const Stack &stack) const;
-        //const Stack operator +=(Data data);
+
         Stack& operator +=(const Stack &stack);
         Stack& operator --();
         const Stack operator --(int);

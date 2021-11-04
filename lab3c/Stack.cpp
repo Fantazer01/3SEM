@@ -42,7 +42,7 @@ namespace lab3c {
     //stack
 
     Stack::Stack(int num, Data *array_data): SZ(0), top(0), array(nullptr) {
-        if (num < 0)
+        if (num <= 0)
             throw "incorrect value of number";
 
         SZ = num;
@@ -60,7 +60,7 @@ namespace lab3c {
 
     Stack::Stack(Stack && stack) noexcept:SZ(stack.SZ), top(stack.top), array(stack.array) {
         stack.array = nullptr;
-
+        std::cout << "move\n";
     }
 
     Conditions Stack::condition() const {

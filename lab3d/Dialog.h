@@ -5,7 +5,7 @@
 #ifndef LAB3D_DIALOG_H
 #define LAB3D_DIALOG_H
 
-//#include ""
+#include "lib/Printed_Circuit_Board.h"
 
 namespace lab3d {
 

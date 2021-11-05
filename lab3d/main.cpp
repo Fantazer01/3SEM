@@ -29,16 +29,13 @@ int main() {
                     EstablishConnect(_arduino);
                     break;
                 case 3:
-                    RemoveContact(_arduino);
+                    OutputPCB(_arduino);
                     break;
                 case 4:
                     GroupOfContacts(_arduino);
                     break;
                 case 5:
                     LengthOfTrack(_arduino);
-                    break;
-                case 6:
-                    OutputPCB(_arduino);
                     break;
             }
             std::cin.get();

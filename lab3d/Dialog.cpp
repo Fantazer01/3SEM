@@ -41,10 +41,9 @@ namespace lab3d {
                 {
                         "1. Добавить контакт",
                         "2. Установить связь между контактами",
-                        "3. Удалить контакт",
+                        "3. Вывести результат на экран",
                         "4. Выделить группу контактов заданного типа",
                         "5. Оценить длину трассы между контактами",
-                        "6. Вывести результат на экран",
                         "0. Выход"
                 };
 
@@ -112,23 +111,47 @@ namespace lab3d {
                       << "Action canceled" << std::endl;
         }
     }
-
+/*
     void RemoveContact(Lab3C::printedCircuitBoard &_arduino) {
+        int num1, number;
+        number = _arduino.getCurrentNumber();
+
+        std::cout << "Enter index of contact, цршср\n";
+
+        std::cout << "Enter the number of index: ";
+        getNum(num1);
+        if (num1 >= number || num1 < 0) {std::cout << "Не корректное значение" << std::endl;return;}
+
         std::cout << "3. что-то делаю\n";
     }
-
+*/
     void GroupOfContacts(Lab3C::printedCircuitBoard &_arduino) {
-        std::cout << "4. что-то делаю\n";
+        int t;
+
+        std::cout << "Enter 0(input) or 1(output) type of contacts: ";
+        getNum(t);
+        std::cout << _arduino.groupOfContacts(t);
     }
 
     void LengthOfTrack(Lab3C::printedCircuitBoard &_arduino) {
+        int num1, num2, number;
+        number = _arduino.getCurrentNumber();
+
+        std::cout << "Enter two indexes of contacts, one of they should be input, another of they should be output and be connection with the first\n";
+
+        std::cout << "Enter the first index: ";
+        getNum(num1);
+        if (num1 >= number || num1 < 0) {std::cout << "Не корректное значение" << std::endl;return;}
+
+        std::cout << "Enter the second index: ";
+        getNum(num2);
+        if (num2 >= number || num2 < 0) {std::cout << "Не корректное значение! Не существует такого элемента" << std::endl;return;}
+        if (num1 == num2) {std::cout << "Не корректное значение! Индексы одинаковые" << std::endl;}
         std::cout << "5. что-то делаю\n";
     }
 
     void OutputPCB(Lab3C::printedCircuitBoard &_arduino) {
-
         std::cout << _arduino;
-
     }
 
 }

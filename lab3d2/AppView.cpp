@@ -3,6 +3,7 @@
 //
 
 #include "AppView.h"
+#include <iostream>
 
 sf::Uint32 styleParameter() {
     return sf::Style::Titlebar+sf::Style::Close;
@@ -34,9 +35,29 @@ void initializationGObjects(sf::RenderWindow &window, std::vector<sf::CircleShap
     for (sf::RectangleShape &rectangle : rectangles) {
         x += m;
         rectangle.setSize(sf::Vector2f(weight,height));
+        rectangle.setFillColor(sf::Color(71, 71, 204));
+        rectangle.setOutlineThickness(7);
+        rectangle.setOutlineColor(sf::Color(0,0,0,0));
         rectangle.move(x, y);
         x += m + weight;
     }
+}
+
+sf::Vector2i normalizationPositionMouse(sf::RenderWindow &window) {
+    sf::Vector2i positionOfMouse = sf::Mouse::getPosition();
+    positionOfMouse.x -= window.getPosition().x;
+    positionOfMouse.y -= window.getPosition().y + 30;
+    return positionOfMouse;
+}
+
+bool pointBelongToRectangle(sf::Vector2i &posPoint, sf::RectangleShape &rect) {
+    sf::Vector2i posRect = sf::Vector2i(rect.getPosition());
+    sf::Vector2i sizeRest = sf::Vector2i(rect.getSize());
+    bool result;
+
+    result = posRect.x <= posPoint.x && posRect.x+sizeRest.x >= posPoint.x;
+    result &= posRect.y <= posPoint.y && posRect.y+sizeRest.y >= posPoint.y;
+    return result;
 }
 
 void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<sf::RectangleShape> &rectangles) {
@@ -49,6 +70,17 @@ void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circle
         // Пользователь нажал на «крестик» и хочет закрыть окно?
         if (event.type == Event::Closed)
             window.close(); // тогда закрываем его
+
+        if (event.type == Event::MouseButtonPressed) {
+            Vector2i positionOfMouse = normalizationPositionMouse(window);
+            for (RectangleShape &rectangle : rectangles) {
+                if (pointBelongToRectangle(positionOfMouse, rectangle))
+                    rectangle.setOutlineColor(sf::Color(255, 54, 101, 100));
+            }
+        } else {
+            for (RectangleShape &rectangle : rectangles)
+                rectangle.setOutlineColor(sf::Color(0,0,0, 0));
+        }
     }
     // Установка цвета фона
     window.clear(Color(181, 181, 181, 0));
@@ -60,10 +92,13 @@ void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circle
     }
 
     for (sf::RectangleShape &rectangle : rectangles) {
-        rectangle.setFillColor(Color(71, 71, 204));
         window.draw(rectangle);
     }
 
     // Отрисовка окна
     window.display();
+}
+
+namespace sf {
+
 }

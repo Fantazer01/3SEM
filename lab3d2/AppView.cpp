@@ -9,7 +9,7 @@ sf::Uint32 styleParameter() {
     return sf::Style::Titlebar+sf::Style::Close;
 }
 
-void initializationGObjects(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<sf::RectangleShape> &rectangles) {
+void initializationGObjects(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles) {
     window.setPosition(sf::Vector2<int>(400, 220));
 
     double radius = 25.f;
@@ -32,13 +32,13 @@ void initializationGObjects(sf::RenderWindow &window, std::vector<sf::CircleShap
     y = 220;
     m = (window.getSize().x/rectangles.size() - weight)/2;
 
-    for (sf::RectangleShape &rectangle : rectangles) {
+    for (std::pair<sf::RectangleShape,int> &rectangle : rectangles) {
         x += m;
-        rectangle.setSize(sf::Vector2f(weight,height));
-        rectangle.setFillColor(sf::Color(71, 71, 204));
-        rectangle.setOutlineThickness(7);
-        rectangle.setOutlineColor(sf::Color(0,0,0,0));
-        rectangle.move(x, y);
+        rectangle.first.setSize(sf::Vector2f(weight,height));
+        rectangle.first.setFillColor(sf::Color(71, 71, 204));
+        rectangle.first.setOutlineThickness(7);
+        rectangle.first.setOutlineColor(sf::Color(0,0,0,0));
+        rectangle.first.move(x, y);
         x += m + weight;
     }
 }
@@ -60,7 +60,7 @@ bool pointBelongToRectangle(sf::Vector2i &posPoint, sf::RectangleShape &rect) {
     return result;
 }
 
-void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<sf::RectangleShape> &rectangles) {
+void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles) {
     using namespace sf;
     // Обрабатываем очередь событий в цикле
     int i = 0;
@@ -73,13 +73,15 @@ void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circle
 
         if (event.type == Event::MouseButtonPressed) {
             Vector2i positionOfMouse = normalizationPositionMouse(window);
-            for (RectangleShape &rectangle : rectangles) {
-                if (pointBelongToRectangle(positionOfMouse, rectangle))
-                    rectangle.setOutlineColor(sf::Color(255, 54, 101, 100));
+            for (std::pair<RectangleShape, int> &rectangle : rectangles) {
+                if (pointBelongToRectangle(positionOfMouse, rectangle.first)) {
+                    rectangle.first.setOutlineColor(sf::Color(255, 54, 101, 100));
+                    break;
+                }
             }
         } else {
-            for (RectangleShape &rectangle : rectangles)
-                rectangle.setOutlineColor(sf::Color(0,0,0, 0));
+            for (std::pair<RectangleShape, int> &rectangle : rectangles)
+                rectangle.first.setOutlineColor(sf::Color(0,0,0, 0));
         }
     }
     // Установка цвета фона
@@ -91,8 +93,8 @@ void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circle
         window.draw(circle);
     }
 
-    for (sf::RectangleShape &rectangle : rectangles) {
-        window.draw(rectangle);
+    for (std::pair<sf::RectangleShape, int> &rectangle : rectangles) {
+        window.draw(rectangle.first);
     }
 
     // Отрисовка окна

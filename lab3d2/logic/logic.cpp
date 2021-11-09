@@ -35,5 +35,15 @@ int getOutput(Lab3C::printedCircuitBoard &_arduino) {
     return counter;
 }
 
+void initializationPairShape(Lab3C::printedCircuitBoard &_arduino, std::vector<std::pair<sf::RectangleShape, int>> &rectangles) {
+    short i, j = 0;
+    short n = _arduino.getCurrentNumber();
+    for (i = 0; i < n; ++i) {
+        if (_arduino[i].type == Lab3C::out)
+            rectangles[j++].second = i;
+
+    }
+}
+
 
 

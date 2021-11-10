@@ -2,5 +2,7 @@
 
 sf::Uint32 styleParameter();
 
-void initializationGObjects(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles);
-void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles);
+using namespace sf;
+
+void initializationGObjects(RenderWindow &window, std::vector<std::pair<CircleShape, int>> &circles, std::vector<std::pair<RectangleShape, int>> &rectangles);
+void processEvent(RenderWindow &window, std::vector<std::pair<CircleShape, int>> &circles, std::vector<std::pair<RectangleShape, int>> &rectangles);

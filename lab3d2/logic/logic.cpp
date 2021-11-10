@@ -1,6 +1,7 @@
 //
 // Created by oleg on 05.11.2021.
 //
+
 #include "logic.h"
 
 void FillPCB(Lab3C::printedCircuitBoard &arduino, int input, int output) {
@@ -35,13 +36,14 @@ int getOutput(Lab3C::printedCircuitBoard &_arduino) {
     return counter;
 }
 
-void initializationPairShape(Lab3C::printedCircuitBoard &_arduino, std::vector<std::pair<sf::RectangleShape, int>> &rectangles) {
-    short i, j = 0;
+void initializationPairShape(Lab3C::printedCircuitBoard &_arduino, std::vector<std::pair<sf::RectangleShape, int>> &rectangles, std::vector<std::pair<sf::CircleShape, int>> circles) {
+    short i, j = 0, k = 0;
     short n = _arduino.getCurrentNumber();
     for (i = 0; i < n; ++i) {
         if (_arduino[i].type == Lab3C::out)
             rectangles[j++].second = i;
-
+        else
+            circles[k++].second = i;
     }
 }
 

@@ -5,23 +5,23 @@
 #include "AppView.h"
 #include <iostream>
 
-sf::Uint32 styleParameter() {
-    return sf::Style::Titlebar+sf::Style::Close;
+Uint32 styleParameter() {
+    return Style::Titlebar+Style::Close;
 }
 
-void initializationGObjects(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles) {
+void initializationGObjects(RenderWindow &window, std::vector<std::pair<CircleShape, int>> &circles, std::vector<std::pair<RectangleShape, int>> &rectangles) {
     window.setPosition(sf::Vector2<int>(400, 220));
 
     double radius = 25.f;
     double thickness = 10.f;
-    int x = 0, y = 35, m = (window.getSize().x/circles.size() - 2*(radius+thickness))/2;
+    int x = 0, y = 35, m = static_cast<int>(window.getSize().x/circles.size() - 2*(radius+thickness))/2;
 
-    for (sf::CircleShape &circle : circles) {
+    for (std::pair<CircleShape, int> &circle : circles) {
         x += m;
-        circle.setRadius(radius);
-        circle.setOutlineThickness(thickness);
-        circle.setOutlineColor(sf::Color(130, 51, 51));
-        circle.move(x, y);
+        circle.first.setRadius(radius);
+        circle.first.setOutlineThickness(thickness);
+        circle.first.setOutlineColor(sf::Color(130, 51, 51));
+        circle.first.move(x, y);
 
         x += m + 2*(radius+thickness);
     }
@@ -30,9 +30,9 @@ void initializationGObjects(sf::RenderWindow &window, std::vector<sf::CircleShap
     double height = 40.f;
     x = 0;
     y = 220;
-    m = (window.getSize().x/rectangles.size() - weight)/2;
+    m = static_cast<int>(window.getSize().x/rectangles.size() - weight)/2;
 
-    for (std::pair<sf::RectangleShape,int> &rectangle : rectangles) {
+    for (std::pair<RectangleShape,int> &rectangle : rectangles) {
         x += m;
         rectangle.first.setSize(sf::Vector2f(weight,height));
         rectangle.first.setFillColor(sf::Color(71, 71, 204));
@@ -60,7 +60,7 @@ bool pointBelongToRectangle(sf::Vector2i &posPoint, sf::RectangleShape &rect) {
     return result;
 }
 
-void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles) {
+void processEvent(sf::RenderWindow &window, std::vector<std::pair<CircleShape, int>> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles) {
     using namespace sf;
     // Обрабатываем очередь событий в цикле
     int i = 0;
@@ -88,9 +88,9 @@ void processEvent(sf::RenderWindow &window, std::vector<sf::CircleShape> &circle
     window.clear(Color(181, 181, 181, 0));
 
     // Закрашиваем наш круг
-    for (CircleShape &circle : circles) {
-        circle.setFillColor(Color(239, 169, 31));
-        window.draw(circle);
+    for (std::pair<CircleShape, int> &circle : circles) {
+        circle.first.setFillColor(Color(239, 169, 31));
+        window.draw(circle.first);
     }
 
     for (std::pair<sf::RectangleShape, int> &rectangle : rectangles) {

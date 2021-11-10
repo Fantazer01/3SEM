@@ -12,6 +12,7 @@
 
 void FillPCB(Lab3C::printedCircuitBoard &arduino, int input, int output);
 void initializationPCB(Lab3C::printedCircuitBoard &_arduino);
+void setConnectPCB(Lab3C::printedCircuitBoard &_arduino);
 int getInput(Lab3C::printedCircuitBoard &_arduino);
 int getOutput(Lab3C::printedCircuitBoard &_arduino);
 

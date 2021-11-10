@@ -5,6 +5,34 @@
 #include "AppView.h"
 #include <iostream>
 
+void introduction() {
+    std::cout << "                  $$$$\n"
+                 "                 $$$$$$$\n"
+                 "                 $$$$$$$$    $_$_$\n"
+                 "                  $$$$$$$   $$$$$$\n"
+                 "                   $$$$$     $$$\n"
+                 "                     $$$$$$$$$$\n"
+                 "           $___$_$    $$$$$$$\n"
+                 "            $$$$$$   $$$$$$$\n"
+                 "             $$$ $$$$$$$$$$$$\n"
+                 "                      $$$$$$$$\n"
+                 "                      $$$$$$$$\n"
+                 "                       $$$$$$$$$$$$\n"
+                 "                    $$$$$$$$$$   $$$\n"
+                 "                    $$$$  $$$$$   $$$$\n"
+                 "                    $$$    $$$$$  $ $ $\n"
+                 "                   $ $ $   $$$$$\n"
+                 "                            $$$$\n"
+                 "                   $$$$$    $$$\n"
+                 "                  $$   $$   $$$\n"
+                 "                 $$        $$$\n"
+                 "                  $$$    $$$\n"
+                 "                     $$$$\n";
+    std::cout << "\n                    GEEK_ON\n\n\n"
+                 "                   Click ENTER\n";
+    std::cin.get();
+}
+
 Uint32 styleParameter() {
     return Style::Titlebar+Style::Close;
 }
@@ -89,7 +117,7 @@ void processEvent(sf::RenderWindow &window, std::vector<std::pair<CircleShape, i
 
     // Закрашиваем наш круг
     for (std::pair<CircleShape, int> &circle : circles) {
-        circle.first.setFillColor(Color(239, 169, 31));
+        //circle.first.setFillColor(Color(239, 169, 31));
         window.draw(circle.first);
     }
 

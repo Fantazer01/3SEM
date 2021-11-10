@@ -6,7 +6,9 @@
 #include <iostream>
 
 void introduction() {
-    std::cout << "                  $$$$\n"
+    system("clear");
+    std::cout << "\n"
+              << "                  $$$$\n"
                  "                 $$$$$$$\n"
                  "                 $$$$$$$$    $_$_$\n"
                  "                  $$$$$$$   $$$$$$\n"
@@ -88,7 +90,18 @@ bool pointBelongToRectangle(sf::Vector2i &posPoint, sf::RectangleShape &rect) {
     return result;
 }
 
-void processEvent(sf::RenderWindow &window, std::vector<std::pair<CircleShape, int>> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles) {
+void action(std::vector<std::pair<CircleShape, int>> &circles, short index) {
+    if (index != -1) {
+        for (std::pair<CircleShape, int> &circle: circles) {
+            if (circle.second == index) {
+                circle.first.setFillColor(Color(239, 169, 31));
+                break;
+            }
+        }
+    }
+}
+
+void processEvent(RenderWindow &window, std::vector<std::pair<CircleShape, int>> &circles, std::vector<std::pair<sf::RectangleShape, int>> &rectangles, Lab3C::printedCircuitBoard &_arduino) {
     using namespace sf;
     // Обрабатываем очередь событий в цикле
     int i = 0;
@@ -104,12 +117,15 @@ void processEvent(sf::RenderWindow &window, std::vector<std::pair<CircleShape, i
             for (std::pair<RectangleShape, int> &rectangle : rectangles) {
                 if (pointBelongToRectangle(positionOfMouse, rectangle.first)) {
                     rectangle.first.setOutlineColor(sf::Color(255, 54, 101, 100));
+                    action(circles, _arduino[rectangle.second].numberOfContact);
                     break;
                 }
             }
         } else {
             for (std::pair<RectangleShape, int> &rectangle : rectangles)
                 rectangle.first.setOutlineColor(sf::Color(0,0,0, 0));
+            for (std::pair<CircleShape, int> &circle : circles)
+                circle.first.setFillColor(Color(255, 255, 255));
         }
     }
     // Установка цвета фона

@@ -16,6 +16,6 @@ void setConnectPCB(Lab3C::printedCircuitBoard &_arduino);
 int getInput(Lab3C::printedCircuitBoard &_arduino);
 int getOutput(Lab3C::printedCircuitBoard &_arduino);
 
-void initializationPairShape(Lab3C::printedCircuitBoard &_arduino, std::vector<std::pair<sf::RectangleShape, int>> &rectangles, std::vector<std::pair<sf::CircleShape, int>> circles);
+void initializationPairShape(Lab3C::printedCircuitBoard &_arduino, std::vector<std::pair<sf::RectangleShape, int>> &rectangles, std::vector<std::pair<sf::CircleShape, int>> &circles);
 
 #endif //LAB3D2_LOGIC_H

@@ -79,7 +79,7 @@ int getOutput(Lab3C::printedCircuitBoard &_arduino) {
     return counter;
 }
 
-void initializationPairShape(Lab3C::printedCircuitBoard &_arduino, std::vector<std::pair<sf::RectangleShape, int>> &rectangles, std::vector<std::pair<sf::CircleShape, int>> circles) {
+void initializationPairShape(Lab3C::printedCircuitBoard &_arduino, std::vector<std::pair<sf::RectangleShape, int>> &rectangles, std::vector<std::pair<sf::CircleShape, int>> &circles) {
     short i, j = 0, k = 0;
     short n = _arduino.getCurrentNumber();
     for (i = 0; i < n; ++i) {

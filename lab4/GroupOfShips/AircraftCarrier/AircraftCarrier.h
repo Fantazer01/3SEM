@@ -14,8 +14,12 @@ namespace lab4 {
     private:
         std::vector<Plane> planes;
     public:
-        AircraftCarrier();
-        AircraftCarrier(std::string name, Person captain, int speed, int vitality, int teamMembers, std::vector<Weapon> _armament)
+        AircraftCarrier() {}
+        AircraftCarrier(std::string name, Person captain, int speed, int vitality, int teamMembers, std::vector<Weapon> _armament);
+
+        std::vector<Plane> getPlanes() { return planes; }
+
+        void setPlanes(std::vector<Plane> _planes);
     };
 
 }

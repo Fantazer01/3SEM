@@ -24,6 +24,7 @@ namespace lab4 {
                 if (weapon.getType() == heavy)
                     throw std::invalid_argument("invalid value!");
 
+        armament = _armament;
     }
 
     void Plane::setSpeed(int _speed) {
@@ -48,6 +49,12 @@ namespace lab4 {
         if (_type != fighter && _type != bomber)
             throw std::invalid_argument("invalid value!");
         type = _type;
+    }
+
+    void Plane::addWeapon(const Weapon &one) {
+        if (armament.size() >= 3)
+            throw std::invalid_argument("invalid value!");
+        armament.push_back(one);
     }
 
 }

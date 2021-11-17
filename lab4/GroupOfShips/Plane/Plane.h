@@ -38,10 +38,10 @@ namespace lab4 {
         void setFuelConsumption(int _fuelConsumption);
         void setType(typePlane _type);
 
-        /* ??? нужно ли добавлять оружие, нужно ли его удалять, если да, то как ???
-        void addWeapon();
-        void removeWeapon();
-        */
+        // ??? нужно ли добавлять оружие, нужно ли его удалять, если да, то как ???
+        void addWeapon(const Weapon &one);
+        void changeWeapon();
+
     };
 
 }

@@ -4,11 +4,16 @@
 
 #include "Person.h"
 #include <stdexcept>
+#include <iostream>
 
 namespace lab4 {
-    void Person::setStanding(int _standing) {
-        if (_standing < 0)
-            throw std::invalid_argument("invalid value!");
-        standing = _standing;
+    std::ostream& operator << (std::ostream& output, const FullName &name) {
+        output << name.First_name << " " << name.Last_name << " " << name.Patronymic;
+        return output;
+    }
+
+    std::ostream& operator << (std::ostream& output, const Person &person) {
+        output << person.rank << " " << person.name << " standing " << person.standing;
+        return output;
     }
 }

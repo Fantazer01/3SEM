@@ -6,6 +6,7 @@
 #define LAB4_PERSON_H
 
 #include <string>
+#include <utility>
 
 namespace lab4 {
 
@@ -13,29 +14,33 @@ namespace lab4 {
         std::string First_name;
         std::string Last_name;
         std::string Patronymic;
+
+        friend std::ostream& operator << (std::ostream&, const FullName &name);
     };
 
     class Person {
     private:
         std::string rank;
         FullName name;
-        int standing;
+        unsigned int standing;
     public:
         Person() : standing(0) {}
 
-        Person(std::string _rank, FullName _name, int _stand) : rank(_rank), name(_name), standing(_stand) {}
+        Person(const std::string &_rank, const FullName &_name, unsigned int _stand) : rank(_rank), name(_name), standing(_stand) {}
 
-        std::string getRank() { return rank; }
+        std::string getRank() const { return rank; }
 
-        FullName getName() { return name; }
+        FullName getName() const { return name; }
 
-        int getStanding() { return standing; }
+        unsigned int getStanding() const { return standing; }
 
-        void setRank(std::string _rank) { rank = _rank; }
+        void setRank(std::string _rank) { rank = std::move(_rank); }
 
-        void setName(FullName _name) { name = _name; }
+        void setName(FullName _name) { name = std::move(_name); }
 
-        void setStanding(int _standing);
+        void setStanding(unsigned int _standing) { standing = _standing; }
+
+        friend std::ostream& operator << (std::ostream&, const Person &person);
 
     };
 

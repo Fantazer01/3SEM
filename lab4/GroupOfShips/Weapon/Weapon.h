@@ -20,27 +20,27 @@ namespace lab4 {
     private:
         std::string name;
         std::string ammunitionName;
-        int rateOfFire;
-        int ammunition;
-        int destruction;
+        uint rateOfFire;
+        uint ammunition;
+        uint destruction;
         typeOfWeapon type;
     public:
         Weapon(): rateOfFire(0), ammunition(0), destruction(0), type(light) {}
 
-        Weapon(std::string _name, std::string _ammunName, typeOfWeapon _type=light, int _rate=0, int _ammun=0, int _destruction=0);
+        Weapon(std::string _name, std::string _ammunName, typeOfWeapon _type=light, uint _rate=0, uint _ammun=0, uint _destruction=0);
 
         std::string getName() const { return name; }
         std::string getAmmunitionName() const { return ammunitionName; }
-        int getRateOfFire() const { return rateOfFire; }
-        int getAmmunition() const { return ammunition; }
-        int getDestruction() const { return destruction; }
+        uint getRateOfFire() const { return rateOfFire; }
+        uint getAmmunition() const { return ammunition; }
+        uint getDestruction() const { return destruction; }
         typeOfWeapon getType() const { return type; }
 
         void setName(std::string _name) { name = std::move(_name); }
         void setAmmunitionName(std::string _name) { ammunitionName = std::move(_name); }
-        void setRateOfFire(int _rate);
-        void setAmmunition(int _ammunition);
-        void setDestruction(int _destruction);
+        void setRateOfFire(uint _rate);
+        void setAmmunition(uint _ammunition);
+        void setDestruction(uint _destruction);
         void setType(typeOfWeapon _type);
 
         friend std::ostream& operator << (std::ostream &, Weapon &);

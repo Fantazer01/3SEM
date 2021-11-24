@@ -42,8 +42,8 @@ namespace lab4 {
         void addWeapon(const Weapon &weapon);
         void changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator);
 
-        std::vector<Weapon>::const_iterator begin() const;
-        std::vector<Weapon>::const_iterator end() const;
+        std::vector<Weapon>::const_iterator begin() const { return armament.cbegin(); }
+        std::vector<Weapon>::const_iterator end() const { return armament.end(); }
 
     };
 

@@ -58,14 +58,6 @@ namespace lab4 {
         armament.push_back(one);
     }
 
-    std::vector<Weapon>::const_iterator Plane::begin() const {
-        return armament.cbegin();
-    }
-
-    std::vector<Weapon>::const_iterator Plane::end() const {
-        return armament.end();
-    }
-
     void Plane::changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator c_it) {
         if (c_it == armament.end())
             return;

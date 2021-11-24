@@ -4,39 +4,40 @@
 
 #include "Ship.h"
 #include <stdexcept>
+#include <iostream>
 
 namespace lab4 {
 
-    Ship::Ship(std::string _name, Person _captain, int _speed, int _vitality, int _teamMembers, std::vector<Weapon> _armament)
-    : name(_name), captain(_captain), speed(_speed), vitality(_vitality), teamMembers(_teamMembers), armament(_armament) {
-        if (_speed < 0 || _vitality < 0 || _teamMembers < 0)
-            throw std::invalid_argument("invalid value!");
+    void Ship::addWeapon(const Weapon &one) {
+        armament.push_back(one);
     }
 
-    void Ship::setName(std::string _name) {
-        name = _name;
+    void Ship::changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator c_it) {
+        if (c_it == armament.cend())
+            return;
+
+        std::vector<Weapon>::iterator it = armament.begin();
+        for (; it != c_it && it != armament.end(); ++it) {;}
+        *it = weapon;
     }
 
-    void Ship::setInfoCaptain(Person _captain) {
-        captain = _captain;
+    double Ship::maxDistance(double fuel) const {
+        return 0.0;
     }
 
-    void Ship::setSpeed(int _speed) {
-        if (_speed < 0)
-            throw std::invalid_argument("invalid value!");
-        speed = _speed;
-    }
-
-    void Ship::setVitality(int _vitality) {
-        if (_vitality < 0)
-            throw std::invalid_argument("invalid value!");
-        vitality = _vitality;
-    }
-
-    void Ship::setTeamMembers(int _teamMembers) {
-        if (_teamMembers < 0)
-            throw std::invalid_argument("invalid value!");
-        teamMembers = _teamMembers;
+    std::ostream& Ship::print(std::ostream &output) const {
+        output << "Name of ship: " << name
+               << "\ncaptain: " << captain
+               << "\nspeed: " << speed
+               << "\nvitality: " << vitality
+               << "\nteam members: " << teamMembers
+               << "\nArmament:\n";
+        if (armament.empty())
+            output << "There is empty\n";
+        else
+            for (const Weapon &a : armament)
+                output << a.getName() << std::endl;
+        return output;
     }
 
 }

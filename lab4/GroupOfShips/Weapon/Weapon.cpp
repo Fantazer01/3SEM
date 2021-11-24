@@ -40,4 +40,18 @@ namespace lab4 {
         type = _type;
     }
 
+    std::ostream& operator << (std::ostream &output, Weapon &weapon) {
+        output << "Name: " << weapon.name
+               << "\nName of ammunition: " << weapon.ammunitionName
+               << "\nRate of fire: " << weapon.rateOfFire
+               << "\nAmmunition: " << weapon.ammunition
+               << "\nDestruction: " << weapon.destruction
+               << "\nType: ";
+        if (weapon.type == light)
+            output << "light\n";
+        else
+            output << "hard\n";
+        return output;
+    }
+
 }

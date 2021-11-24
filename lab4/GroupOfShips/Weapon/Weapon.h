@@ -6,6 +6,7 @@
 #define LAB4_WEAPON_H
 
 #include <string>
+#include <iostream>
 
 namespace lab4 {
 
@@ -34,13 +35,14 @@ namespace lab4 {
         int getDestruction() const { return destruction; }
         typeOfWeapon getType() const { return type; }
 
-        //??? По всем ли полям нужны сеттеры, не будет ли это портить логику ???
-        //void setName(std::string _name) { name = _name; }
-        //void setAmmunitionName(std::string _name) { ammunitionName = _name; }
+        void setName(std::string _name) { name = _name; }
+        void setAmmunitionName(std::string _name) { ammunitionName = _name; }
         void setRateOfFire(int _rate);
         void setAmmunition(int _ammunition);
         void setDestruction(int _destruction);
         void setType(typeOfWeapon _type);
+
+        friend std::ostream& operator << (std::ostream &, Weapon &);
 
     };
 

@@ -10,37 +10,40 @@
 
 namespace lab4 {
 
-    enum typePlane {
-        fighter,
-        bomber
-    };
-
     class Plane {
+    public:
+        enum typePlane {
+            fighter,
+            bomber
+        };
     private:
         std::vector <Weapon> armament;
-        int speed;
-        int vitality;
-        int fuelConsumption;
+        uint speed;
+        uint vitality;
+        uint fuelConsumption;
         typePlane type;
     public:
         Plane(): speed(0), vitality(0), fuelConsumption(0), type(fighter) {}
-        Plane(std::vector<Weapon> _armament, int _speed, int _vitality, int _fuelConsumption, typePlane _type);
+        Plane(const std::vector<Weapon> &_armament, uint _speed, uint _vitality, uint _fuelConsumption, typePlane _type);
 
         std::vector<Weapon> getArmament() const { return armament; }
-        int getSpeed() const { return speed; }
-        int getVitality() const { return vitality; }
-        int getFuelConsumption() const { return fuelConsumption; }
+        uint getSpeed() const { return speed; }
+        uint getVitality() const { return vitality; }
+        uint getFuelConsumption() const { return fuelConsumption; }
         typePlane getType() const {return type;}
 
-        void setArmament(std::vector<Weapon> _armament);
-        void setSpeed(int _speed);
-        void setVitality(int _vitality);
-        void setFuelConsumption(int _fuelConsumption);
+        void setArmament(const std::vector<Weapon> &_armament);
+        void setSpeed(unsigned int _speed);
+        void setVitality(unsigned int _vitality);
+        void setFuelConsumption(unsigned int _fuelConsumption);
         void setType(typePlane _type);
 
-        // ??? нужно ли добавлять оружие, нужно ли его удалять, если да, то как ???
-        void addWeapon(const Weapon &one);
-        void changeWeapon();
+        uint getNumWeapon() const { return armament.size(); }
+        void addWeapon(const Weapon &weapon);
+        void changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator);
+
+        std::vector<Weapon>::const_iterator begin() const;
+        std::vector<Weapon>::const_iterator end() const;
 
     };
 

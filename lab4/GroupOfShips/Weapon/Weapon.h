@@ -7,15 +7,16 @@
 
 #include <string>
 #include <iostream>
+#include <utility>
 
 namespace lab4 {
 
-    enum typeOfWeapon {
-        light,
-        heavy
-    };
-
     class Weapon {
+    public:
+        enum typeOfWeapon {
+            light,
+            heavy
+        };
     private:
         std::string name;
         std::string ammunitionName;
@@ -35,8 +36,8 @@ namespace lab4 {
         int getDestruction() const { return destruction; }
         typeOfWeapon getType() const { return type; }
 
-        void setName(std::string _name) { name = _name; }
-        void setAmmunitionName(std::string _name) { ammunitionName = _name; }
+        void setName(std::string _name) { name = std::move(_name); }
+        void setAmmunitionName(std::string _name) { ammunitionName = std::move(_name); }
         void setRateOfFire(int _rate);
         void setAmmunition(int _ammunition);
         void setDestruction(int _destruction);
@@ -46,7 +47,7 @@ namespace lab4 {
 
     };
 
-};
+}
 
 
 #endif //LAB4_WEAPON_H

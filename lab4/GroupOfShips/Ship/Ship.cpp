@@ -16,8 +16,7 @@ namespace lab4 {
         if (c_it == armament.cend())
             return;
 
-        std::vector<Weapon>::iterator it = armament.begin();
-        for (; it != c_it && it != armament.end(); ++it) {;}
+        std::vector<Weapon>::iterator it = armament.begin() + (c_it - armament.begin());
         *it = weapon;
     }
 

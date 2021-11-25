@@ -14,7 +14,7 @@ namespace lab4 {
 
     void Ship::changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator c_it) {
         if (c_it == armament.cend())
-            return;
+            throw std::invalid_argument("invalid value!");
 
         std::vector<Weapon>::iterator it = armament.begin() + (c_it - armament.begin());
         *it = weapon;

@@ -60,7 +60,7 @@ namespace lab4 {
 
     void Plane::changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator c_it) {
         if (c_it == armament.end())
-            return;
+            throw std::invalid_argument("invalid value!");
         if (weapon.getType() == Weapon::heavy && type == fighter)
             throw std::invalid_argument("invalid value!");
 

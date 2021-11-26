@@ -53,6 +53,14 @@ namespace lab4 {
         *it = plane;
     }
 
+    uint AircraftCarrier::calculateDamagePlanes(Target type) const
+    {
+        uint damage = 0;
+        for (const Plane &plane : planes)
+            damage += plane.calculateDamage(type);
+        return damage;
+    }
+
     std::ostream& AircraftCarrier::print(std::ostream &output) const
     {
         int i = 1;
@@ -62,6 +70,12 @@ namespace lab4 {
         for (const Plane &plane : planes)
             output << "Plane" << i++ << ": " << plane << std::endl;
 
+        return output;
+    }
+
+    std::ostream& operator <<(std::ostream &output, AircraftCarrier &ship)
+    {
+        ship.print(output);
         return output;
     }
 

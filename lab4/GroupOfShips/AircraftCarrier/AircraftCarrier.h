@@ -7,6 +7,7 @@
 
 #include "Ship.h"
 #include "Plane.h"
+#include "Target.h"
 
 namespace lab4 {
 
@@ -34,6 +35,8 @@ namespace lab4 {
         void changePlane(const Plane &plane, std::vector<Plane>::const_iterator);
 
         void setPlanes(std::vector<Plane> _planes) { planes = std::move(_planes); }
+
+        uint calculateDamagePlanes(Target type=earth) const;
 
         std::ostream& print(std::ostream &output) const override;//вроде вывел, но это не точно
         friend  std::ostream& operator <<(std::ostream &output, AircraftCarrier &ship);

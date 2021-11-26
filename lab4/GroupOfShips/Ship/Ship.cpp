@@ -12,7 +12,7 @@ namespace lab4 {
         armament.push_back(one);
     }
 
-    void Ship::changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator c_it) {
+    void Ship::changeWeapon(const Weapon &weapon, vecWeapon::const_iterator c_it) {
         if (c_it == armament.cend())
             throw std::invalid_argument("invalid value!");
 
@@ -36,6 +36,12 @@ namespace lab4 {
         else
             for (const Weapon &a : armament)
                 output << a.getName() << std::endl;
+        return output;
+    }
+
+    std::ostream& operator <<(std::ostream &output, const Ship &ship)
+    {
+        ship.print(output);
         return output;
     }
 

@@ -14,40 +14,44 @@ namespace lab4 {
 
     class Ship {
     private:
+        typedef std::vector<Weapon> vecWeapon;
+    private:
         std::string name;
         Person captain;
         uint speed;
         uint vitality;
         uint teamMembers;
-        std::vector <Weapon> armament;
+        vecWeapon armament;
     public:
         Ship(): speed(0), vitality(0), teamMembers(0) {}
-        Ship(std::string _name, Person _captain, uint _speed, uint _vitality, uint _teamMembers, std::vector<Weapon> _armament=std::vector<Weapon>())
+        Ship(std::string _name, Person _captain, uint _speed, uint _vitality, uint _teamMembers, vecWeapon _armament=vecWeapon())
                 : name(std::move(_name)), captain(std::move(_captain)), speed(_speed), vitality(_vitality), teamMembers(_teamMembers), armament(std::move(_armament)) {}
+        virtual ~Ship() = default;
 
         std::string getName() const { return name; }
         Person getInfoCaptain() const { return captain; }
         uint getSpeed() const { return speed; }
         uint getVitality() const { return vitality; }
         uint getTeamMembers() const { return teamMembers; }
-        std::vector<Weapon> getArmament() const { return armament; }
+        vecWeapon getArmament() const { return armament; }
 
         void setName(std::string _name) { name = std::move(_name); }
         void setInfoCaptain(Person _captain) { captain = std::move(_captain); }
         void setSpeed(uint _speed) { speed = _speed; }
         void setVitality(uint _vitality) { vitality = _vitality; }
         void setTeamMembers(uint _teamMembers) { teamMembers = _teamMembers; }
-        void setArmament(const std::vector<Weapon> &_armament) { armament = _armament; }
+        virtual void setArmament(const std::vector<Weapon> &_armament) { armament = _armament; }
 
-        std::vector<Weapon>::const_iterator begin() const { return armament.cbegin(); }
-        std::vector<Weapon>::const_iterator end() const { return armament.cend(); }
+        vecWeapon::const_iterator beginForWeapon() const { return armament.cbegin(); }
+        vecWeapon::const_iterator endForWeapon() const { return armament.cend(); }
 
         uint getNumWeapon() const { return armament.size(); }
-        void addWeapon(const Weapon &weapon);
-        void changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator);
+        virtual void addWeapon(const Weapon &weapon);
+        virtual void changeWeapon(const Weapon &weapon, vecWeapon::const_iterator);
 
         double maxDistance(double fuel) const;//какая тут формула???
-        std::ostream& print(std::ostream &output) const;//вроде вывел, но это не точно
+        virtual std::ostream& print(std::ostream &output) const;//вроде вывел, но это не точно
+        friend  std::ostream& operator <<(std::ostream &output, const Ship &ship);
 
     };
 

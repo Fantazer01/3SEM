@@ -68,4 +68,16 @@ namespace lab4 {
         *it = weapon;
     }
 
+    std::ostream& operator <<(std::ostream &output, const Plane &plane)
+    {
+        output << "set of weapons: ";
+        for (const Weapon &w : plane.armament)
+            output << w << " ";
+        output << std::endl
+               << "speed: " << plane.speed
+               << "vitality: " << plane.vitality
+               << "fuel consumption: " << plane.fuelConsumption
+               << "type: " << plane.type;
+    }
+
 }

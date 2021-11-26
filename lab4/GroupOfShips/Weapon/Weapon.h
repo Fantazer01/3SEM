@@ -43,7 +43,7 @@ namespace lab4 {
         void setDestruction(uint _destruction);
         void setType(typeOfWeapon _type);
 
-        friend std::ostream& operator << (std::ostream &, Weapon &);
+        friend std::ostream& operator << (std::ostream &, const Weapon &);
 
     };
 

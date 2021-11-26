@@ -9,6 +9,7 @@
 #include <vector>
 #include "Person.h"
 #include "Weapon.h"
+#include "Target.h"
 
 namespace lab4 {
 
@@ -50,6 +51,7 @@ namespace lab4 {
         virtual void changeWeapon(const Weapon &weapon, vecWeapon::const_iterator);
 
         double maxDistance(double fuel) const;//какая тут формула???
+        uint calculateDamage(Target type=earth) const;
         virtual std::ostream& print(std::ostream &output) const;//вроде вывел, но это не точно
         friend  std::ostream& operator <<(std::ostream &output, const Ship &ship);
 

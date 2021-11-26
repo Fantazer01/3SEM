@@ -24,6 +24,19 @@ namespace lab4 {
         return 0.0;
     }
 
+    uint Ship::calculateDamage(Target typeTarget) const {
+        uint damage = 0;
+        Weapon::typeOfWeapon typeWeapon = Weapon::light;
+
+        if (typeTarget == earth)
+            typeWeapon = Weapon::heavy;
+
+        for (const Weapon &w : armament)
+            if (w.getType() == typeWeapon)
+                damage += w.getDestruction();
+        return damage;
+    }
+
     std::ostream& Ship::print(std::ostream &output) const {
         output << "Name of ship: " << name
                << "\ncaptain: " << captain

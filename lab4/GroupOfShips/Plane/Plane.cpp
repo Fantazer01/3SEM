@@ -68,11 +68,17 @@ namespace lab4 {
         *it = weapon;
     }
 
-    uint Plane::calculateDamage() const
+    uint Plane::calculateDamage(Target typeTarget) const
     {
         uint damage = 0;
+        Weapon::typeOfWeapon typeWeapon = Weapon::light;
+
+        if (typeTarget == earth)
+            typeWeapon = Weapon::heavy;
+
         for (const Weapon &w : armament)
-            damage += w.getDestruction();
+            if (w.getType() == typeWeapon)
+                damage += w.getDestruction();
         return damage;
     }
 

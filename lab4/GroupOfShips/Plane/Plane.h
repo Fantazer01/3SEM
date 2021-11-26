@@ -6,6 +6,7 @@
 #define LAB4_PLANE_H
 
 #include "Weapon.h"
+#include "Target.h"
 #include <vector>
 
 namespace lab4 {
@@ -45,7 +46,7 @@ namespace lab4 {
         std::vector<Weapon>::const_iterator begin() const { return armament.cbegin(); }
         std::vector<Weapon>::const_iterator end() const { return armament.end(); }
 
-        uint calculateDamage() const;
+        uint calculateDamage(Target type) const;
 
         friend std::ostream& operator <<(std::ostream &output, const Plane &plane);
 

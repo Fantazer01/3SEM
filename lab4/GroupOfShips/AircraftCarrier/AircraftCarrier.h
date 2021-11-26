@@ -7,7 +7,6 @@
 
 #include "Ship.h"
 #include "Plane.h"
-#include "Target.h"
 
 namespace lab4 {
 
@@ -25,16 +24,16 @@ namespace lab4 {
         void addWeapon(const Weapon &one) override;
         void changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator) override;
 
-        std::vector<Plane> getPlanes() { return planes; }
+        vecPlane getPlanes() { return planes; }
 
-        std::vector<Plane>::const_iterator beginForPlane() const { return planes.cbegin(); }
-        std::vector<Plane>::const_iterator endForPlane() const { return planes.cend(); }
+        vecPlane::const_iterator beginForPlane() const { return planes.cbegin(); }
+        vecPlane::const_iterator endForPlane() const { return planes.cend(); }
 
         uint getNumPlanes() const { return planes.size(); }
         void addPlane(const Plane &plane);
-        void changePlane(const Plane &plane, std::vector<Plane>::const_iterator);
+        void changePlane(const Plane &plane, vecPlane::const_iterator);
 
-        void setPlanes(std::vector<Plane> _planes) { planes = std::move(_planes); }
+        void setPlanes(vecPlane _planes) { planes = std::move(_planes); }
 
         uint calculateDamagePlanes(Target type=earth) const;
 

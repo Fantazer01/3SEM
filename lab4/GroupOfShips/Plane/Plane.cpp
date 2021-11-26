@@ -68,6 +68,14 @@ namespace lab4 {
         *it = weapon;
     }
 
+    uint Plane::calculateDamage() const
+    {
+        uint damage = 0;
+        for (const Weapon &w : armament)
+            damage += w.getDestruction();
+        return damage;
+    }
+
     std::ostream& operator <<(std::ostream &output, const Plane &plane)
     {
         output << "set of weapons: ";

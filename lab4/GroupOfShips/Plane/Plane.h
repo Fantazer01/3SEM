@@ -45,6 +45,8 @@ namespace lab4 {
         std::vector<Weapon>::const_iterator begin() const { return armament.cbegin(); }
         std::vector<Weapon>::const_iterator end() const { return armament.end(); }
 
+        uint calculateDamage() const;
+
         friend std::ostream& operator <<(std::ostream &output, const Plane &plane);
 
     };

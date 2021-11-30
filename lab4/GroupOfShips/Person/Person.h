@@ -44,6 +44,9 @@ namespace lab4 {
 
         void setStanding(unsigned int _standing) { standing = _standing; }
 
+        bool operator == (const Person &person) const
+        { return (rank == person.rank && name == person.name && standing == person.standing); }
+
         friend std::ostream& operator << (std::ostream&, const Person &person);
 
     };

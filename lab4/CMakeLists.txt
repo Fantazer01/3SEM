@@ -3,9 +3,6 @@ project(lab4)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_subdirectory(GroupOfShips/Person)
-add_subdirectory(GroupOfShips/Weapon)
-
 set(SOURCES
         main.cpp
         GroupOfShips/Person/Person.cpp
@@ -28,6 +25,8 @@ include_directories(
         GroupOfShips/TableOfShips
         GroupOfShips/GroupOfShips)
 
-
+add_subdirectory(GroupOfShips/Person)
+add_subdirectory(GroupOfShips/Weapon)
+add_subdirectory(GroupOfShips/Plane)
 
 add_executable(lab4 ${SOURCES})

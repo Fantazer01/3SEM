@@ -11,7 +11,8 @@ set(SOURCES
         GroupOfShips/Ship/Ship.cpp
         GroupOfShips/AircraftCarrier/AircraftCarrier.cpp
         GroupOfShips/Destroyer/Destroyer.cpp
-        GroupOfShips/TableOfShips/TableOfShips.cpp)
+        GroupOfShips/TableOfShips/TableOfShips.cpp
+        GroupOfShips/GroupOfShips/GroupOfShips.cpp)
 
 include_directories(
         GroupOfShips
@@ -21,6 +22,7 @@ include_directories(
         GroupOfShips/Ship
         GroupOfShips/AircraftCarrier
         GroupOfShips/Destroyer
-        GroupOfShips/TableOfShips)
+        GroupOfShips/TableOfShips
+        GroupOfShips/GroupOfShips)
 
 add_executable(lab4 ${SOURCES})

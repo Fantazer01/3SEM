@@ -15,6 +15,9 @@ namespace lab4 {
         std::string Last_name;
         std::string Patronymic;
 
+        bool operator == (const FullName &name) const
+        { return (First_name == name.First_name && Last_name == name.Last_name && Patronymic == name.Patronymic); }
+
         friend std::ostream& operator << (std::ostream&, const FullName &name);
     };
 
@@ -22,11 +25,12 @@ namespace lab4 {
     private:
         std::string rank;
         FullName name;
-        unsigned int standing;
+        uint standing;
     public:
         Person() : standing(0) {}
 
-        Person(const std::string &_rank, const FullName &_name, unsigned int _stand) : rank(_rank), name(_name), standing(_stand) {}
+        Person(std::string _rank, FullName _name, uint _stand)
+        : rank(std::move(_rank)), name(std::move(_name)), standing(_stand) {}
 
         std::string getRank() const { return rank; }
 

@@ -43,6 +43,16 @@ namespace lab4 {
         void setDestruction(uint _destruction);
         void setType(typeOfWeapon _type);
 
+        bool operator == (const Weapon &weapon) const
+        { return
+            (name == weapon.name &&
+             ammunitionName == weapon.ammunitionName &&
+             rateOfFire == weapon.rateOfFire &&
+             ammunition == weapon.ammunition &&
+             destruction == weapon.destruction &&
+             type == weapon.type);
+        }
+
         friend std::ostream& operator << (std::ostream &, const Weapon &);
 
     };

@@ -92,6 +92,7 @@ namespace lab4 {
                << "vitality: " << plane.vitality
                << "fuel consumption: " << plane.fuelConsumption
                << "type: " << plane.type;
+        return output;
     }
 
 }

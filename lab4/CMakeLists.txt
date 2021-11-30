@@ -4,6 +4,7 @@ project(lab4)
 set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(GroupOfShips/Person)
+add_subdirectory(GroupOfShips/Weapon)
 
 set(SOURCES
         main.cpp

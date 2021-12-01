@@ -38,7 +38,7 @@ namespace lab4 {
 
         uint calculateDamagePlanes(Target type=earth) const;
 
-        double maxDistance(double fuel) const { return static_cast<double>(k)*fuel; }
+        double maxDistance(double fuel) const override { return static_cast<double>(k)*fuel; }
 
         std::ostream& print(std::ostream &output) const override;//вроде вывел, но это не точно
         friend  std::ostream& operator <<(std::ostream &output, AircraftCarrier &ship);

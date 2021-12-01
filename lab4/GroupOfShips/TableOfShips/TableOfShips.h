@@ -54,7 +54,8 @@ namespace lab4 {
         const_iterator begin() const { return const_iterator(cells.cbegin()); }
         const_iterator end() const { return const_iterator(cells.cend()); }
 
-        Ship* find(const std::string& first) const { return cells.find(first)->second; }
+        //Ship* find(const std::string& first) const { return cells.find(first)->second; }
+        const_iterator find(const std::string& first) const { return const_iterator(cells.find(first)); }
         void insert(const std::string& first, Ship * second) { cells.insert(std::make_pair(first, second)); }
         void erase(const const_iterator &out_it) { cells.erase(out_it.getCIT()); }
 

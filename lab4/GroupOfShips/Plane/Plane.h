@@ -48,6 +48,14 @@ namespace lab4 {
 
         uint calculateDamage(Target type) const;
 
+        bool operator == (const Plane &plane) const {
+            return
+                    (speed == plane.speed &&
+                    vitality == plane.vitality &&
+                    fuelConsumption == plane.fuelConsumption &&
+                    type == plane.type);
+        }
+
         friend std::ostream& operator <<(std::ostream &output, const Plane &plane);
 
     };

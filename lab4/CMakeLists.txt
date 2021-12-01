@@ -28,5 +28,6 @@ include_directories(
 add_subdirectory(GroupOfShips/Person)
 add_subdirectory(GroupOfShips/Weapon)
 add_subdirectory(GroupOfShips/Plane)
+add_subdirectory(GroupOfShips/Ship)
 
 add_executable(lab4 ${SOURCES})

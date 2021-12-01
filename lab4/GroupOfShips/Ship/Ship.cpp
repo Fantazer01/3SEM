@@ -21,7 +21,7 @@ namespace lab4 {
     }
 
     double Ship::maxDistance(double fuel) const {
-        return 0.0;
+        return static_cast<double>(k)*fuel;
     }
 
     uint Ship::calculateDamage(Target typeTarget) const {

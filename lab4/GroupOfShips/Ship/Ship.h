@@ -17,6 +17,7 @@ namespace lab4 {
     private:
         typedef std::vector<Weapon> vecWeapon;
     private:
+        static const uint k = 10;
         std::string name;
         Person captain;
         uint speed;

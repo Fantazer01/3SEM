@@ -18,6 +18,8 @@ TEST(Weapon, Constructor)
     ASSERT_EQ(5, weapon.getRateOfFire());
     ASSERT_EQ(6, weapon.getAmmunition());
     ASSERT_EQ(7, weapon.getDestruction());
+
+
 }
 
 TEST(Weapon, Modificate)

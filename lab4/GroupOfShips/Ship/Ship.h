@@ -51,7 +51,7 @@ namespace lab4 {
         virtual void addWeapon(const Weapon &weapon);
         virtual void changeWeapon(const Weapon &weapon, vecWeapon::const_iterator);
 
-        double maxDistance(double fuel) const;//какая тут формула???
+        virtual double maxDistance(double fuel) const;
         uint calculateDamage(Target type=earth) const;
         virtual std::ostream& print(std::ostream &output) const;//вроде вывел, но это не точно
         friend  std::ostream& operator <<(std::ostream &output, const Ship &ship);

@@ -15,6 +15,7 @@ namespace lab4 {
         typedef std::vector<Weapon> vecWeapon;
         typedef std::vector<Plane> vecPlane;
     private:
+        static const uint k = 8;
         std::vector<Plane> planes;
     public:
         AircraftCarrier() = default;
@@ -36,6 +37,8 @@ namespace lab4 {
         void setPlanes(vecPlane _planes) { planes = std::move(_planes); }
 
         uint calculateDamagePlanes(Target type=earth) const;
+
+        double maxDistance(double fuel) const { return static_cast<double>(k)*fuel; }
 
         std::ostream& print(std::ostream &output) const override;//вроде вывел, но это не точно
         friend  std::ostream& operator <<(std::ostream &output, AircraftCarrier &ship);

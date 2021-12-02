@@ -41,7 +41,7 @@ namespace lab4 {
             bool operator !=(const const_iterator &out_it) const { return this->it != out_it.it; }
             const_iterator& operator ++() { ++it; return (*this); }
             const_iterator operator ++(int) { const_iterator itCopy(it); ++it; return itCopy; }
-            const std::pair<std::string, Ship*>& operator *() const { return *it; }
+            std::pair<std::string, Ship*> operator *() const { return *it; }
 
         };
     private:

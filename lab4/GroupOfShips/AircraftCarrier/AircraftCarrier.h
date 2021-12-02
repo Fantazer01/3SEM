@@ -10,10 +10,9 @@
 
 namespace lab4 {
 
+    typedef std::vector<Plane> vecPlane;
+
     class AircraftCarrier: public Ship {
-    private:
-        typedef std::vector<Weapon> vecWeapon;
-        typedef std::vector<Plane> vecPlane;
     private:
         static const uint k = 8;
         std::vector<Plane> planes;

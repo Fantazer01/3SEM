@@ -13,9 +13,9 @@
 
 namespace lab4 {
 
+    typedef std::vector<Weapon> vecWeapon;
+
     class Ship {
-    private:
-        typedef std::vector<Weapon> vecWeapon;
     private:
         static const uint k = 10;
         std::string name;

@@ -13,8 +13,6 @@ namespace lab4 {
 
     class Destroyer : public Ship {
     private:
-        typedef std::vector<Weapon> vecWeapon;
-    private:
         static const uint k = 11;
         Ship *covered;
     public:

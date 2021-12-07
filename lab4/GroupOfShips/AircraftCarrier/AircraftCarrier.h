@@ -7,15 +7,16 @@
 
 #include "Ship.h"
 #include "Plane.h"
+#include <list>
 
 namespace lab4 {
 
-    typedef std::vector<Plane> vecPlane;
+    typedef std::list<Plane> vecPlane;
 
     class AircraftCarrier: public Ship {
     private:
         static const uint k = 8;
-        std::vector<Plane> planes;
+        std::list<Plane> planes;
     public:
         AircraftCarrier() = default;
         AircraftCarrier(std::string name, Person captain, uint speed, uint vitality, uint teamMembers, vecWeapon _armament=vecWeapon(), vecPlane _planes=vecPlane());
@@ -32,6 +33,7 @@ namespace lab4 {
         uint getNumPlanes() const { return planes.size(); }
         void addPlane(const Plane &plane);
         void changePlane(const Plane &plane, vecPlane::const_iterator);
+        void erasePlane(std::list<Plane>::const_iterator c_it);
 
         void setPlanes(vecPlane _planes) { planes = std::move(_planes); }
 

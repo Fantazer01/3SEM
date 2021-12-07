@@ -47,10 +47,19 @@ namespace lab4 {
             planes.push_back(plane);
     }
 
-    void AircraftCarrier::changePlane(const Plane &plane, std::vector<Plane>::const_iterator c_it)
+    void AircraftCarrier::changePlane(const Plane &plane, std::list<Plane>::const_iterator c_it)
     {
-        std::vector<Plane>::iterator it = planes.begin() + (c_it - planes.begin());
-        *it = plane;
+        if (c_it == planes.cend())
+            return;
+        planes.emplace(c_it, plane);
+        planes.erase(c_it);
+    }
+
+    void AircraftCarrier::erasePlane(std::list<Plane>::const_iterator c_it)
+    {
+        if (c_it == planes.cend())
+            return;
+        planes.erase(c_it);
     }
 
     uint AircraftCarrier::calculateDamagePlanes(Target type) const

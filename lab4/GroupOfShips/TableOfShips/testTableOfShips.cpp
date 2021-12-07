@@ -33,8 +33,6 @@ TEST(TableOfShips, mainMethods)
 
     ASSERT_EQ(2, table.getNumOfGroup());
 
-    TableOfShips::const_iterator it = table.find("lucky");
-
     ASSERT_EQ(&ship_AIRCRF, (*table.find("lucky")).second);
     ASSERT_EQ(&destroyer, (*table.find("bull")).second);
     ASSERT_EQ(table.end(), table.find("baby"));

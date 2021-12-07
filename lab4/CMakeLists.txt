@@ -32,5 +32,6 @@ add_subdirectory(GroupOfShips/Ship)
 add_subdirectory(GroupOfShips/AircraftCarrier)
 add_subdirectory(GroupOfShips/Destroyer)
 add_subdirectory(GroupOfShips/TableOfShips)
+add_subdirectory(GroupOfShips/GroupOfShips)
 
 add_executable(lab4 ${SOURCES})

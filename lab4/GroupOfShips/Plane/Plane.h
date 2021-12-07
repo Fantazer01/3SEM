@@ -39,6 +39,8 @@ namespace lab4 {
         void setFuelConsumption(unsigned int _fuelConsumption);
         void setType(typePlane _type);
 
+        void decreaseVitality(uint damage) { if (damage > vitality) vitality = 0; else vitality -= damage; }
+
         uint getNumWeapon() const { return armament.size(); }
         void addWeapon(const Weapon &weapon);
         void changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator);

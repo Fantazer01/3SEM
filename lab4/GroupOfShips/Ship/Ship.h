@@ -44,6 +44,8 @@ namespace lab4 {
         void setTeamMembers(uint _teamMembers) { teamMembers = _teamMembers; }
         virtual void setArmament(const std::vector<Weapon> &_armament) { armament = _armament; }
 
+        void decreaseVitality(uint damage) { if (damage > vitality) vitality = 0; else vitality -= damage; }
+
         vecWeapon::const_iterator beginForWeapon() const { return armament.cbegin(); }
         vecWeapon::const_iterator endForWeapon() const { return armament.cend(); }
 

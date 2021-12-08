@@ -14,6 +14,9 @@
 
 namespace lab4 {
 
+    typedef TableOfShips::const_iterator ship_iterator;
+    typedef vecPlane::const_iterator plane_iterator;
+
     enum ResultOfFight {
         win,
         fight_over,
@@ -43,6 +46,7 @@ namespace lab4 {
         std::string getPointOfArrival() const { return to; }
         double getDistance() const { return distance; }
         uint getNumOfGroup() const { return table.getNumOfGroup(); }
+        uint getNumOfPlanes() const;
 
         void setTable(TableOfShips _table) { table = std::move(_table); }
         void setCommander(Person _commander) { commander = std::move(_commander); }
@@ -57,9 +61,11 @@ namespace lab4 {
         void insert(const std::string& first, Ship * second) { table.insert(first, second); }
         void erase(const TableOfShips::const_iterator &out_it) { table.erase(out_it); }
 
-        uint getNumShipOfType() const;
+        uint getNumShipOfType(const std::type_info &typeInfo) const;
 
-        ResultOfFight modeling(std::vector<Plane> enemy_aircraft) const;
+        void movePlane(plane_iterator it_plane, ship_iterator it_from, ship_iterator it_to);
+
+        ResultOfFight modeling(vecPlane enemy_aircraft) const;
 
     };
 }

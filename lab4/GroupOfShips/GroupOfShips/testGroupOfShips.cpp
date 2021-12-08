@@ -51,9 +51,12 @@ TEST(GroupOfShips, Constructor)
     ASSERT_EQ(&ship_AIRCRF, (*group.find("lucky")).second);
     ASSERT_EQ(&destroyer, (*group.find("bull")).second);
     ASSERT_EQ(group.end(), group.find("baby"));
+
+    ASSERT_EQ(1, group.getNumShipOfType(typeid(AircraftCarrier)));
+    ASSERT_EQ(1, group.getNumShipOfType(typeid(Destroyer)));
 }
 
-TEST(GroupOfShips, Methods)
+TEST(GroupOfShips, Methods_setters_)
 {
     //begin of initialization
     Person set_smbds[] = {
@@ -101,6 +104,9 @@ TEST(GroupOfShips, Methods)
     ASSERT_EQ(&ship_AIRCRF, (*group.find("lucky")).second);
     ASSERT_EQ(&destroyer, (*group.find("bull")).second);
     ASSERT_EQ(group.end(), group.find("baby"));
+
+    ASSERT_EQ(1, group.getNumShipOfType(typeid(AircraftCarrier)));
+    ASSERT_EQ(1, group.getNumShipOfType(typeid(Destroyer)));
 }
 
 TEST(GroupOfShips, Modeling)
@@ -136,7 +142,7 @@ TEST(GroupOfShips, Modeling)
     GroupOfShips group(table, set_smbds[0], "New Delly", "San-Francisco", 12345.8);
 
     //begin of initialization: enemy
-    std::vector<Plane> planes_enemy = {
+    vecPlane planes_enemy = {
             Plane(weapons_light, 15, 100, 20, Plane::fighter),
             Plane(weapons_light_and_hard, 17, 100, 23, Plane::bomber)
     };

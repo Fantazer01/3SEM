@@ -30,6 +30,9 @@ namespace lab4 {
         vecPlane::const_iterator beginForPlane() const { return planes.cbegin(); }
         vecPlane::const_iterator endForPlane() const { return planes.cend(); }
 
+        vecPlane::iterator beginForPlane() { return planes.begin(); }
+        vecPlane::iterator endForPlane() { return planes.end(); }
+
         uint getNumPlanes() const { return planes.size(); }
         void addPlane(const Plane &plane);
         void changePlane(const Plane &plane, vecPlane::const_iterator);

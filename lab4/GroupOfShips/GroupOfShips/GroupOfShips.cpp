@@ -9,9 +9,9 @@ namespace lab4
     uint GroupOfShips::getNumOfPlanes() const
     {
         uint counter = 0;
-        for (auto it = (*this).begin(); it != (*this).end(); ++it)
-            if (typeid(*(*it).second) == typeid(AircraftCarrier))
-                counter += dynamic_cast<AircraftCarrier&>(*(*it).second).getNumPlanes();
+        for (auto && it : *this)
+            if (typeid(*(it).second) == typeid(AircraftCarrier))
+                counter += dynamic_cast<AircraftCarrier&>(*(it).second).getNumPlanes();
 
         return counter;
     }
@@ -19,20 +19,20 @@ namespace lab4
     uint GroupOfShips::getNumShipOfType(const std::type_info &typeInfo) const
     {
         uint counter = 0;
-        for (auto it = (*this).begin(); it != (*this).end(); ++it)
-            if (typeid(*(*it).second) == typeInfo)
+        for (auto && it : *this)
+            if (typeid(*(it).second) == typeInfo)
                 ++counter;
 
         return counter;
     }
 
-    void movePlane(plane_iterator it_plane, ship_iterator it_from, ship_iterator it_to)
+    void GroupOfShips::movePlane(plane_iterator it_plane, ship_iterator it_from, ship_iterator it_to)
     {
-        if (typeid(*(*it_from).second) == typeid(AircraftCarrier))
-            throw std::invalid_argument("invalid value!");
+        if (typeid(*(*it_from).second) != typeid(AircraftCarrier))
+            throw std::invalid_argument("invalid value! First iterator isn't pointing on AircraftCarrier");
 
-        if (typeid(*(*it_to).second) == typeid(AircraftCarrier))
-            throw std::invalid_argument("invalid value!");
+        if (typeid(*(*it_to).second) != typeid(AircraftCarrier))
+            throw std::invalid_argument("invalid value! Second iterator isn't pointing on AircraftCarrier");
 
         auto it_p = dynamic_cast<AircraftCarrier&>(*(*it_from).second).beginForPlane();
         for (; it_p != dynamic_cast<AircraftCarrier&>(*(*it_from).second).endForPlane(); ++it_p)
@@ -42,7 +42,7 @@ namespace lab4
                 dynamic_cast<AircraftCarrier&>(*(*it_from).second).erasePlane(it_p);
                 return;
             }
-        throw std::invalid_argument("invalid value!");
+        throw std::invalid_argument("invalid value! Plane isn't looked");
     }
 
     uint damage_air(const vecPlane &enemy_aircraft)
@@ -95,50 +95,164 @@ namespace lab4
         return false;
     }
 
-    Target_set groupAiming(vecPlane &enemy_aircraft, GroupOfShips &group)
+    void step_change_target_for_group(vecPlane &enemy_aircraft, Target_set &target)
+    {
+        if (target.air.empty() || target.air.begin()->first->getVitality()-target.air.begin()->second <= 0)
+        {
+            target.air.emplace_front(&(*enemy_aircraft.begin()), 0);
+            enemy_aircraft.pop_front();
+        }
+    }
+
+    void shipAiming(vecPlane &enemy_aircraft, Ship *p_ship, Target_set &target)
+    {
+        for (auto it = p_ship->beginForWeapon(); it != p_ship->endForWeapon(); ++it)
+        {
+            if (enemy_aircraft.empty())
+                return;
+            if (it->getType() != Weapon::light)
+                continue;
+            step_change_target_for_group(enemy_aircraft, target);
+            target.air.begin()->second += it->getDestruction();
+        }
+
+        if (typeid(*p_ship) == typeid(AircraftCarrier))
+        {
+            auto it_p = dynamic_cast<AircraftCarrier&>(*p_ship).beginForPlane();
+            for (; it_p != dynamic_cast<AircraftCarrier&>(*p_ship).endForPlane(); ++it_p)
+            {
+                if (enemy_aircraft.empty())
+                    return;
+                step_change_target_for_group(enemy_aircraft, target);
+                target.air.begin()->second += it_p->calculateDamage(air);
+            }
+        }
+    }
+
+    Target_set groupAiming(vecPlane enemy_aircraft, GroupOfShips &group)
     {
         Target_set target;
+
+        for (auto it = group.begin(); it != group.end(); ++it)
+            shipAiming(enemy_aircraft, (*it).second, target);
 
         return target;
     }
 
-    Target_set enemyAiming(vecPlane &enemy_aircraft, GroupOfShips &group)
+    void step_change_target_for_enemy(GroupOfShips &group, Target_set &target)
+    {
+        if (target.earth.empty() || target.earth.begin()->first->getVitality() - target.earth.begin()->second <= 0)
+        {
+            target.earth.emplace_front((*group.begin()).second, 0);
+            group.erase(group.begin());
+        }
+
+        if (target.air.empty() || target.air.begin()->first->getVitality() - target.air.begin()->second <= 0)
+        {
+            for (auto && it : group)
+                if (typeid(*(it).second) == typeid(AircraftCarrier) && dynamic_cast<AircraftCarrier&>(*(it).second).getNumPlanes() != 0) {
+                    auto it_p = dynamic_cast<AircraftCarrier&>(*(it).second).beginForPlane();
+                    target.air.emplace_front(&(*it_p), 0);
+                    dynamic_cast<AircraftCarrier&>(*(it).second).erasePlane(it_p);
+                    break;
+                }
+        }
+    }
+
+    void enemy_plane_aiming(const Plane &plane, GroupOfShips &group, Target_set &target)
+    {
+        if (group.getNumOfGroup() != 0)
+        {
+            step_change_target_for_enemy(group, target);
+            target.earth.begin()->second += plane.calculateDamage(earth);
+            target.air.begin()->second += plane.calculateDamage(air);
+        }
+    }
+
+    Target_set enemyAiming(vecPlane &enemy_aircraft, GroupOfShips group)
     {
         Target_set target;
+
+        for (auto it = enemy_aircraft.begin(); it != enemy_aircraft.end(); ++it)
+            enemy_plane_aiming(*it, group, target);
 
         return target;
     }
 
-    void decreaseHealth
-        (vecPlane &enemy_aircraft, GroupOfShips &group, Target_set &target_enemy, Target_set &target_group)
+    void decreaseHealthEnemy(Target_set &target_enemy)
     {
         for (auto it = target_enemy.air.begin(); it != target_enemy.air.end(); ++it)
             it->first->decreaseVitality(it->second);
         for (auto it = target_enemy.earth.begin(); it != target_enemy.earth.end(); ++it)
             it->first->decreaseVitality(it->second);
+    }
 
+    void decreaseHealthGroup(Target_set &target_group)
+    {
         for (auto it = target_group.air.begin(); it != target_group.air.end(); ++it)
             it->first->decreaseVitality(it->second);
         for (auto it = target_group.earth.begin(); it != target_group.earth.end(); ++it)
             it->first->decreaseVitality(it->second);
+    }
 
+    void eraseDestroyedPlanesEnemy(vecPlane &enemy_aircraft)
+    {
         for (auto it = enemy_aircraft.begin(); it != enemy_aircraft.end(); ++it)
             if (it->getVitality() == 0)
                 enemy_aircraft.erase(it);
+    }
+
+    ship_iterator findNormalAircraftCarrier(const GroupOfShips &group)
+    {
+        for (auto it = group.begin(); it != group.end(); ++it)
+            if (typeid(*(*it).second) == typeid(AircraftCarrier) && (*(*it).second).getVitality() > 0)
+                return it;
+        return group.end();
+    }
+
+    void movingPlanesFromSinkingShip(ship_iterator it_from, ship_iterator it_to, GroupOfShips &group)
+    {
+        auto it_p = dynamic_cast<AircraftCarrier&>(*(*it_from).second).beginForPlane();
+        for (; it_p != dynamic_cast<AircraftCarrier&>(*(*it_from).second).endForPlane(); ++it_p)
+            if (it_p->getVitality() != 0)
+                group.movePlane(it_p, it_from, it_to);
+    }
+
+    void eraseDestroyedPlanes(ship_iterator it)
+    {
+        auto it_p = dynamic_cast<AircraftCarrier&>(*(*it).second).beginForPlane();
+        for (; it_p != dynamic_cast<AircraftCarrier&>(*(*it).second).endForPlane(); ++it_p)
+            if (it_p->getVitality() == 0)
+                dynamic_cast<AircraftCarrier&>(*(*it).second).erasePlane(it_p);
+    }
+
+    void eraseDestroyedMemberOfGroup(GroupOfShips &group)
+    {
+        auto it_to = findNormalAircraftCarrier(group);
 
         for (auto it = group.begin(); it != group.end(); ++it)
+        {
             if ((*it).second->getVitality() == 0)
+            {
+                if (it_to != group.end() && typeid(*(*it).second) == typeid(AircraftCarrier))
+                    movingPlanesFromSinkingShip(it, it_to, group);
                 group.erase(it);
-
-        for (auto it = group.begin(); it != group.end(); ++it) {
-            if (typeid(*(*it).second) == typeid(AircraftCarrier)) {
-                auto it_p = dynamic_cast<AircraftCarrier&>(*(*it).second).beginForPlane();
-                for (; it_p != dynamic_cast<AircraftCarrier&>(*(*it).second).endForPlane(); ++it_p)
-                    if (it_p->getVitality() == 0)
-                        dynamic_cast<AircraftCarrier&>(*(*it).second).erasePlane(it_p);
+            } else if (typeid(*(*it).second) == typeid(AircraftCarrier))
+            {
+                eraseDestroyedPlanes(it);
             }
         }
+    }
 
+    void decreaseHealth
+        (vecPlane &enemy_aircraft, GroupOfShips &group, Target_set &target_enemy, Target_set &target_group)
+    {
+        decreaseHealthEnemy(target_enemy);
+
+        decreaseHealthGroup(target_group);
+
+        eraseDestroyedPlanesEnemy(enemy_aircraft);
+        eraseDestroyedMemberOfGroup(group);
 
     }
 
@@ -153,7 +267,7 @@ namespace lab4
             // 2. Прицелились вражеские самолеты
             Target_set target_enemy = enemyAiming(enemy_aircraft, copy_group);
             // 3. Убавили здоровье всех участников боя, исключили тех, чье здоровье равно нулю
-            decreaseHealth(enemy_aircraft, copy_group, target_enemy, target_group);//-готово
+            decreaseHealth(enemy_aircraft, copy_group, target_enemy, target_group);
             break;
         }
 

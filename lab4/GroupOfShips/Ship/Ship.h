@@ -60,6 +60,16 @@ namespace lab4 {
         virtual std::ostream& print(std::ostream &output) const;//вроде вывел, но это не точно
         friend  std::ostream& operator <<(std::ostream &output, const Ship &ship);
 
+        virtual bool equal(const Ship &ship) const
+        { return (name == ship.name &&
+                  captain == ship.captain &&
+                  speed == ship.speed &&
+                  vitality == ship.vitality &&
+                  teamMembers == ship.teamMembers &&
+                  armament == ship.armament); }
+
+        virtual bool operator == (const Ship &ship) const { return (*this).equal(ship); }
+
     };
 
 }

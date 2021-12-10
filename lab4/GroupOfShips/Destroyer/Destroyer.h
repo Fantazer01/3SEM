@@ -25,6 +25,11 @@ namespace lab4 {
         Ship * getCovered() const { return covered; }
         void setCovered(Ship *_covered) { covered = _covered; }
 
+        virtual bool equal(const Destroyer &ship) const
+        { return (covered == ship.covered && (*this).Ship::equal(ship)); }
+
+        virtual bool operator == (const Destroyer &ship) const { return (*this).equal(ship); }
+
         double maxDistance(double fuel) const override { return static_cast<double>(k)*fuel; }
 
         std::ostream& print(std::ostream &output) const override;//вроде вывел, но это не точно

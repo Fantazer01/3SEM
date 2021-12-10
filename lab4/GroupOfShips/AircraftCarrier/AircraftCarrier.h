@@ -21,6 +21,8 @@ namespace lab4 {
         AircraftCarrier() = default;
         AircraftCarrier(std::string name, Person captain, uint speed, uint vitality, uint teamMembers, vecWeapon _armament=vecWeapon(), vecPlane _planes=vecPlane());
 
+        virtual AircraftCarrier *clone() const { return new AircraftCarrier(*this); }
+
         void setArmament(const std::vector<Weapon> &_armament) override;
         void addWeapon(const Weapon &one) override;
         void changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator) override;

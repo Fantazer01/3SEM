@@ -20,6 +20,8 @@ namespace lab4 {
         Destroyer(std::string _name, Person _captain, uint _speed, uint _vitality, uint _teamMembers, vecWeapon _armament, Ship* _covered = nullptr)
         : Ship(std::move(_name), std::move(_captain), _speed, _vitality, _teamMembers, std::move(_armament)), covered(_covered) {}
 
+        virtual Destroyer *clone() const { return new Destroyer(*this); }
+
         Ship * getCovered() const { return covered; }
         void setCovered(Ship *_covered) { covered = _covered; }
 

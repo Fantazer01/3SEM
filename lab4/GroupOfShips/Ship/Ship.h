@@ -30,6 +30,8 @@ namespace lab4 {
                 : name(std::move(_name)), captain(std::move(_captain)), speed(_speed), vitality(_vitality), teamMembers(_teamMembers), armament(std::move(_armament)) {}
         virtual ~Ship() = default;
 
+        virtual Ship *clone() const { return new Ship(*this); }
+
         std::string getName() const { return name; }
         Person getInfoCaptain() const { return captain; }
         uint getSpeed() const { return speed; }

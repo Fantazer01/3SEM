@@ -19,6 +19,7 @@ namespace lab4 {
             iterator() = default;
             explicit iterator(const std::map<std::string, Ship*>::iterator &_it): it(_it) {}
 
+            std::map<std::string, Ship*>::iterator getValue() const { return it; }
             bool operator ==(const iterator &out_it) const { return this->it == out_it.it; }
             bool operator !=(const iterator &out_it) const { return this->it != out_it.it; }
             iterator& operator ++() { ++it; return (*this); }
@@ -34,6 +35,7 @@ namespace lab4 {
         public:
             const_iterator() = default;
             explicit const_iterator(const std::map<std::string, Ship*>::const_iterator &_it): it(_it) {}
+            const_iterator(TableOfShips::iterator _it_) { it = _it_.getValue(); }
 
             std::map<std::string, Ship*>::const_iterator getCIT() const { return it; }
 
@@ -48,16 +50,22 @@ namespace lab4 {
         std::map <std::string, Ship*> cells;//first - callsign, second - pointer
     public:
         TableOfShips() = default;
+        TableOfShips(const TableOfShips &table);
+        ~TableOfShips();
+
+        TableOfShips& operator = (const TableOfShips &table);
 
         uint getNumOfGroup() const { return cells.size(); }
 
         const_iterator begin() const { return const_iterator(cells.cbegin()); }
         const_iterator end() const { return const_iterator(cells.cend()); }
+        iterator begin() { return iterator(cells.begin()); }
+        iterator end() { return iterator(cells.end()); }
 
-        //Ship* find(const std::string& first) const { return cells.find(first)->second; }
+        iterator find(const std::string& first) { return iterator(cells.find(first)); }
         const_iterator find(const std::string& first) const { return const_iterator(cells.find(first)); }
-        void insert(const std::string& first, Ship * second) { cells.insert(std::make_pair(first, second)); }
-        void erase(const const_iterator &out_it) { cells.erase(out_it.getCIT()); }
+        void insert(const std::string& first, Ship * second);
+        void erase(const const_iterator &out_it);
 
         std::ostream& print(std::ostream &output) const;
         friend std::ostream& operator <<(std::ostream &output, const TableOfShips &table);

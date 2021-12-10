@@ -6,6 +6,49 @@
 
 namespace lab4 {
 
+    TableOfShips::TableOfShips(const TableOfShips &table)
+    {
+        for(auto && item : table)
+        {
+            (*this).cells.insert(std::make_pair(item.first, item.second->clone()));
+        }
+    }
+
+    TableOfShips::~TableOfShips()
+    {
+        for(auto && item : cells)
+        {
+            delete item.second;
+            item.second = nullptr;
+        }
+    }
+
+    TableOfShips& TableOfShips::operator = (const TableOfShips &table)
+    {
+        for(auto && item : cells)
+        {
+            delete item.second;
+            item.second = nullptr;
+        }
+        cells.clear();
+        for(auto && item : table)
+        {
+            (*this).cells.insert(std::make_pair(item.first, item.second->clone()));
+        }
+        return (*this);
+    }
+
+    void TableOfShips::insert(const std::string& first, Ship * second)
+    {
+        cells.insert(std::make_pair(first, second->clone()));
+    }
+
+    void TableOfShips::erase(const const_iterator &out_it)
+    {
+        delete (*out_it).second;
+        cells.erase(out_it.getCIT());
+    }
+
     std::ostream& TableOfShips::print(std::ostream &output) const
     {
         for (const auto &obj : cells) {

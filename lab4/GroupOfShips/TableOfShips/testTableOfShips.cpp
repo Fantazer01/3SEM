@@ -20,7 +20,7 @@ TEST(TableOfShips, mainMethods)
             Weapon("aka", "bullet", Weapon::light, 5, 6, 7)
     };
 
-    std::vector<Plane> planes = {
+    vecPlane planes = {
             Plane(weapons, 15, 100, 20, Plane::fighter),
             Plane(weapons, 17, 100, 23, Plane::bomber)
     };
@@ -33,8 +33,11 @@ TEST(TableOfShips, mainMethods)
 
     ASSERT_EQ(2, table.getNumOfGroup());
 
-    ASSERT_EQ(&ship_AIRCRF, (*table.find("lucky")).second);
-    ASSERT_EQ(&destroyer, (*table.find("bull")).second);
+    AircraftCarrier air_ship2 = static_cast<AircraftCarrier&>(*(*table.find("lucky")).second);
+    ASSERT_EQ(ship_AIRCRF, air_ship2);
+
+    Destroyer dest_ship2 = static_cast<Destroyer&>(*(*table.find("bull")).second);
+    ASSERT_EQ(destroyer, dest_ship2);
     ASSERT_EQ(table.end(), table.find("baby"));
 
     table.erase(table.find("lucky"));

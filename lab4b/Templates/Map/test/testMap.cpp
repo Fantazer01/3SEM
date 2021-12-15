@@ -83,6 +83,164 @@ TEST(Map, Erase)
 
 }
 
+TEST(Map, IteratorPlusPlusCase0_EmptyMap)
+{
+    Map ABC;
+
+    int i;
+    Map::iterator it;
+    for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
+        ;
+    ASSERT_EQ(1, i);
+
+}
+
+TEST(Map, IteratorPlusPlusCase1_FullTree)
+{
+    Map ABC;
+
+    //1 level
+    ABC.insert(Make_pair(Key(4), Info(4)));
+    //2 level
+    ABC.insert(Make_pair(Key(2), Info(2)));
+    ABC.insert(Make_pair(Key(6), Info(6)));
+    //3 level
+    ABC.insert(Make_pair(Key(1), Info(1)));
+    ABC.insert(Make_pair(Key(3), Info(3)));
+    ABC.insert(Make_pair(Key(5), Info(5)));
+    ABC.insert(Make_pair(Key(7), Info(7)));
+    /*
+     *          _4_
+     *      _2_     _6_
+     *    _1_ _3_ _5_ _7_
+     */
+
+    int i;
+    Map::iterator it;
+    for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
+        ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
+
+}
+
+TEST(Map, IteratorPlusPlusCase2_NoFullTree)
+{
+    Map ABC;
+
+    //1 level
+    ABC.insert(Make_pair(Key(3), Info(3)));
+    //2 level
+    ABC.insert(Make_pair(Key(2), Info(2)));
+    ABC.insert(Make_pair(Key(5), Info(5)));
+    //3 level
+    ABC.insert(Make_pair(Key(1), Info(1)));
+    ABC.insert(Make_pair(Key(4), Info(4)));
+    /*
+     *          _3_
+     *      _2_     _5_
+     *    _1_     _4_
+     */
+
+    int i;
+    Map::iterator it;
+    for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
+        ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
+
+}
+
+TEST(Map, IteratorPlusPlusCase3_LeftLine)
+{
+    Map ABC;
+
+    //1 level
+    ABC.insert(Make_pair(Key(3), Info(3)));
+    //2 level
+    ABC.insert(Make_pair(Key(2), Info(2)));
+    //3 level
+    ABC.insert(Make_pair(Key(1), Info(1)));
+    /*
+     *         _3_
+     *      _2_
+     *    _1_
+     */
+
+    int i;
+    Map::iterator it;
+    for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
+        ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
+
+}
+
+TEST(Map, IteratorPlusPlusCase4_RightLine)
+{
+    Map ABC;
+
+    //1 level
+    ABC.insert(Make_pair(Key(1), Info(1)));
+    //2 level
+    ABC.insert(Make_pair(Key(2), Info(2)));
+    //3 level
+    ABC.insert(Make_pair(Key(3), Info(3)));
+    /*
+     *          _1_
+     *             _2_
+     *                _3_
+     */
+
+    int i;
+    Map::iterator it;
+    for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
+        ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
+
+}
+
+TEST(Map, IteratorPlusPlusCase5_LeftSubtree)
+{
+    Map ABC;
+
+    //1 level
+    ABC.insert(Make_pair(Key(4), Info(4)));
+    //2 level
+    ABC.insert(Make_pair(Key(2), Info(2)));
+    //3 level
+    ABC.insert(Make_pair(Key(1), Info(1)));
+    ABC.insert(Make_pair(Key(3), Info(3)));
+    /*
+     *          _4_
+     *      _2_
+     *    _1_ _3_
+     */
+
+    int i;
+    Map::iterator it;
+    for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
+        ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
+
+}
+
+TEST(Map, IteratorPlusPlusCase1_RightSubtree)
+{
+    Map ABC;
+
+    //1 level
+    ABC.insert(Make_pair(Key(1), Info(1)));
+    //2 level
+    ABC.insert(Make_pair(Key(3), Info(3)));
+    //3 level
+    ABC.insert(Make_pair(Key(2), Info(2)));
+    ABC.insert(Make_pair(Key(4), Info(4)));
+    /*
+     *          _1_
+     *              _3_
+     *            _2_ _4_
+     */
+
+    int i;
+    Map::iterator it;
+    for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
+        ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
+
+}
+
 
 
 int main(int argc, char* argv[])

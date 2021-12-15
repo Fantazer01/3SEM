@@ -96,10 +96,10 @@ public:
         bool operator == (const iterator &it) const { return ptr == it.ptr; }
         bool operator != (const iterator &it) const { return ptr != it.ptr; }
 
-        /*
-        iterator& operator ++() { return (*this); }
-        iterator operator ++(int) { return (*this); }
-         */
+
+        iterator& operator ++();
+        iterator operator ++(int) { iterator it(*this); ++(*this); return it; }
+
         friend Binary_tree;
     };
 
@@ -110,7 +110,6 @@ private:
 public:
     Binary_tree(): root(nullptr), _size(0) {}
     ~Binary_tree() { clear(); }
-    //explicit Binary_tree(Node *_root): root(_root) {}
 
     bool empty() const { return root == nullptr; }
     uint size() const { return _size; }
@@ -127,6 +126,43 @@ public:
 };
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~realize~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Node* FindLeftmost(Node *leftmost)
+{
+    while (leftmost->left != nullptr)
+        leftmost = leftmost->left;
+
+    return leftmost;
+}
+
+Node* ClimbUpUntilExitFromRightSubtree(Node *ptr_node)
+{
+    while (ptr_node->parent != nullptr && ptr_node->p_info->first > ptr_node->parent->p_info->first) {
+        ptr_node = ptr_node->parent;
+    }
+
+    return ptr_node->parent;
+}
+
+bool LeftSubtree(Node *ptr_node) { return ptr_node->p_info->first < ptr_node->parent->p_info->first;}
+
+bool RightSubtree(Node *ptr_node) { return ptr_node->p_info->first > ptr_node->parent->p_info->first;}
+
+Binary_tree::iterator& Binary_tree::iterator::operator ++()
+{
+    if (*this == Binary_tree::end())
+        throw std::invalid_argument("invalid value!");
+
+    if (this->ptr->right == nullptr) {
+        if (this->ptr->parent == nullptr || LeftSubtree(this->ptr))
+            this->ptr = this->ptr->parent;
+        else
+            this->ptr = ClimbUpUntilExitFromRightSubtree(this->ptr);
+    } else if (this->ptr->right != nullptr) {
+        this->ptr = FindLeftmost(this->ptr->right);
+    }
+    return (*this);
+}
 
 Binary_tree::iterator Binary_tree::find(const Key &key)
 {

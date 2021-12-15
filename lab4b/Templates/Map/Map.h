@@ -7,55 +7,18 @@
 #ifndef TEMPLATES_MAP_H
 #define TEMPLATES_MAP_H
 
-class Key {
-private:
-    int a;
-public:
-    Key() = default;
-    explicit Key(int _a): a(_a) {}
-
-    int getA() const { return a; }
-    void setA(int _a) { a = _a; }
-
-    bool operator ==(const Key &temp) const { return a == temp.a; }
-    bool operator !=(const Key &temp) const { return a != temp.a; }
-    bool operator < (const Key &temp) const { return a < temp.a; }
-    bool operator <= (const Key &temp) const { return a <= temp.a; }
-    bool operator > (const Key &temp) const { return a > temp.a; }
-    bool operator >= (const Key &temp) const { return a >= temp.a; }
-
-};
-
-class Info {
-private:
-    int a;
-public:
-    Info() = default;
-    explicit Info(int _a): a(_a) {}
-
-    int getA() const { return a; }
-    void setA(int _a) { a = _a; }
-
-    bool operator ==(const Info &temp) const { return a == temp.a; }
-    bool operator !=(const Info &temp) const { return a != temp.a; }
-    bool operator < (const Info &temp) const { return a < temp.a; }
-    bool operator <= (const Info &temp) const { return a <= temp.a; }
-    bool operator > (const Info &temp) const { return a > temp.a; }
-    bool operator >= (const Info &temp) const { return a >= temp.a; }
-
-};
-
+template <typename T_Key, typename T_Info>
 struct Node {
 public:
-    Pair<Key, Info> *p_info;
+    Pair<T_Key, T_Info> *p_info;
     Node *parent;
     Node *left;
     Node *right;
 
     Node(): p_info(nullptr), parent(nullptr), left(nullptr), right(nullptr) {}
     Node(Node *_parent): p_info(nullptr), parent(_parent), left(nullptr), right(nullptr) {}
-    Node(Node *_parent, Pair<Key, Info> info): parent(_parent), left(nullptr), right(nullptr)
-    { p_info = new Pair<Key, Info>(info.first, info.second); }
+    Node(Node *_parent, Pair<T_Key, T_Info> info): parent(_parent), left(nullptr), right(nullptr)
+    { p_info = new Pair<T_Key, T_Info>(info.first, info.second); }
     Node(Node *_parent, Node *_left, Node *_right): p_info(nullptr), parent(_parent), left(_left), right(_right) {}
     ~Node() { delete p_info; }
 
@@ -77,21 +40,22 @@ public:
 
 };
 
+template <typename T_Key, typename T_Info>
 class Binary_tree {
 public:
     class iterator {
     private:
-        Node *ptr;
+        Node<T_Key, T_Info> *ptr;
 
     public:
         iterator(): ptr(nullptr) {}
-        explicit iterator(Node *_ptr): ptr(_ptr) {}
+        explicit iterator(Node<T_Key, T_Info> *_ptr): ptr(_ptr) {}
 
-        Pair<Key, Info>& operator *() { return *(ptr->p_info); }
-        const Pair<Key, Info>& operator *() const { return *(ptr->p_info); }
+        Pair<T_Key, T_Info>& operator *() { return *(ptr->p_info); }
+        const Pair<T_Key, T_Info>& operator *() const { return *(ptr->p_info); }
 
-        Pair<Key, Info>* operator ->() { return ptr->p_info; }
-        const Pair<Key, Info>* operator ->() const { return ptr->p_info; }
+        Pair<T_Key, T_Info>* operator ->() { return ptr->p_info; }
+        const Pair<T_Key, T_Info>* operator ->() const { return ptr->p_info; }
 
         bool operator == (const iterator &it) const { return ptr == it.ptr; }
         bool operator != (const iterator &it) const { return ptr != it.ptr; }
@@ -104,7 +68,7 @@ public:
     };
 
 private:
-    Node *root;
+    Node<T_Key, T_Info> *root;
     uint _size;
 
 public:
@@ -114,9 +78,9 @@ public:
     bool empty() const { return root == nullptr; }
     uint size() const { return _size; }
 
-    iterator find(const Key &key);
-    bool insert(const Pair<Key, Info> &_pair_);
-    bool erase(const Key &key);
+    iterator find(const T_Key &key);
+    bool insert(const Pair<T_Key, T_Info> &_pair_);
+    bool erase(const T_Key &key);
 
     iterator begin();
     static iterator end() { return {}; }
@@ -127,7 +91,8 @@ public:
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~realize~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Node* FindLeftmost(Node *leftmost)
+template <typename T_Key, typename T_Info>
+Node<T_Key, T_Info>* FindLeftmost(Node<T_Key, T_Info> *leftmost)
 {
     while (leftmost->left != nullptr)
         leftmost = leftmost->left;
@@ -135,7 +100,8 @@ Node* FindLeftmost(Node *leftmost)
     return leftmost;
 }
 
-Node* ClimbUpUntilExitFromRightSubtree(Node *ptr_node)
+template <typename T_Key, typename T_Info>
+Node<T_Key, T_Info>* ClimbUpUntilExitFromRightSubtree(Node<T_Key, T_Info> *ptr_node)
 {
     while (ptr_node->parent != nullptr && ptr_node->p_info->first > ptr_node->parent->p_info->first) {
         ptr_node = ptr_node->parent;
@@ -144,11 +110,16 @@ Node* ClimbUpUntilExitFromRightSubtree(Node *ptr_node)
     return ptr_node->parent;
 }
 
-bool LeftSubtree(Node *ptr_node) { return ptr_node->p_info->first < ptr_node->parent->p_info->first;}
+template <typename T_Key, typename T_Info>
+bool LeftSubtree(Node<T_Key, T_Info> *ptr_node)
+{ return ptr_node->p_info->first < ptr_node->parent->p_info->first;}
 
-bool RightSubtree(Node *ptr_node) { return ptr_node->p_info->first > ptr_node->parent->p_info->first;}
+template <typename T_Key, typename T_Info>
+bool RightSubtree(Node<T_Key, T_Info> *ptr_node)
+{ return ptr_node->p_info->first > ptr_node->parent->p_info->first;}
 
-Binary_tree::iterator& Binary_tree::iterator::operator ++()
+template <typename T_Key, typename T_Info>
+typename Binary_tree<T_Key, T_Info>::iterator& Binary_tree<T_Key, T_Info>::iterator::operator ++()
 {
     if (*this == Binary_tree::end())
         throw std::invalid_argument("invalid value!");
@@ -164,9 +135,10 @@ Binary_tree::iterator& Binary_tree::iterator::operator ++()
     return (*this);
 }
 
-Binary_tree::iterator Binary_tree::find(const Key &key)
+template <typename T_Key, typename T_Info>
+typename Binary_tree<T_Key, T_Info>::iterator Binary_tree<T_Key, T_Info>::find(const T_Key &key)
 {
-    Node *ptr_node = root;
+    Node<T_Key, T_Info> *ptr_node = root;
 
     while (ptr_node != nullptr)
     {
@@ -181,9 +153,10 @@ Binary_tree::iterator Binary_tree::find(const Key &key)
     return end();
 }
 
-void InsertToNOEmptySubTree(const Pair<Key, Info> &_pair_, Node *ptr_node)
+template <typename T_Key, typename T_Info>
+void InsertToNOEmptySubTree(const Pair<T_Key, T_Info> &_pair_, Node<T_Key, T_Info> *ptr_node)
 {
-    Node *next = ptr_node;
+    Node<T_Key, T_Info> *next = ptr_node;
 
     while (next != nullptr)
     {
@@ -195,17 +168,18 @@ void InsertToNOEmptySubTree(const Pair<Key, Info> &_pair_, Node *ptr_node)
     }
 
     if (ptr_node->p_info->first > _pair_.first)
-        ptr_node->left = new Node(ptr_node, _pair_);
+        ptr_node->left = new Node<T_Key, T_Info>(ptr_node, _pair_);
     else
-        ptr_node->right = new Node(ptr_node, _pair_);
+        ptr_node->right = new Node<T_Key, T_Info>(ptr_node, _pair_);
 
 }
 
-bool Binary_tree::insert(const Pair<Key, Info> &_pair_)
+template <typename T_Key, typename T_Info>
+bool Binary_tree<T_Key, T_Info>::insert(const Pair<T_Key, T_Info> &_pair_)
 {
     if (empty()) {
         ++_size;
-        root = new Node(nullptr, _pair_);
+        root = new Node<T_Key, T_Info>(nullptr, _pair_);
         return true;
     }
 
@@ -217,7 +191,8 @@ bool Binary_tree::insert(const Pair<Key, Info> &_pair_)
     return true;
 }
 
-uint CheckBranch(Node *ptr_node)
+template <typename T_Key, typename T_Info>
+uint CheckBranch(Node<T_Key, T_Info> *ptr_node)
 {
     uint counter = 0;
 
@@ -229,7 +204,8 @@ uint CheckBranch(Node *ptr_node)
     return counter;
 }
 
-void SimpleCaseErase(Node *&root, Node *ptr_node)
+template <typename T_Key, typename T_Info>
+void SimpleCaseErase(Node<T_Key, T_Info> *&root, Node<T_Key, T_Info> *ptr_node)
 {
     if (ptr_node->left == nullptr) {
         root = ptr_node->right;
@@ -244,7 +220,8 @@ void SimpleCaseErase(Node *&root, Node *ptr_node)
     delete ptr_node;
 }
 
-void SimpleCaseErase(Node *ptr_node)
+template <typename T_Key, typename T_Info>
+void SimpleCaseErase(Node<T_Key, T_Info> *ptr_node)
 {
     if (ptr_node->left == nullptr) {
         if (ptr_node->parent->left == ptr_node)
@@ -263,13 +240,12 @@ void SimpleCaseErase(Node *ptr_node)
         if (ptr_node->left != nullptr)
             ptr_node->left->parent = ptr_node->parent;
     }
-    //ptr_node->left = nullptr;
-    //ptr_node->right = nullptr;
-    //ptr_node->parent = nullptr;
+
     delete ptr_node;
 }
 
-Node* FindRightmost(Node *rightmost)
+template <typename T_Key, typename T_Info>
+Node<T_Key, T_Info>* FindRightmost(Node<T_Key, T_Info> *rightmost)
 {
     while (rightmost->right != nullptr)
         rightmost = rightmost->right;
@@ -277,14 +253,16 @@ Node* FindRightmost(Node *rightmost)
     return rightmost;
 }
 
-void DifficultCaseErase(Node *ptr_node)
+template <typename T_Key, typename T_Info>
+void DifficultCaseErase(Node<T_Key, T_Info> *ptr_node)
 {
-    Node *scapegoat = FindRightmost(ptr_node->left);
+    Node<T_Key, T_Info> *scapegoat = FindRightmost(ptr_node->left);
     Swap(ptr_node->p_info, scapegoat->p_info);
     SimpleCaseErase(scapegoat);
 }
 
-bool Binary_tree::erase(const Key &key)
+template <typename T_Key, typename T_Info>
+bool Binary_tree<T_Key, T_Info>::erase(const T_Key &key)
 {
     iterator it;
     if ((it = find(key)) == end())
@@ -302,12 +280,13 @@ bool Binary_tree::erase(const Key &key)
     return true;
 }
 
-Binary_tree::iterator Binary_tree::begin()
+template <typename T_Key, typename T_Info>
+typename Binary_tree<T_Key, T_Info>::iterator Binary_tree<T_Key, T_Info>::begin()
 {
     if (empty())
         return end();
 
-    Node *ptr_node = root;
+    Node<T_Key, T_Info> *ptr_node = root;
 
     while (ptr_node->left != nullptr)
         ptr_node = ptr_node->left;
@@ -315,11 +294,7 @@ Binary_tree::iterator Binary_tree::begin()
     return iterator(ptr_node);
 }
 
-typedef Binary_tree Map;
-/*class Map {
-private:
-    int info;
-
-};*/
+template <typename T_Key, typename T_Info>
+using Map = Binary_tree<T_Key, T_Info>;
 
 #endif //TEMPLATES_MAP_H

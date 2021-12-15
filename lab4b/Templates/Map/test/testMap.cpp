@@ -5,10 +5,48 @@
 #include "gtest/gtest.h"
 #include "Map.h"
 
+class Key {
+private:
+    int a;
+public:
+    Key() = default;
+    explicit Key(int _a): a(_a) {}
+
+    int getA() const { return a; }
+    void setA(int _a) { a = _a; }
+
+    bool operator ==(const Key &temp) const { return a == temp.a; }
+    bool operator !=(const Key &temp) const { return a != temp.a; }
+    bool operator < (const Key &temp) const { return a < temp.a; }
+    bool operator <= (const Key &temp) const { return a <= temp.a; }
+    bool operator > (const Key &temp) const { return a > temp.a; }
+    bool operator >= (const Key &temp) const { return a >= temp.a; }
+
+};
+
+class Info {
+private:
+    int a;
+public:
+    Info() = default;
+    explicit Info(int _a): a(_a) {}
+
+    int getA() const { return a; }
+    void setA(int _a) { a = _a; }
+
+    bool operator ==(const Info &temp) const { return a == temp.a; }
+    bool operator !=(const Info &temp) const { return a != temp.a; }
+    bool operator < (const Info &temp) const { return a < temp.a; }
+    bool operator <= (const Info &temp) const { return a <= temp.a; }
+    bool operator > (const Info &temp) const { return a > temp.a; }
+    bool operator >= (const Info &temp) const { return a >= temp.a; }
+
+};
+
 
 TEST(Map, Insert)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     ASSERT_EQ(0, ABC.size());
     ASSERT_EQ(true, ABC.empty());
@@ -27,7 +65,7 @@ TEST(Map, Insert)
 
 TEST(Map, Find)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     ABC.insert(Make_pair(Key(1), Info(1)));
     ABC.insert(Make_pair(Key(2), Info(2)));
@@ -46,7 +84,7 @@ TEST(Map, Find)
 
 TEST(Map, Erase)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     ABC.insert(Make_pair(Key(1), Info(1)));
     ABC.insert(Make_pair(Key(2), Info(2)));
@@ -85,10 +123,10 @@ TEST(Map, Erase)
 
 TEST(Map, IteratorPlusPlusCase0_EmptyMap)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     int i;
-    Map::iterator it;
+    Map<Key, Info>::iterator it;
     for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
         ;
     ASSERT_EQ(1, i);
@@ -97,7 +135,7 @@ TEST(Map, IteratorPlusPlusCase0_EmptyMap)
 
 TEST(Map, IteratorPlusPlusCase1_FullTree)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     //1 level
     ABC.insert(Make_pair(Key(4), Info(4)));
@@ -116,7 +154,7 @@ TEST(Map, IteratorPlusPlusCase1_FullTree)
      */
 
     int i;
-    Map::iterator it;
+    Map<Key, Info>::iterator it;
     for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
         ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
 
@@ -124,7 +162,7 @@ TEST(Map, IteratorPlusPlusCase1_FullTree)
 
 TEST(Map, IteratorPlusPlusCase2_NoFullTree)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     //1 level
     ABC.insert(Make_pair(Key(3), Info(3)));
@@ -141,7 +179,7 @@ TEST(Map, IteratorPlusPlusCase2_NoFullTree)
      */
 
     int i;
-    Map::iterator it;
+    Map<Key, Info>::iterator it;
     for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
         ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
 
@@ -149,7 +187,7 @@ TEST(Map, IteratorPlusPlusCase2_NoFullTree)
 
 TEST(Map, IteratorPlusPlusCase3_LeftLine)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     //1 level
     ABC.insert(Make_pair(Key(3), Info(3)));
@@ -164,7 +202,7 @@ TEST(Map, IteratorPlusPlusCase3_LeftLine)
      */
 
     int i;
-    Map::iterator it;
+    Map<Key, Info>::iterator it;
     for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
         ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
 
@@ -172,7 +210,7 @@ TEST(Map, IteratorPlusPlusCase3_LeftLine)
 
 TEST(Map, IteratorPlusPlusCase4_RightLine)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     //1 level
     ABC.insert(Make_pair(Key(1), Info(1)));
@@ -187,7 +225,7 @@ TEST(Map, IteratorPlusPlusCase4_RightLine)
      */
 
     int i;
-    Map::iterator it;
+    Map<Key, Info>::iterator it;
     for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
         ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
 
@@ -195,7 +233,7 @@ TEST(Map, IteratorPlusPlusCase4_RightLine)
 
 TEST(Map, IteratorPlusPlusCase5_LeftSubtree)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     //1 level
     ABC.insert(Make_pair(Key(4), Info(4)));
@@ -211,7 +249,7 @@ TEST(Map, IteratorPlusPlusCase5_LeftSubtree)
      */
 
     int i;
-    Map::iterator it;
+    Map<Key, Info>::iterator it;
     for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
         ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
 
@@ -219,7 +257,7 @@ TEST(Map, IteratorPlusPlusCase5_LeftSubtree)
 
 TEST(Map, IteratorPlusPlusCase1_RightSubtree)
 {
-    Map ABC;
+    Map<Key, Info> ABC;
 
     //1 level
     ABC.insert(Make_pair(Key(1), Info(1)));
@@ -235,7 +273,7 @@ TEST(Map, IteratorPlusPlusCase1_RightSubtree)
      */
 
     int i;
-    Map::iterator it;
+    Map<Key, Info>::iterator it;
     for (i = 1, it = ABC.begin(); it != ABC.end(); ++i, ++it)
         ASSERT_EQ(Make_pair(Key(i), Info(i)), *it);
 

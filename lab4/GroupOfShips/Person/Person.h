@@ -2,6 +2,14 @@
 // Created by oleg on 10.11.2021.
 //
 
+/*!
+ * @file
+ * @brief description for class Person
+ *
+ * stores struct FullName and class Person
+ * stores information about a person's name, rank and experience
+ */
+
 #ifndef LAB4_PERSON_H
 #define LAB4_PERSON_H
 
@@ -10,6 +18,9 @@
 
 namespace lab4 {
 
+    /*!
+     * @brief struct description person's name
+     */
     struct FullName {
         std::string First_name;
         std::string Last_name;
@@ -21,6 +32,9 @@ namespace lab4 {
         friend std::ostream& operator << (std::ostream&, const FullName &name);
     };
 
+    /*!
+     * @brief class description person: his name, rank and experience
+     */
     class Person {
     private:
         std::string rank;

@@ -2,6 +2,11 @@
 // Created by oleg on 10.11.2021.
 //
 
+/*!
+ * @file
+ * @brief executable friend operator <<, >> for FullName and Person
+ */
+
 #include "Person.h"
 #include <stdexcept>
 #include <iostream>

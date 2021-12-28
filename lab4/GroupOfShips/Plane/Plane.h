@@ -2,6 +2,11 @@
 // Created by oleg on 10.11.2021.
 //
 
+/*!
+ * @file
+ * @brief description for class Plane
+ */
+
 #ifndef LAB4_PLANE_H
 #define LAB4_PLANE_H
 
@@ -11,6 +16,9 @@
 
 namespace lab4 {
 
+    /*!
+     * @brief class description plane
+     */
     class Plane {
     public:
         enum typePlane {

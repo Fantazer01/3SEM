@@ -14,10 +14,12 @@
 namespace lab4 {
 
     typedef std::vector<Weapon> vecWeapon;
-
+    /*!
+     * @brief Ship is parent class
+     */
     class Ship {
     private:
-        static const uint k = 10;
+        static const uint k = 10;/// < constant is used for calculating distance
         std::string name;
         Person captain;
         uint speed;
@@ -57,7 +59,7 @@ namespace lab4 {
 
         virtual double maxDistance(double fuel) const;
         uint calculateDamage(Target type=earth) const;
-        virtual std::ostream& print(std::ostream &output) const;//вроде вывел, но это не точно
+        virtual std::ostream& print(std::ostream &output) const;
         friend  std::ostream& operator <<(std::ostream &output, const Ship &ship);
 
         virtual bool equal(const Ship &ship) const

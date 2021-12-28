@@ -13,6 +13,10 @@ namespace lab4 {
 
     typedef std::list<Plane> vecPlane;
 
+    /*!
+     * AircraftCarrier is heir of Ship
+     * It don't have heavy weapon and stores some planes
+     */
     class AircraftCarrier: public Ship {
     private:
         static const uint k = 8;
@@ -21,7 +25,7 @@ namespace lab4 {
         AircraftCarrier() = default;
         AircraftCarrier(std::string name, Person captain, uint speed, uint vitality, uint teamMembers, vecWeapon _armament=vecWeapon(), vecPlane _planes=vecPlane());
 
-        virtual AircraftCarrier *clone() const { return new AircraftCarrier(*this); }
+        AircraftCarrier *clone() const override { return new AircraftCarrier(*this); }
 
         void setArmament(const std::vector<Weapon> &_armament) override;
         void addWeapon(const Weapon &one) override;

@@ -8,6 +8,7 @@
 namespace lab4 {
 
     /*!
+     * @file
      * @details Target is air for planes; target is earth for ships and other...
      */
     enum Target {

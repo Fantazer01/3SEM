@@ -11,6 +11,10 @@
 
 namespace lab4 {
 
+    /*!
+     * Destroyer is heir of Ship
+     * Difference between destroyer and ship: destroyer have pointer on covered ship
+     */
     class Destroyer : public Ship {
     private:
         static const uint k = 11;

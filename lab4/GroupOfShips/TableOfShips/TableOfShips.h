@@ -10,6 +10,9 @@
 
 namespace lab4 {
 
+    /*!
+     * Table contains in self call sign of ship and pointer on object ship
+     */
     class TableOfShips {
     public:
         class iterator {
@@ -47,7 +50,7 @@ namespace lab4 {
 
         };
     private:
-        std::map <std::string, Ship*> cells;//first - callsign, second - pointer
+        std::map <std::string, Ship*> cells;
     public:
         TableOfShips() = default;
         TableOfShips(const TableOfShips &table);

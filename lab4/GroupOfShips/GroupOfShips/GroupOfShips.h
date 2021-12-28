@@ -23,11 +23,17 @@ namespace lab4 {
         fail
     };
 
+    /*!
+     * Target_set tells us who and how many damage got during one step of fight
+     */
     struct Target_set {
         std::list<std::pair<Plane *, uint>> air;
         std::list<std::pair<Ship *, uint>> earth;
     };
 
+    /*!
+     * GroupOfShip is main class - container, combines a set of ships and planes into one whole
+     */
     class GroupOfShips {
     private:
         TableOfShips table;
@@ -37,8 +43,8 @@ namespace lab4 {
         double distance{};
     public:
         GroupOfShips() = default;
-        GroupOfShips(TableOfShips _table, Person _commander, std::string _from, std::string _to, double _distance)
-        :table(std::move(_table)), commander(std::move(_commander)), from(std::move(_from)), to(std::move(_to)), distance(_distance) {}
+        GroupOfShips(const TableOfShips& _table, Person _commander, std::string _from, std::string _to, double _distance)
+        :table(_table), commander(std::move(_commander)), from(std::move(_from)), to(std::move(_to)), distance(_distance) {}
 
         TableOfShips getTable() const { return table; }
         Person getCommander() const { return commander; }
@@ -48,7 +54,7 @@ namespace lab4 {
         uint getNumOfGroup() const { return table.getNumOfGroup(); }
         uint getNumOfPlanes() const;
 
-        void setTable(TableOfShips _table) { table = std::move(_table); }
+        void setTable(const TableOfShips& _table) { table = _table; }
         void setCommander(Person _commander) { commander = std::move(_commander); }
         void setDeparturePoint(std::string _from) { from = std::move(_from); }
         void setPointOfArrival(std::string _to) { to = std::move(_to); }

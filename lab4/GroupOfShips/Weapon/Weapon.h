@@ -11,6 +11,11 @@
 
 namespace lab4 {
 
+    /*!
+     * Weapon can be 2 types:
+     * 1st - light, for destroying planes
+     * 2nd - heavy, for destroying ships
+     */
     class Weapon {
     public:
         enum typeOfWeapon {

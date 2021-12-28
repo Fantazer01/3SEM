@@ -279,6 +279,33 @@ TEST(Map, IteratorPlusPlusCase1_RightSubtree)
 
 }
 
+TEST(Map, IteratorPlusPlusCase0)
+{
+    Map<Key, Info> ABC;
+
+    //1 level
+    ABC.insert(Make_pair(Key(4), Info(4)));
+    //2 level
+    ABC.insert(Make_pair(Key(2), Info(2)));
+    ABC.insert(Make_pair(Key(6), Info(6)));
+    //3 level
+    ABC.insert(Make_pair(Key(1), Info(1)));
+    ABC.insert(Make_pair(Key(3), Info(3)));
+    ABC.insert(Make_pair(Key(5), Info(5)));
+    ABC.insert(Make_pair(Key(7), Info(7)));
+    /*
+     *          _4_
+     *      _2_     _6_
+     *    _1_ _3_ _5_ _7_
+     */
+
+    int i;
+    Map<Key, Info>::iterator it;
+    for (auto a : ABC)
+        std::cout << a.first.getA() << " " << a.second.getA() << std::endl;
+
+}
+
 
 
 int main(int argc, char* argv[])

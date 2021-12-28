@@ -50,10 +50,13 @@ namespace lab4 {
 
         double maxDistance(double fuel) const override { return static_cast<double>(k)*fuel; }
 
-        virtual bool equal(const AircraftCarrier &ship) const
-        { return (planes == ship.planes && (*this).Ship::equal(ship)); }
+        virtual bool equal(const AircraftCarrier *ship) const
+        {
+            if (typeid(*this) != typeid(*ship)) return false;
+            return (planes == ship->planes && (*this).Ship::equal(ship));
+        }
 
-        virtual bool operator == (const AircraftCarrier &ship) const { return (*this).equal(ship); }
+        virtual bool operator == (const AircraftCarrier &ship) const { return (*this).equal(&ship); }
 
         std::ostream& print(std::ostream &output) const override;//вроде вывел, но это не точно
         friend  std::ostream& operator <<(std::ostream &output, AircraftCarrier &ship);

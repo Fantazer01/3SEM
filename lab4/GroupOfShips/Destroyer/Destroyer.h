@@ -29,10 +29,13 @@ namespace lab4 {
         Ship * getCovered() const { return covered; }
         void setCovered(Ship *_covered) { covered = _covered; }
 
-        virtual bool equal(const Destroyer &ship) const
-        { return (covered == ship.covered && (*this).Ship::equal(ship)); }
+        virtual bool equal(const Destroyer *ship) const
+        {
+            if (typeid(*this) != typeid(*ship)) return false;
+            return (covered == ship->covered && (*this).Ship::equal(ship));
+        }
 
-        virtual bool operator == (const Destroyer &ship) const { return (*this).equal(ship); }
+        virtual bool operator == (const Destroyer &ship) const { return (*this).equal(&ship); }
 
         double maxDistance(double fuel) const override { return static_cast<double>(k)*fuel; }
 

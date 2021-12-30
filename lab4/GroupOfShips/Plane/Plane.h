@@ -59,6 +59,8 @@ namespace lab4 {
         uint calculateDamage(Target type) const;
 
         bool operator == (const Plane &plane) const {
+            if (this == &plane)
+                return true;
             return
                     (speed == plane.speed &&
                     vitality == plane.vitality &&

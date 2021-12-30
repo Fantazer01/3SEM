@@ -48,8 +48,8 @@ namespace lab4
     uint damage_air(const vecPlane &enemy_aircraft)
     {
         uint damage = 0;
-        for (auto it = enemy_aircraft.begin(); it != enemy_aircraft.end(); ++it)
-            damage += it->calculateDamage(air);
+        for (const auto & plane : enemy_aircraft)
+            damage += plane.calculateDamage(air);
 
         return damage;
     }
@@ -57,8 +57,8 @@ namespace lab4
     uint damage_earth(const vecPlane &enemy_aircraft)
     {
         uint damage = 0;
-        for (auto it = enemy_aircraft.begin(); it != enemy_aircraft.end(); ++it)
-            damage += it->calculateDamage(earth);
+        for (const auto & plane : enemy_aircraft)
+            damage += plane.calculateDamage(earth);
 
         return damage;
     }
@@ -95,16 +95,16 @@ namespace lab4
         return false;
     }
 
-    void step_change_target_for_group(vecPlane &enemy_aircraft, Target_set &target)
+    void step_change_target_for_group(std::list<Plane *> &enemy_aircraft, Target_set &target)
     {
         if (target.air.empty() || target.air.begin()->first->getVitality()-target.air.begin()->second <= 0)
         {
-            target.air.emplace_front(&(*enemy_aircraft.begin()), 0);
+            target.air.emplace_front(std::make_pair(*enemy_aircraft.begin(), 0));
             enemy_aircraft.pop_front();
         }
     }
 
-    void shipAiming(vecPlane &enemy_aircraft, Ship *p_ship, Target_set &target)
+    void shipAiming(std::list<Plane *> &enemy_aircraft, Ship *p_ship, Target_set &target)
     {
         for (auto it = p_ship->beginForWeapon(); it != p_ship->endForWeapon(); ++it)
         {
@@ -115,6 +115,9 @@ namespace lab4
             step_change_target_for_group(enemy_aircraft, target);
             target.air.begin()->second += it->getDestruction();
         }
+
+        //for (auto & a : target.air)
+        //    std::cout << "target air \n" << *(a.first) << "\ndamage: " << a.second << "\n";
 
         if (typeid(*p_ship) == typeid(AircraftCarrier))
         {
@@ -129,12 +132,13 @@ namespace lab4
         }
     }
 
-    Target_set groupAiming(vecPlane enemy_aircraft, GroupOfShips &group)
+    Target_set groupAiming(std::list<Plane *> enemy_aircraft_pointer, GroupOfShips &group)
     {
         Target_set target;
 
-        for (auto it = group.begin(); it != group.end(); ++it)
-            shipAiming(enemy_aircraft, (*it).second, target);
+        TableOfShips::const_iterator it;
+        for (it = group.begin(); it != group.end(); ++it)
+            shipAiming(enemy_aircraft_pointer, (*it).second, target);
 
         return target;
     }
@@ -173,26 +177,26 @@ namespace lab4
     {
         Target_set target;
 
-        for (auto it = enemy_aircraft.begin(); it != enemy_aircraft.end(); ++it)
-            enemy_plane_aiming(*it, group, target);
+        for (auto & it : enemy_aircraft)
+            enemy_plane_aiming(it, group, target);
 
         return target;
     }
 
     void decreaseHealthEnemy(Target_set &target_enemy)
     {
-        for (auto it = target_enemy.air.begin(); it != target_enemy.air.end(); ++it)
-            it->first->decreaseVitality(it->second);
-        for (auto it = target_enemy.earth.begin(); it != target_enemy.earth.end(); ++it)
-            it->first->decreaseVitality(it->second);
+        for (auto & it : target_enemy.air)
+            it.first->decreaseVitality(it.second);
+        for (auto & it : target_enemy.earth)
+            it.first->decreaseVitality(it.second);
     }
 
     void decreaseHealthGroup(Target_set &target_group)
     {
-        for (auto it = target_group.air.begin(); it != target_group.air.end(); ++it)
-            it->first->decreaseVitality(it->second);
-        for (auto it = target_group.earth.begin(); it != target_group.earth.end(); ++it)
-            it->first->decreaseVitality(it->second);
+        for (auto & it : target_group.air)
+            it.first->decreaseVitality(it.second);
+        for (auto & it : target_group.earth)
+            it.first->decreaseVitality(it.second);
     }
 
     void eraseDestroyedPlanesEnemy(vecPlane &enemy_aircraft)
@@ -262,13 +266,7 @@ namespace lab4
 
         while (IsFightOver(enemy_aircraft, copy_group))
         {
-            // 1. Прицелилась группа
-            Target_set target_group = groupAiming(enemy_aircraft, copy_group);
-            // 2. Прицелились вражеские самолеты
-            Target_set target_enemy = enemyAiming(enemy_aircraft, copy_group);
-            // 3. Убавили здоровье всех участников боя, исключили тех, чье здоровье равно нулю
-            decreaseHealth(enemy_aircraft, copy_group, target_enemy, target_group);
-            break;
+            copy_group.stepOfFight(enemy_aircraft);
         }
 
         if (copy_group.getNumOfGroup() == 0)
@@ -276,5 +274,27 @@ namespace lab4
         if (enemy_aircraft.empty())
             return win;
         return fight_over;
+    }
+
+    std::list<Plane *> createPointerList(vecPlane &enemy_aircraft)
+    {
+        std::list<Plane *> enemy_aircraft_pointer(enemy_aircraft.size());
+        auto it = enemy_aircraft.begin();
+        auto it_p = enemy_aircraft_pointer.begin();
+        for (; it != enemy_aircraft.end(); ++it, ++it_p)
+            *it_p = &(*it);
+        return enemy_aircraft_pointer;
+    }
+
+    void GroupOfShips::stepOfFight(vecPlane &enemy_aircraft) {
+        std::list<Plane *> enemy_aircraft_pointer;
+        enemy_aircraft_pointer = createPointerList(enemy_aircraft);
+
+        // 1. Прицелилась группа
+        Target_set target_group = groupAiming(enemy_aircraft_pointer, *this);
+        /*// 2. Прицелились вражеские самолеты
+        Target_set target_enemy = enemyAiming(enemy_aircraft, *this);
+        // 3. Убавили здоровье всех участников боя, исключили тех, чье здоровье равно нулю
+        decreaseHealth(enemy_aircraft, *this, target_enemy, target_group);*/
     }
 }

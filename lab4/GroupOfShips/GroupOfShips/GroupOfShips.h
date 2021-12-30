@@ -72,8 +72,14 @@ namespace lab4 {
         void movePlane(plane_iterator it_plane, ship_iterator it_from, ship_iterator it_to);
 
         ResultOfFight modeling(vecPlane enemy_aircraft) const;
+        void stepOfFight(vecPlane &enemy_aircraft);
 
     };
+
+    void step_change_target_for_group(std::list<Plane *> &enemy_aircraft, Target_set &target);
+    void shipAiming(std::list<Plane *> &enemy_aircraft, Ship *p_ship, Target_set &target);
+    Target_set groupAiming(std::list<Plane *> enemy_aircraft, GroupOfShips &group);
+
 }
 
 

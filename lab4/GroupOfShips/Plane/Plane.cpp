@@ -10,6 +10,8 @@
 #include <stdexcept>
 #include "Plane.h"
 
+#define hr "\n---------------------------------------------------------------------\n"
+
 namespace lab4 {
 
     Plane::Plane(const std::vector<Weapon> &_armament, uint _speed, uint _vitality, uint _fuelConsumption, typePlane _type)
@@ -69,7 +71,7 @@ namespace lab4 {
         if (weapon.getType() == Weapon::heavy && type == fighter)
             throw std::invalid_argument("invalid value!");
 
-        std::vector<Weapon>::iterator it = armament.begin() + (c_it - armament.begin());
+        auto it = armament.begin() + (c_it - armament.begin());
         *it = weapon;
     }
 
@@ -89,14 +91,13 @@ namespace lab4 {
 
     std::ostream& operator <<(std::ostream &output, const Plane &plane)
     {
-        output << "set of weapons: ";
+        output << "set of weapons: \n";
         for (const Weapon &w : plane.armament)
-            output << w << " ";
-        output << std::endl
-               << "speed: " << plane.speed
-               << "vitality: " << plane.vitality
-               << "fuel consumption: " << plane.fuelConsumption
-               << "type: " << plane.type;
+            output << w << hr;
+        output << "speed: " << plane.speed << hr
+               << "vitality: " << plane.vitality << hr
+               << "fuel consumption: " << plane.fuelConsumption << hr
+               << "type: " << plane.type << "\n";
         return output;
     }
 

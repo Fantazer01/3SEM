@@ -141,13 +141,16 @@ namespace lab4 {
          * @return if weapons have equal all field they are equal and result is true, else false
          */
         bool operator == (const Weapon &weapon) const
-        { return
-            (name == weapon.name &&
-             ammunitionName == weapon.ammunitionName &&
-             rateOfFire == weapon.rateOfFire &&
-             ammunition == weapon.ammunition &&
-             destruction == weapon.destruction &&
-             type == weapon.type);
+        {
+            if (this == &weapon)
+                return true;
+            return
+                (name == weapon.name &&
+                 ammunitionName == weapon.ammunitionName &&
+                 rateOfFire == weapon.rateOfFire &&
+                 ammunition == weapon.ammunition &&
+                 destruction == weapon.destruction &&
+                 type == weapon.type);
         }
 
         /*!

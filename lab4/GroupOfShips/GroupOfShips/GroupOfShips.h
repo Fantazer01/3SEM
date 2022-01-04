@@ -73,7 +73,6 @@ namespace lab4 {
 
         static void movePlane(plane_iterator it_plane, ship_iterator it_from, ship_iterator it_to);
 
-        ResultOfFight modeling(vecPlane enemy_aircraft) const;
         void stepOfFight(vecPlane &enemy_aircraft);
 
     };

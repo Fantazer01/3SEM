@@ -96,22 +96,6 @@ namespace lab4
         return false;
     }
 
-    ResultOfFight GroupOfShips::modeling(vecPlane enemy_aircraft) const
-    {
-        GroupOfShips copy_group(*this);
-
-        while (IsFightOver(enemy_aircraft, copy_group))
-        {
-            copy_group.stepOfFight(enemy_aircraft);
-        }
-
-        if (copy_group.getNumOfGroup() == 0)
-            return fail;
-        if (enemy_aircraft.empty())
-            return win;
-        return fight_over;
-    }
-
     Target_set createTarget(vecPlane &enemy_aircraft)
     {
         Target_set target;

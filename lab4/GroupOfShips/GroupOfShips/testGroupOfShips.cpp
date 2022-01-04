@@ -145,33 +145,6 @@ TEST(GroupOfShips, movePlane)
     ASSERT_EQ(1, dynamic_cast<AircraftCarrier&>(*(*(group.find("lucky"))).second).getNumPlanes());
     ASSERT_EQ(1, dynamic_cast<AircraftCarrier&>(*(*(group.find("bull"))).second).getNumPlanes());
 }
-/*
-TEST(GroupOfShips, Modeling)
-{
-    //begin of initialization
-    std::vector<Person> set_smbds = arrayPerson();
-    std::vector<Weapon> weapons_light = WeaponLight();
-    std::vector<Weapon> weapons_light_and_hard = WeaponLightAndHard();
-    vecPlane planes = initPlanes(weapons_light, weapons_light_and_hard);
-
-    AircraftCarrier ship_AIRCRF("AirCar", set_smbds[1], 15, 1000, 7, weapons_light, planes);
-    Destroyer destroyer("Bambam", set_smbds[2], 15, 1300, 7, weapons_light_and_hard);
-
-    TableOfShips table;
-    table.insert("lucky", &ship_AIRCRF);
-    table.insert("bull", &destroyer);
-    //end of initialization
-    GroupOfShips group(table, set_smbds[0], "New Delly", "San-Francisco", 12345.8);
-
-    //begin of initialization: enemy
-    vecPlane planes_enemy = {
-            Plane(weapons_light, 15, 100, 20, Plane::fighter),
-            Plane(weapons_light_and_hard, 17, 100, 23, Plane::bomber)
-    };
-    //end of initialization: enemy
-    ASSERT_EQ(fight_over, group.modeling(planes_enemy));
-}
-*/
 
 TEST(GroupOfShips, shipAiming_Destroyer)
 {

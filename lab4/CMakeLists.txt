@@ -12,7 +12,11 @@ set(SOURCES
         GroupOfShips/AircraftCarrier/AircraftCarrier.cpp
         GroupOfShips/Destroyer/Destroyer.cpp
         GroupOfShips/TableOfShips/TableOfShips.cpp
-        GroupOfShips/GroupOfShips/GroupOfShips.cpp)
+        GroupOfShips/GroupOfShips/GroupOfShips.cpp
+        GroupOfShips/GroupOfShips/groupAiming.cpp
+        GroupOfShips/GroupOfShips/enemyAiming.cpp
+        GroupOfShips/GroupOfShips/decreaseHealth.cpp
+        )
 
 include_directories(
         GroupOfShips

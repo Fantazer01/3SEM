@@ -14,6 +14,8 @@
 
 namespace lab4 {
 
+    typedef std::_List_iterator<std::pair<Plane *, unsigned int>> Target_plane_it;
+    typedef std::_List_iterator<std::pair<Ship *, unsigned int>> Target_ship_it;
     typedef TableOfShips::const_iterator ship_iterator;
     typedef vecPlane::const_iterator plane_iterator;
 
@@ -69,16 +71,20 @@ namespace lab4 {
 
         uint getNumShipOfType(const std::type_info &typeInfo) const;
 
-        void movePlane(plane_iterator it_plane, ship_iterator it_from, ship_iterator it_to);
+        static void movePlane(plane_iterator it_plane, ship_iterator it_from, ship_iterator it_to);
 
         ResultOfFight modeling(vecPlane enemy_aircraft) const;
         void stepOfFight(vecPlane &enemy_aircraft);
 
     };
 
-    void step_change_target_for_group(std::list<Plane *> &enemy_aircraft, Target_set &target);
-    void shipAiming(std::list<Plane *> &enemy_aircraft, Ship *p_ship, Target_set &target);
-    Target_set groupAiming(std::list<Plane *> enemy_aircraft, GroupOfShips &group);
+    Target_set createTarget(vecPlane &enemy_aircraft);
+    Target_set createTarget(GroupOfShips &group);
+    void shipAiming(Ship *p_ship, Target_set &target, Target_plane_it &planeIt);
+    void groupAiming(Target_set &target, GroupOfShips &group);
+    void enemyAiming(Target_set &target, vecPlane &enemy_aircraft);
+    void decreaseHealth
+            (vecPlane &enemy_aircraft, GroupOfShips &group, Target_set &target_enemy, Target_set &target_group);
 
 }
 

@@ -12,6 +12,9 @@ set(SOURCES
         ../AircraftCarrier/AircraftCarrier.cpp
         ../Destroyer/Destroyer.cpp
         ../TableOfShips/TableOfShips.cpp
+        groupAiming.cpp
+        enemyAiming.cpp
+        decreaseHealth.cpp
         GroupOfShips.cpp)
 
 

@@ -50,8 +50,10 @@ namespace lab4 {
         FullName name;
         uint standing;
     public:
+
         /*!
-         * @brief Default constructor, it create class have empty field rank and name, standing is 0
+         * @brief Default constructor
+         * @details It create class have empty field rank and name, standing is 0
          */
         Person() : standing(0) {}
 
@@ -96,7 +98,7 @@ namespace lab4 {
 
         /*!
          * @brief Change field standing (only positive number)
-         * @param _standing
+         * @param[in] _standing
          */
         void setStanding(uint _standing) { standing = _standing; }
 

@@ -171,71 +171,7 @@ TEST(GroupOfShips, Modeling)
     //end of initialization: enemy
     ASSERT_EQ(fight_over, group.modeling(planes_enemy));
 }
-
-TEST(GroupOfShips, StepOfFight)
-{
-    //begin of initialization
-    std::vector<Person> set_smbds = arrayPerson();
-    std::vector<Weapon> weapons_light = WeaponLight();
-    std::vector<Weapon> weapons_light_and_hard = WeaponLightAndHard();
-    vecPlane planes = initPlanes(weapons_light, weapons_light_and_hard);
-
-    AircraftCarrier ship_AIRCRF("AirCar", set_smbds[1], 15, 1000, 7, weapons_light, planes);
-    Destroyer destroyer("Bambam", set_smbds[2], 15, 1300, 7, weapons_light_and_hard);
-
-    TableOfShips table;
-    table.insert("lucky", &ship_AIRCRF);
-    table.insert("bull", &destroyer);
-    //end of initialization
-    GroupOfShips group(table, set_smbds[0], "New Delly", "San-Francisco", 12345.8);
-
-    //begin of initialization: enemy
-    vecPlane planes_enemy = {
-            Plane(weapons_light, 15, 100, 20, Plane::fighter),
-            Plane(weapons_light_and_hard, 17, 100, 23, Plane::bomber)
-    };
-    //end of initialization: enemy
-
-    group.stepOfFight(planes_enemy);
-    std::cout << "test#####################################\n";
-    /*for (auto a : group) {
-        std::cout << "Ship:\n";
-        std::cout << *(a.second) << "\n\n";
-    }
-    for (const auto &a : planes_enemy) {
-        std::cout << "Plane:\n";
-        std::cout << a << "\n\n";
-    }
-
-}*/
-
-std::list<Plane *> createPointerList(vecPlane &planes_enemy)
-{
-    std::list<Plane *> enemy_aircraft_pointer(planes_enemy.size());
-    auto it = planes_enemy.begin();
-    auto it_p = enemy_aircraft_pointer.begin();
-    for (; it != planes_enemy.end(); ++it, ++it_p)
-        *it_p = &(*it);
-    return enemy_aircraft_pointer;
-}
-
-TEST(GroupOfShips, step_change_target_for_group)
-{
-    std::vector<Weapon> weapons_light = WeaponLight();
-    std::vector<Weapon> weapons_light_and_hard = WeaponLightAndHard();
-    vecPlane planes_enemy = initPlanes(weapons_light, weapons_light_and_hard);
-
-    Target_set target;
-
-    std::list<Plane *> enemy_aircraft_pointer = createPointerList(planes_enemy);
-
-    step_change_target_for_group(enemy_aircraft_pointer, target);
-
-    ASSERT_EQ(false, target.air.empty());
-    ASSERT_EQ(*(target.air.begin()->first), (*planes_enemy.begin()));
-    ASSERT_EQ(target.air.begin()->second, 0);
-    ASSERT_EQ(enemy_aircraft_pointer.size(), 1);
-}
+*/
 
 TEST(GroupOfShips, shipAiming_Destroyer)
 {
@@ -246,19 +182,25 @@ TEST(GroupOfShips, shipAiming_Destroyer)
 
     Destroyer destroyer("Bambam", set_smbds[2], 15, 1300, 7, weapons_light_and_hard);
 
-    Target_set target;
+    Target_set target = createTarget(planes_enemy);
+    Target_plane_it tar_planeIt = target.air.begin();
 
-    std::list<Plane *> enemy_aircraft_pointer;
-    enemy_aircraft_pointer = createPointerList(planes_enemy);
+    shipAiming(&destroyer, target, tar_planeIt);
 
-    shipAiming(enemy_aircraft_pointer, &destroyer, target);
+    tar_planeIt = target.air.begin();
+    auto AnswerPlaneIt = planes_enemy.begin();
 
-    ASSERT_EQ(target.air.size(), 1);
-    ASSERT_EQ(target.air.begin()->second, 7);
+    ASSERT_EQ(*tar_planeIt->first, *AnswerPlaneIt);
+    ASSERT_EQ(tar_planeIt->second, 7);
+
+    ++tar_planeIt;
+    ++AnswerPlaneIt;
+
+    ASSERT_EQ(*tar_planeIt->first, *AnswerPlaneIt);
+    ASSERT_EQ(tar_planeIt->second, 0);
 }
 
-TEST(GroupOfShips, shipAiming_AircraftCarrier)
-{
+TEST(GroupOfShips, shipAiming_AircraftCarrier) {
     std::vector<Person> set_smbds = arrayPerson();
     std::vector<Weapon> weapons_light = WeaponLight();
     std::vector<Weapon> weapons_light_and_hard = WeaponLightAndHard();
@@ -267,15 +209,22 @@ TEST(GroupOfShips, shipAiming_AircraftCarrier)
 
     AircraftCarrier ship_AIRCRF("AirCar", set_smbds[1], 15, 1000, 7, weapons_light, planes);
 
-    Target_set target;
+    Target_set target = createTarget(planes_enemy);
+    Target_plane_it tar_planeIt = target.air.begin();
 
-    std::list<Plane *> enemy_aircraft_pointer;
-    enemy_aircraft_pointer = createPointerList(planes_enemy);
+    shipAiming(&ship_AIRCRF, target, tar_planeIt);
 
-    shipAiming(enemy_aircraft_pointer, &ship_AIRCRF, target);
+    tar_planeIt = target.air.begin();
+    auto AnswerPlaneIt = planes_enemy.begin();
 
-    ASSERT_EQ(target.air.size(), 1);
-    ASSERT_EQ(target.air.begin()->second, 21);
+    ASSERT_EQ(*tar_planeIt->first, *AnswerPlaneIt);
+    ASSERT_EQ(tar_planeIt->second, 21);
+
+    ++tar_planeIt;
+    ++AnswerPlaneIt;
+
+    ASSERT_EQ(*tar_planeIt->first, *AnswerPlaneIt);
+    ASSERT_EQ(tar_planeIt->second, 0);
 }
 
 TEST(GroupOfShips, groupAiming)
@@ -293,61 +242,98 @@ TEST(GroupOfShips, groupAiming)
     group.insert("lucky", &ship_AIRCRF);
     group.insert("bull", &destroyer);
 
-    Target_set target;
+    Target_set target = createTarget(planes_enemy);
 
-    std::list<Plane *> enemy_aircraft_pointer;
-    enemy_aircraft_pointer = createPointerList(planes_enemy);
+    groupAiming(target, group);
 
-    target = groupAiming(enemy_aircraft_pointer, group);
+    Target_plane_it tar_planeIt = target.air.begin();
+    auto AnswerPlaneIt = planes_enemy.begin();
 
-    ASSERT_EQ(target.air.size(), 1);
-    ASSERT_EQ(target.air.begin()->second, 28);
+    ASSERT_EQ(*tar_planeIt->first, *AnswerPlaneIt);
+    ASSERT_EQ(tar_planeIt->second, 28);
+
+    ++tar_planeIt;
+    ++AnswerPlaneIt;
+
+    ASSERT_EQ(*tar_planeIt->first, *AnswerPlaneIt);
+    ASSERT_EQ(tar_planeIt->second, 0);
 }
-/*
-TEST(GroupOfShips, FuncOfFight)
+
+TEST(GroupOfShips, enemyAiming)
 {
-    //begin of initialization
-    Person set_smbds[] = {
-            Person("boss", { "Simpson", "Tom", "Ivanovich"}, 15),
-            Person("minion", { "Pines", "Jo", "Petrovich"}, 6),
-            Person("hunky", { "Trump", "Peter", "Mikhailovich"}, 11)
-    };
-
-    std::vector<Weapon> weapons_light = {
-            Weapon("aka", "bullet", Weapon::light, 5, 6, 7)
-    };
-
-    std::vector<Weapon> weapons_light_and_hard = {
-            Weapon("aka", "bullet", Weapon::light, 5, 6, 7),
-            Weapon("bazooka", "rocket", Weapon::heavy, 8, 9,10)
-    };
-
-    vecPlane planes = {
-            Plane(weapons_light, 15, 100, 20, Plane::fighter),
-            Plane(weapons_light_and_hard, 17, 100, 23, Plane::bomber)
-    };
+    std::vector<Person> set_smbds = arrayPerson();
+    std::vector<Weapon> weapons_light = WeaponLight();
+    std::vector<Weapon> weapons_light_and_hard = WeaponLightAndHard();
+    vecPlane planes = initPlanes(weapons_light, weapons_light_and_hard);
+    vecPlane planes_enemy = initPlanes(weapons_light, weapons_light_and_hard);
 
     AircraftCarrier ship_AIRCRF("AirCar", set_smbds[1], 15, 1000, 7, weapons_light, planes);
     Destroyer destroyer("Bambam", set_smbds[2], 15, 1300, 7, weapons_light_and_hard);
 
-    TableOfShips table;
-    table.insert("lucky", &ship_AIRCRF);
-    table.insert("bull", &destroyer);
-    //end of initialization
-    GroupOfShips group(table, set_smbds[0], "New Delly", "San-Francisco", 12345.8);
+    GroupOfShips group(TableOfShips(), set_smbds[0], "New Delly", "San-Francisco", 12345.8);
+    group.insert("lucky", &ship_AIRCRF);
+    group.insert("bull", &destroyer);
 
-    //begin of initialization: enemy
-    vecPlane planes_enemy = {
-            Plane(weapons_light, 15, 100, 20, Plane::fighter),
-            Plane(weapons_light_and_hard, 17, 100, 23, Plane::bomber)
-    };
-    //end of initialization: enemy
+    Target_set target = createTarget(group);
 
-    Target_set target_group;// = groupAiming(planes_enemy, group);
-    shipAiming(planes_enemy, (*group.begin()).second, target_group);
-    ASSERT_EQ(*(target_group.air.begin()->first), *(planes_enemy.begin()));
+    enemyAiming(target, planes_enemy);
 
-}*/
+    Target_plane_it tar_planeIt = target.air.begin();
+    Target_ship_it tar_shipIt = target.earth.begin();
+    auto plane_group_it = dynamic_cast<AircraftCarrier &>(*(*(group.find("lucky"))).second).beginForPlane();
+    auto ship_group_it = group.begin();
+
+    ASSERT_EQ(*tar_planeIt->first, *plane_group_it);
+    ASSERT_EQ(tar_planeIt->second, 14);
+
+    ASSERT_EQ(tar_shipIt->first, (*ship_group_it).second);
+    ASSERT_EQ(tar_shipIt->second, 10);
+
+    ++tar_planeIt;
+    ++tar_shipIt;
+    ++plane_group_it;
+    ++ship_group_it;
+
+    ASSERT_EQ(*tar_planeIt->first, *plane_group_it);
+    ASSERT_EQ(tar_planeIt->second, 0);
+
+    ASSERT_EQ(tar_shipIt->first, (*ship_group_it).second);
+    ASSERT_EQ(tar_shipIt->second, 0);
+}
+
+TEST(GroupOfShips, stepOfFight)
+{
+    std::vector<Person> set_smbds = arrayPerson();
+    std::vector<Weapon> weapons_light = WeaponLight();
+    std::vector<Weapon> weapons_light_and_hard = WeaponLightAndHard();
+    vecPlane planes = initPlanes(weapons_light, weapons_light_and_hard);
+    vecPlane planes_enemy = initPlanes(weapons_light, weapons_light_and_hard);
+
+    AircraftCarrier ship_AIRCRF("AirCar", set_smbds[1], 15, 1000, 7, weapons_light, planes);
+    Destroyer destroyer("Bambam", set_smbds[2], 15, 1300, 7, weapons_light_and_hard);
+
+    GroupOfShips group(TableOfShips(), set_smbds[0], "New Delly", "San-Francisco", 12345.8);
+    group.insert("lucky", &ship_AIRCRF);
+    group.insert("bull", &destroyer);
+
+    group.stepOfFight(planes_enemy);
+
+    auto plane_enemy_it = planes_enemy.begin();
+    auto plane_group_it = dynamic_cast<AircraftCarrier &>(*(*(group.find("lucky"))).second).beginForPlane();
+    auto ship_group_it = group.begin();
+
+    ASSERT_EQ(72, plane_enemy_it->getVitality());
+    ASSERT_EQ(86, plane_group_it->getVitality());
+    ASSERT_EQ(1290, (*ship_group_it).second->getVitality());
+
+    ++plane_enemy_it;
+    ++plane_group_it;
+    ++ship_group_it;
+
+    ASSERT_EQ(100, plane_enemy_it->getVitality());
+    ASSERT_EQ(100, plane_group_it->getVitality());
+    ASSERT_EQ(1000, (*ship_group_it).second->getVitality());
+}
 
 int main(int argc, char* argv[])
 {

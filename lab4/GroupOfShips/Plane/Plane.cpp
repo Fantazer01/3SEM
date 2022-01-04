@@ -2,11 +2,6 @@
 // Created by oleg on 10.11.2021.
 //
 
-/*!
- * @file
- * @brief executable methods of class Plane
- */
-
 #include <stdexcept>
 #include "Plane.h"
 
@@ -36,26 +31,26 @@ namespace lab4 {
     }
 
     void Plane::setSpeed(uint _speed) {
-        if (_speed < 0)
-            throw std::invalid_argument("invalid value!");
         speed = _speed;
     }
 
     void Plane::setVitality(uint _vitality) {
-        if (_vitality < 0)
-            throw std::invalid_argument("invalid value!");
         vitality = _vitality;
     }
 
     void Plane::setFuelConsumption(uint _fuelConsumption) {
-        if (_fuelConsumption < 0)
-            throw std::invalid_argument("invalid value!");
         fuelConsumption = _fuelConsumption;
     }
 
     void Plane::setType(typePlane _type) {
         if (_type != fighter && _type != bomber)
             throw std::invalid_argument("invalid value!");
+        if (_type == fighter)
+        {
+            for (auto &weapon : armament)
+                if (weapon.getType() == Weapon::heavy)
+                    throw std::invalid_argument("invalid value!");
+        }
         type = _type;
     }
 

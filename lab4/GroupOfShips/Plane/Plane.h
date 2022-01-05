@@ -124,7 +124,7 @@ namespace lab4 {
         void setType(typePlane type);
 
         /*!
-         * @brief Decrease vitality of plane under vitality will be 0
+         * @brief Decrease vitality of plane until vitality will be 0
          * @param damage
          */
         void decreaseVitality(uint damage) { if (damage > vitality) vitality = 0; else vitality -= damage; }

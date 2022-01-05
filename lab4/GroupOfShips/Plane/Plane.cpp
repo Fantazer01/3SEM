@@ -9,8 +9,9 @@
 
 namespace lab4 {
 
-    Plane::Plane(const std::vector<Weapon> &_armament, uint _speed, uint _vitality, uint _fuelConsumption, typePlane _type)
-    : armament(_armament), speed(_speed), vitality(_vitality), fuelConsumption(_fuelConsumption), type(_type) {
+    Plane::Plane(const vecWeapon &_armament, uint _speed, uint _vitality, uint _fuelConsumption, typePlane _type)
+    : armament(_armament), speed(_speed), vitality(_vitality), fuelConsumption(_fuelConsumption), type(_type)
+    {
         if (_armament.size() > 3 || (type != fighter && type != bomber))
             throw std::invalid_argument("invalid value!");
         if (type == fighter)
@@ -19,7 +20,7 @@ namespace lab4 {
                     throw std::invalid_argument("invalid value!");
     }
 
-    void Plane::setArmament(const std::vector<Weapon> &_armament) {
+    void Plane::setArmament(const vecWeapon &_armament) {
         if (_armament.size() > 3)
             throw std::invalid_argument("invalid value!");
         if (type == fighter)
@@ -60,7 +61,7 @@ namespace lab4 {
         armament.push_back(one);
     }
 
-    void Plane::changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator c_it) {
+    void Plane::changeWeapon(const Weapon &weapon, vecWeapon::const_iterator c_it) {
         if (c_it == armament.end())
             throw std::invalid_argument("invalid value!");
         if (weapon.getType() == Weapon::heavy && type == fighter)

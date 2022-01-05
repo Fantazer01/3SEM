@@ -37,7 +37,7 @@ namespace lab4 {
             bomber ///< can have any weapon
         };
     private:
-        std::vector <Weapon> armament;
+        vecWeapon armament;
         uint speed;
         uint vitality;
         uint fuelConsumption;
@@ -58,13 +58,13 @@ namespace lab4 {
          * @param fuelConsumption
          * @param type
          */
-        Plane(const std::vector<Weapon> &armament, uint speed, uint vitality, uint fuelConsumption, typePlane type);
+        Plane(const vecWeapon &armament, uint speed, uint vitality, uint fuelConsumption, typePlane type);
 
         /*!
          *
          * @return armament of plane
          */
-        std::vector<Weapon> getArmament() const { return armament; }
+        vecWeapon getArmament() const { return armament; }
 
         /*!
          *
@@ -96,7 +96,7 @@ namespace lab4 {
          * @throw if new armament has more 3 weapons
          * @param armament new armament of plane
          */
-        void setArmament(const std::vector<Weapon> &armament);
+        void setArmament(const vecWeapon &armament);
 
         /*!
          * Change speed of plane
@@ -148,19 +148,19 @@ namespace lab4 {
          * @throw if armament has heavy weapon and type of plane is fighter
          * @param weapon new weapon
          */
-        void changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator);
+        void changeWeapon(const Weapon &weapon, vecWeapon::const_iterator);
 
         /*!
          *
          * @return iterator pointer on begin container armament
          */
-        std::vector<Weapon>::const_iterator begin() const { return armament.cbegin(); }
+        vecWeapon::const_iterator begin() const { return armament.cbegin(); }
 
         /*!
          *
          * @return iterator pointer on end container armament
          */
-        std::vector<Weapon>::const_iterator end() const { return armament.end(); }
+        vecWeapon::const_iterator end() const { return armament.end(); }
 
         /*!
          *

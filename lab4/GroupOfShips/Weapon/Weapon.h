@@ -13,6 +13,7 @@
 #include <string>
 #include <iostream>
 #include <utility>
+#include <vector>
 
 namespace lab4 {
 
@@ -161,6 +162,8 @@ namespace lab4 {
         friend std::ostream& operator << (std::ostream &, const Weapon &weapon);
 
     };
+
+    typedef std::vector<Weapon> vecWeapon;
 
 }
 

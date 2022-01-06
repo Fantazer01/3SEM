@@ -24,27 +24,27 @@ namespace lab4
     ship_iterator findNormalAircraftCarrier(const GroupOfShips &group)
     {
         for (auto shipIt = group.begin(); shipIt != group.end(); ++shipIt)
-            if (typeid(*(*shipIt).second) == typeid(AircraftCarrier) && (*(*shipIt).second).getVitality() > 0)
+            if (typeid(*shipIt->second) == typeid(AircraftCarrier) && (*shipIt->second).getVitality() > 0)
                 return shipIt;
         return group.end();
     }
 
     void movingPlanesFromSinkingShip(ship_iterator shipIt_from, ship_iterator shipIt_to, GroupOfShips &group)
     {
-        auto planeIt = dynamic_cast<AircraftCarrier &>(*(*shipIt_from).second).beginForPlane();
-        auto planeIt_end = dynamic_cast<AircraftCarrier &>(*(*shipIt_from).second).endForPlane();
+        auto planeIt = dynamic_cast<AircraftCarrier &>(*shipIt_from->second).beginForPlane();
+        auto planeIt_end = dynamic_cast<AircraftCarrier &>(*shipIt_from->second).endForPlane();
         for (; planeIt != planeIt_end; ++planeIt)
             if (planeIt->getVitality() != 0)
                 group.movePlane(planeIt, shipIt_from, shipIt_to);
     }
 
-    void eraseDestroyedPlanes(ship_iterator it)
+    void eraseDestroyedPlanes(ship_iterator shipIt)
     {
-        auto planeIt = dynamic_cast<AircraftCarrier &>(*(*it).second).beginForPlane();
-        auto planeIt_end = dynamic_cast<AircraftCarrier &>(*(*it).second).endForPlane();
+        auto planeIt = dynamic_cast<AircraftCarrier &>(*shipIt->second).beginForPlane();
+        auto planeIt_end = dynamic_cast<AircraftCarrier &>(*shipIt->second).endForPlane();
         for (; planeIt != planeIt_end; ++planeIt)
             if (planeIt->getVitality() == 0)
-                dynamic_cast<AircraftCarrier &>(*(*it).second).erasePlane(planeIt);
+                dynamic_cast<AircraftCarrier &>(*shipIt->second).erasePlane(planeIt);
     }
 
     void eraseDestroyedMemberOfGroup(GroupOfShips &group)
@@ -52,11 +52,11 @@ namespace lab4
         auto aliveAirCar_it = findNormalAircraftCarrier(group);
 
         for (auto ship_it = group.begin(); ship_it != group.end(); ++ship_it) {
-            if ((*ship_it).second->getVitality() == 0) {
-                if (aliveAirCar_it != group.end() && typeid(*(*ship_it).second) == typeid(AircraftCarrier))
+            if (ship_it->second->getVitality() == 0) {
+                if (aliveAirCar_it != group.end() && typeid(*ship_it->second) == typeid(AircraftCarrier))
                     movingPlanesFromSinkingShip(ship_it, aliveAirCar_it, group);
                 group.erase(ship_it);
-            } else if (typeid(*(*ship_it).second) == typeid(AircraftCarrier)) {
+            } else if (typeid(*ship_it->second) == typeid(AircraftCarrier)) {
                 eraseDestroyedPlanes(ship_it);
             }
         }

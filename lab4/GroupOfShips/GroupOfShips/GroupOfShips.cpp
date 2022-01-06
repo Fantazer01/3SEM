@@ -10,8 +10,8 @@ namespace lab4
     {
         uint counter = 0;
         for (auto && it : *this)
-            if (typeid(*(it).second) == typeid(AircraftCarrier))
-                counter += dynamic_cast<AircraftCarrier&>(*(it).second).getNumPlanes();
+            if (typeid(*it.second) == typeid(AircraftCarrier))
+                counter += dynamic_cast<AircraftCarrier&>(*it.second).getNumPlanes();
 
         return counter;
     }
@@ -20,7 +20,7 @@ namespace lab4
     {
         uint counter = 0;
         for (auto && it : *this)
-            if (typeid(*(it).second) == typeInfo)
+            if (typeid(*it.second) == typeInfo)
                 ++counter;
 
         return counter;
@@ -28,19 +28,19 @@ namespace lab4
 
     void GroupOfShips::movePlane(plane_iterator it_plane, ship_iterator shipIt_from, ship_iterator shipIt_to)
     {
-        if (typeid(*(*shipIt_from).second) != typeid(AircraftCarrier))
+        if (typeid(*shipIt_from->second) != typeid(AircraftCarrier))
             throw std::invalid_argument("invalid value! First iterator isn't pointing on AircraftCarrier");
 
-        if (typeid(*(*shipIt_to).second) != typeid(AircraftCarrier))
+        if (typeid(*shipIt_to->second) != typeid(AircraftCarrier))
             throw std::invalid_argument("invalid value! Second iterator isn't pointing on AircraftCarrier");
 
-        auto planeIt = dynamic_cast<AircraftCarrier&>(*(*shipIt_from).second).beginForPlane();
-        auto planeIt_end = dynamic_cast<AircraftCarrier&>(*(*shipIt_from).second).endForPlane();
+        auto planeIt = dynamic_cast<AircraftCarrier&>(*shipIt_from->second).beginForPlane();
+        auto planeIt_end = dynamic_cast<AircraftCarrier&>(*shipIt_from->second).endForPlane();
         for (; planeIt != planeIt_end; ++planeIt)
             if (planeIt == it_plane)
             {
-                dynamic_cast<AircraftCarrier&>(*(*shipIt_to).second).addPlane(*planeIt);
-                dynamic_cast<AircraftCarrier&>(*(*shipIt_from).second).erasePlane(planeIt);
+                dynamic_cast<AircraftCarrier&>(*shipIt_to->second).addPlane(*planeIt);
+                dynamic_cast<AircraftCarrier&>(*shipIt_from->second).erasePlane(planeIt);
                 return;
             }
         throw std::invalid_argument("invalid value! Plane isn't looked");
@@ -68,10 +68,10 @@ namespace lab4
     {
         uint damage = 0;
         for (auto it = group.begin(); it != group.end(); ++it) {
-            damage += (*(*it).second).calculateDamage(air);
-            if (typeid(*(*it).second) == typeid(AircraftCarrier)) {
-                auto it_p = dynamic_cast<AircraftCarrier&>(*(*it).second).beginForPlane();
-                for (; it_p != dynamic_cast<AircraftCarrier&>(*(*it).second).endForPlane(); ++it_p)
+            damage += (*it->second).calculateDamage(air);
+            if (typeid(*it->second) == typeid(AircraftCarrier)) {
+                auto it_p = dynamic_cast<AircraftCarrier&>(*it->second).beginForPlane();
+                for (; it_p != dynamic_cast<AircraftCarrier&>(*it->second).endForPlane(); ++it_p)
                     damage += it_p->calculateDamage(air);
             }
         }

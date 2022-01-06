@@ -40,9 +40,9 @@ namespace lab4
     void groupAiming(Target_set &target, GroupOfShips &group)
     {
         Target_plane_it planeIt = target.air.begin();
-        TableOfShips::const_iterator it;
-        for (it = group.begin(); it != group.end(); ++it)
-            shipAiming((*it).second, target, planeIt);
+        TableOfShips::const_iterator shipIt;
+        for (shipIt = group.begin(); shipIt != group.end(); ++shipIt)
+            shipAiming(shipIt->second, target, planeIt);
 
     }
 }

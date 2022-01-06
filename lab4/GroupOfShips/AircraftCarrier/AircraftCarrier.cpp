@@ -7,7 +7,7 @@
 #include <utility>
 
 namespace lab4 {
-    AircraftCarrier::AircraftCarrier(std::string _name, Person _captain, uint _speed, uint _vitality, uint _teamMembers, std::vector<Weapon> _armament, vecPlane _planes)
+    AircraftCarrier::AircraftCarrier(std::string _name, Person _captain, uint _speed, uint _vitality, uint _teamMembers, vecWeapon _armament, vecPlane _planes)
     : Ship(std::move(_name), std::move(_captain), _speed, _vitality, _teamMembers), planes(std::move(_planes))
     {
         for (const Weapon &w : _armament)
@@ -17,7 +17,7 @@ namespace lab4 {
         this->Ship::setArmament(_armament);
     }
 
-    void AircraftCarrier::setArmament(const std::vector<Weapon> &_armament)
+    void AircraftCarrier::setArmament(const vecWeapon &_armament)
     {
         for (const Weapon &w : _armament)
             if (w.getType() == Weapon::heavy)
@@ -34,7 +34,7 @@ namespace lab4 {
         this->Ship::addWeapon(weapon);
     }
 
-    void AircraftCarrier::changeWeapon(const Weapon &weapon, std::vector<Weapon>::const_iterator c_it)
+    void AircraftCarrier::changeWeapon(const Weapon &weapon, vecWeapon::const_iterator c_it)
     {
         if (c_it->getType() == Weapon::heavy)
             throw std::invalid_argument("invalid value!");

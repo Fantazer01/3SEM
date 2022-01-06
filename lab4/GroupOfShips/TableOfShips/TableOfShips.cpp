@@ -46,7 +46,7 @@ namespace lab4 {
     void TableOfShips::erase(const const_iterator &out_it)
     {
         delete (*out_it).second;
-        cells.erase(out_it.getCIT());
+        cells.erase(out_it.it);
     }
 
     std::ostream& TableOfShips::print(std::ostream &output) const

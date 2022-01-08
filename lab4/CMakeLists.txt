@@ -29,6 +29,7 @@ include_directories(
         GroupOfShips/TableOfShips
         GroupOfShips/GroupOfShips)
 
+add_subdirectory(GroupOfShips)
 add_subdirectory(GroupOfShips/Person)
 add_subdirectory(GroupOfShips/Weapon)
 add_subdirectory(GroupOfShips/Plane)

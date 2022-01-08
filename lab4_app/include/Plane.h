@@ -189,9 +189,6 @@ namespace lab4 {
          * @param plane plane who will be put in stream
          * @return
          */
-
-        std::ostream& print(std::ostream &output, const std::string &beginChar) const;
-
         friend std::ostream& operator <<(std::ostream &output, const Plane &plane);
 
     };

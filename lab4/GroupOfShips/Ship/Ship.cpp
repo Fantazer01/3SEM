@@ -36,8 +36,24 @@ namespace lab4 {
                 damage += w.getDestruction();
         return damage;
     }
+    std::ostream& Ship::print(std::ostream &output, const std::string &beginChar) const
+    {
+        output << beginChar << "Name of ship: " << name << std::endl
+               << beginChar << "captain: " << captain << std::endl
+               << beginChar << "speed: " << speed << std::endl
+               << beginChar << "vitality: " << vitality << std::endl
+               << beginChar << "team members: " << teamMembers << std::endl
+               << beginChar << "Armament:" << std::endl;
+        if (armament.empty())
+            output << beginChar << "There is empty\n";
+        else
+            for (const Weapon &a : armament)
+                output << beginChar << "* " << a.getName() << std::endl;
+        return output;
+    }
 
-    std::ostream& Ship::print(std::ostream &output) const {
+    std::ostream& Ship::print(std::ostream &output) const
+    {
         output << "Name of ship: " << name
                << "\ncaptain: " << captain
                << "\nspeed: " << speed

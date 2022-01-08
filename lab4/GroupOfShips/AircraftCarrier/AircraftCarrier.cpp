@@ -73,11 +73,12 @@ namespace lab4 {
     std::ostream& AircraftCarrier::print(std::ostream &output) const
     {
         int i = 1;
-        this->Ship::print(output);
+        Ship::print(output);
         if (planes.empty())
             output << "Planes: empty" << std::endl;
         for (const Plane &plane : planes)
-            output << "Plane" << i++ << ": " << plane << std::endl;
+            output << "Plane" << i++ << ": " << std::endl
+                   << plane << std::endl;
 
         return output;
     }
@@ -85,6 +86,20 @@ namespace lab4 {
     std::ostream& operator <<(std::ostream &output, AircraftCarrier &ship)
     {
         ship.print(output);
+        return output;
+    }
+
+    std::ostream &AircraftCarrier::print(std::ostream &output, const std::string &beginChar) const {
+        int i = 1;
+        Ship::print(output, beginChar);
+        if (planes.empty())
+            output << beginChar << "Planes: empty" << std::endl;
+        for (const Plane &plane: planes)
+        {
+            output << beginChar << "Plane" << i++ << ": " << std::endl;
+            plane.print(output, beginChar+"  ");
+        }
+
         return output;
     }
 

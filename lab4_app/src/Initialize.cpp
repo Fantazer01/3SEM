@@ -1,11 +1,22 @@
-#include <iostream>
-#include "Person.h"
-#include "Weapon.h"
-#include "Plane.h"
-#include "Ship.h"
-#include "GroupOfShips.h"
+//
+// Created by oleg on 08.01.2022.
+//
+
+#include "Initialize.h"
 
 using namespace lab4;
+
+std::vector<PointOnMap> initializePoints()
+{
+    std::vector<PointOnMap> points =
+    {
+            PointOnMap("New York", 23, 105),
+            PointOnMap("Paramaribo", 46, 33),
+            PointOnMap("Lisbon", 149, 58)
+    };
+
+    return points;
+}
 
 std::vector<Person> arrayPerson()
 {
@@ -68,25 +79,4 @@ lab4::GroupOfShips initializeGroup()
     group.insert("bull", &destroyer);
 
     return group;
-}
-
-int main() {
-
-
-    lab4::GroupOfShips group;
-    group = initializeGroup();
-    /*
-    FullName name = { "Best", "Proper", "Dear"};
-    Person MrProper(std::string("Mr"), name, 35);
-    std::cout << MrProper << std::endl;
-
-    Weapon one("pushka", "pulki", Weapon::light, 5, 5, 5);
-    std::cout << one;
-    Plane plane;
-    Ship ship("Lucky", MrProper, 5, 10, 15);
-
-    ship.print(std::cout);
-     */
-    group.print(std::cout);
-    return 0;
 }

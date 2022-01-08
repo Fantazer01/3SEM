@@ -145,4 +145,29 @@ namespace lab4
         // 3. Убавили здоровье всех участников боя, исключили тех, чье здоровье равно нулю
         decreaseHealth(enemy_aircraft, *this, target_enemy, target_group);
     }
+
+    std::ostream& GroupOfShips::print(std::ostream &output) const
+    {
+        output << "Commander of group: " << commander << std::endl
+               << "Point of departure: " << from << std::endl
+               << "Point of arrival: " << to << std::endl
+               << "Distance between point of departure and point of arrival: " << distance << std::endl
+               << "Ships:" << std::endl;
+
+        std::string beginChar = "  ";
+        ship_iterator shipIt = table.begin();
+        for (; shipIt != table.end(); ++shipIt)
+        {
+            output << beginChar << "Call sign: " << shipIt->first << std::endl;
+            shipIt->second->print(output, beginChar);
+            output << std::endl;
+        }
+        return output;
+    }
+
+    std::ostream& operator <<(std::ostream &output, const GroupOfShips &group)
+    {
+        group.print(output);
+        return output;
+    }
 }

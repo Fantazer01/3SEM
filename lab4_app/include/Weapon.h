@@ -154,8 +154,6 @@ namespace lab4 {
                  type == weapon.type);
         }
 
-        std::ostream& print(std::ostream &output, const std::string &beginChar) const;
-
         /*!
          * Put object of class Weapon in defined stream
          * @param weapon weapon who will be put in stream

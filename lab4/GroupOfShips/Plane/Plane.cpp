@@ -85,6 +85,7 @@ namespace lab4 {
         return damage;
     }
 
+
     std::ostream& operator <<(std::ostream &output, const Plane &plane)
     {
         output << "set of weapons: \n";
@@ -94,6 +95,18 @@ namespace lab4 {
                << "vitality: " << plane.vitality << hr
                << "fuel consumption: " << plane.fuelConsumption << hr
                << "type: " << plane.type << "\n";
+        return output;
+    }
+
+    std::ostream &Plane::print(std::ostream &output, const std::string &beginChar) const
+    {
+        output << beginChar << "set of weapons: \n";
+        for (const Weapon &w : armament)
+            w.print(output, beginChar+"* ");// << std::endl;//<< hr;
+        output << beginChar << "speed: " << speed << std::endl//<< hr
+               << beginChar << "vitality: " << vitality << std::endl//<< hr
+               << beginChar << "fuel consumption: " << fuelConsumption << std::endl//<< hr
+               << beginChar << "type: " << type << "\n";
         return output;
     }
 

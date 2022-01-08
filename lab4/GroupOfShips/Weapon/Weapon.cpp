@@ -48,4 +48,18 @@ namespace lab4 {
         return output;
     }
 
+    std::ostream &Weapon::print(std::ostream &output, const std::string &beginChar) const {
+        output << beginChar << "Name: " << name << std::endl
+               << beginChar << "Name of ammunition: " << ammunitionName << std::endl
+               << beginChar << "Rate of fire: " << rateOfFire << std::endl
+               << beginChar << "Ammunition: " << ammunition << std::endl
+               << beginChar << "Destruction: " << destruction << std::endl
+               << beginChar << "Type: ";
+        if (type == Weapon::light)
+            output << "light" << std::endl;
+        else
+            output << "hard" << std::endl;
+        return output;
+    }
+
 }

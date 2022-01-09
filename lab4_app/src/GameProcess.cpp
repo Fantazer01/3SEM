@@ -48,7 +48,7 @@ uint dialog(const uint &numOfStations)
     return rc;
 }
 
-void game_process(const std::vector<Port> &points, lab4::GroupOfShips &group, const Port &startPoint)
+void game_process(std::vector<Port> &points, lab4::GroupOfShips &group, const Port &startPoint)
 {
     uint indexLocation = 0;
     group.setDeparturePoint(startPoint.getName());

@@ -11,6 +11,7 @@ set(Port
         src/Port.cpp)
 
 set(CommandsOfMenu
+        src/SetCompound.cpp
         src/SelectPoint.cpp
         src/PutInformation.cpp)
 

@@ -196,6 +196,8 @@ namespace lab4 {
          */
         virtual std::ostream& print(std::ostream &output) const;
 
+        virtual std::ostream& print(std::ostream &output, const std::string &beginChar) const;
+
         /*!
          * @brief Doing same method print, because use it
          * @param output

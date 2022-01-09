@@ -96,6 +96,8 @@ namespace lab4 {
          */
         std::ostream& print(std::ostream &output) const override;
 
+        std::ostream& print(std::ostream &output, const std::string &beginChar) const override;
+
         /*!
          * @brief Doing same method print, because use it
          * @param output

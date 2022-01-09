@@ -29,6 +29,8 @@ public:
 
     ship_iterator begin() const { return groupInsidePort.begin(); }
     ship_iterator end() const { return groupInsidePort.end(); }
+
+    std::ostream& print(std::ostream &output) const;
 };
 
 

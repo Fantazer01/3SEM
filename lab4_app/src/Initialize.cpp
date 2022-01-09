@@ -18,6 +18,18 @@ std::vector<PointOnMap> initializePoints()
     return points;
 }
 
+std::vector<Port> initializePorts()
+{
+    std::vector<Port> ports =
+            {
+                    Port("New York", 23, 105),
+                    Port("Paramaribo", 46, 33),
+                    Port("Lisbon", 149, 58)
+            };
+
+    return ports;
+}
+
 std::vector<Person> arrayPerson()
 {
     std::vector<Person> people = {

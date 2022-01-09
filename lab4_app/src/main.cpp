@@ -1,3 +1,4 @@
+#include <Port.h>
 #include "PointOnMap.h"
 #include "GroupOfShips.h"
 #include "Initialize.h"
@@ -5,13 +6,14 @@
 
 int main()
 {
+    std::vector<Port> ports;
     std::vector<PointOnMap> points;
     lab4::GroupOfShips group;
 
-    points = initializePoints();
+    ports = initializePorts();
     group = initializeGroup();
-    PointOnMap defaultPoint = points[0];
+    Port defaultPoint = ports[0];
 
-    game_process(points, group, defaultPoint);
+    game_process(ports, group, defaultPoint);
     return 0;
 }

@@ -8,10 +8,9 @@
 
 using namespace lab4;
 
-void PutInformation(const GroupOfShips &group, const PointOnMap &location)
+void PutInformation(const GroupOfShips &group)
 {
-    std::cout << "Group is located in port: " << location.getName()
-              << ", coordinates: (" << location.get1stCoordinate() << ", " << location.get2ndCoordinate() << ")"<< std::endl
+    std::cout << "Group is located in port: " << group.getDeparturePoint() << std::endl
               << "~~~~~~~~~~~~~~~~~~~~~~Composition-of-the-group~~~~~~~~~~~~~~~~~~~~~~" << std::endl
               << group << std::endl;
 }

@@ -7,9 +7,12 @@
 
 #include <vector>
 #include "PointOnMap.h"
+#include "Port.h"
 #include "GroupOfShips.h"
 
 std::vector<PointOnMap> initializePoints();
+
+std::vector<Port> initializePorts();
 
 lab4::GroupOfShips initializeGroup();
 

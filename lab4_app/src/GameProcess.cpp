@@ -48,21 +48,21 @@ int dialog(const uint &numOfStations)
     return rc;
 }
 
-void game_process(const std::vector<PointOnMap> &points, lab4::GroupOfShips &group, const PointOnMap &startPoint)
+void game_process(const std::vector<Port> &points, lab4::GroupOfShips &group, const Port &startPoint)
 {
-    PointOnMap placeOfLocated = startPoint;
+    uint indexLocation = 0;
     group.setDeparturePoint(startPoint.getName());
 
     int rc;
     while ((rc = dialog(menu())) != quit)
     {
         if (rc == setCompound)
-            ;//
+            SetCompound(group, points[indexLocation]);
         else if (rc == selectPoint)
-            SelectPoint(points, group);
+            indexLocation = SelectPoint(points, group);
         else if (rc == startToMove)
             ;
         else if (rc == info)
-            PutInformation(group, placeOfLocated);
+            PutInformation(group);
     }
 }

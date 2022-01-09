@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCES
         src/main.cpp
         src/Initialize.cpp
+        src/SelectPoint.cpp
         src/PutInformation.cpp
         src/GameProcess.cpp
         src/LabTools.cpp

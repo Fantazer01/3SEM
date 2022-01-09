@@ -7,7 +7,10 @@
 
 #include "GroupOfShips.h"
 #include "PointOnMap.h"
+#include "LabTools.h"
 
+int dialog(const uint &numOfStations);
+void SelectPoint(const std::vector<PointOnMap> &points, lab4::GroupOfShips &group);
 void PutInformation(const lab4::GroupOfShips &group, const PointOnMap &placeOfLocated);
 void game_process(const std::vector<PointOnMap> &points, lab4::GroupOfShips &group, const PointOnMap &startPoint);
 

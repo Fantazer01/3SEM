@@ -3,10 +3,8 @@
 //
 
 #include <vector>
-#include "PointOnMap.h"
-#include "GroupOfShips.h"
 #include "GameProcess.h"
-#include "LabTools.h"
+
 
 enum MenuAnswer {
     quit = 0,
@@ -16,7 +14,7 @@ enum MenuAnswer {
     info
 };
 
-int menu() {
+uint menu() {
     const char *menu_msgs[] =
             {
                     "1. Настроить состав",
@@ -26,7 +24,7 @@ int menu() {
                     "0. Выход"
             };
 
-    const int size_menu_msgs = sizeof(menu_msgs) / sizeof(*menu_msgs);
+    const uint size_menu_msgs = sizeof(menu_msgs) / sizeof(*menu_msgs);
 
     for(auto & menu_msg : menu_msgs)
         std::cout << menu_msg << std::endl;
@@ -34,10 +32,9 @@ int menu() {
     return size_menu_msgs;
 }
 
-int dialog() {
-    int numOfStations, rc;
-
-    numOfStations = menu();
+int dialog(const uint &numOfStations)
+{
+    int rc;
 
     do {
         try{
@@ -54,13 +51,15 @@ int dialog() {
 void game_process(const std::vector<PointOnMap> &points, lab4::GroupOfShips &group, const PointOnMap &startPoint)
 {
     PointOnMap placeOfLocated = startPoint;
-    int rc = 0;
-    while ((rc = dialog()) != quit)
+    group.setDeparturePoint(startPoint.getName());
+
+    int rc;
+    while ((rc = dialog(menu())) != quit)
     {
         if (rc == setCompound)
             ;//
         else if (rc == selectPoint)
-            ;//
+            SelectPoint(points, group);
         else if (rc == startToMove)
             ;
         else if (rc == info)

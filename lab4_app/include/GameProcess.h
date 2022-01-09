@@ -11,7 +11,7 @@
 #include "LabTools.h"
 
 uint dialog(const uint &numOfStations);
-void SetCompound(GroupOfShips &group, const Port &);
+void SetCompound(GroupOfShips &group, Port );
 uint SelectPoint(const std::vector<Port> &points, lab4::GroupOfShips &group);
 void PutInformation(const lab4::GroupOfShips &group);
 void game_process(const std::vector<Port> &points, lab4::GroupOfShips &group, const Port &startPoint);

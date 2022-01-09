@@ -32,7 +32,7 @@ uint menu() {
     return size_menu_msgs;
 }
 
-int dialog(const uint &numOfStations)
+uint dialog(const uint &numOfStations)
 {
     int rc;
 
@@ -43,7 +43,7 @@ int dialog(const uint &numOfStations)
             std::cout << "End of file" << std::endl;
             return 0;
         }
-    } while(rc > numOfStations || rc < 0);
+    } while (rc > numOfStations || rc < 0);
 
     return rc;
 }

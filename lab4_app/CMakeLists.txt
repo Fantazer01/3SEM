@@ -3,14 +3,24 @@ project(lab4_app)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(PointOnMap
+        src/PointOnMap.cpp)
+
+set(Port
+        ${PointOnMap}
+        src/Port.cpp)
+
+set(CommandsOfMenu
+        src/SelectPoint.cpp
+        src/PutInformation.cpp)
+
 set(SOURCES
         src/main.cpp
+        ${Port}
         src/Initialize.cpp
-        src/SelectPoint.cpp
-        src/PutInformation.cpp
+        ${CommandsOfMenu}
         src/GameProcess.cpp
-        src/LabTools.cpp
-        )
+        src/LabTools.cpp)
 
 include_directories(include)
 

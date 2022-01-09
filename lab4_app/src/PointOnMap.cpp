@@ -3,8 +3,9 @@
 //
 
 #include "PointOnMap.h"
+#include <cmath>
 
 double PointOnMap::getDistance(PointOnMap point) const
 {
-    return sqtr(pow(x-point.x, 2) + pow(y-point.y, 2));
+    return sqrt(pow(x-point.x, 2) + pow(y-point.y, 2));
 }
